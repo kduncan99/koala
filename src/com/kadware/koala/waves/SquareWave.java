@@ -1,7 +1,11 @@
+/**
+ * Koala - Virtual Modular Synthesizer
+ * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ */
+
 package com.kadware.koala.waves;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.exceptions.BadSignalValueException;
 
 public class SquareWave implements Wave {
 
@@ -18,13 +22,7 @@ public class SquareWave implements Wave {
     public double getValue(
         final double position,
         final double pulseWidth
-    ) throws BadSignalValueException {
-        if (position < 0.0 || position >= 1.0) {
-            throw new BadSignalValueException(position);
-        } else if (pulseWidth < 0.0 || pulseWidth > 1.0) {
-            throw new BadSignalValueException(pulseWidth);
-        }
-
+    ) {
         return (position >= pulseWidth) ? Koala.MAX_PORT_VALUE : Koala.MIN_PORT_VALUE;
     }
 

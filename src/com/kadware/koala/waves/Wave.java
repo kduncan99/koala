@@ -1,6 +1,9 @@
-package com.kadware.koala.waves;
+/**
+ * Koala - Virtual Modular Synthesizer
+ * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ */
 
-import com.kadware.koala.exceptions.BadSignalValueException;
+package com.kadware.koala.waves;
 
 public interface Wave {
 
@@ -22,7 +25,7 @@ public interface Wave {
     public double getValue(
         final double position,      //  from 0.0 to 1.0
         final double pulseWidth     //  from 0.0 to 1.0
-    ) throws BadSignalValueException;
+    );
 
     public String getWaveClass();
     public WaveType getWaveType();

@@ -1,7 +1,11 @@
+/**
+ * Koala - Virtual Modular Synthesizer
+ * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ */
+
 package com.kadware.koala.waves;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.exceptions.BadSignalValueException;
 
 public class SawtoothWave implements Wave {
 
@@ -19,13 +23,16 @@ public class SawtoothWave implements Wave {
         final double position,
         final double pulseWidth
     ) {
-        if (position < 0.0 || position >= 1.0) {
-            throw new BadSignalValueException(position);
-        } else if (pulseWidth < 0.0 || pulseWidth > 1.0) {
-            throw new BadSignalValueException(pulseWidth);
+        double effectivePosition = position;
+        double effectivePulseWidth = pulseWidth;
+
+        if (position < 0.0) {
+            effectivePosition = 0.0;
+        } else if (position > 1.0) {
+            effectivePosition = 1.0;
         }
 
-        return ((1.0 - position) * 2 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
+        return ((1.0 - effectivePosition) * 2 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
     }
 
     @Override

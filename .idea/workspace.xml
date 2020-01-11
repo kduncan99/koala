@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="" />
+    <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadParameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadParameter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadPortException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadPortException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadSignalValueException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/AREnvelopeModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/AREnvelopeModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/AmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/AmplifierModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/MonoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/MonoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/NoiseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/NoiseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/OscillatorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/OscillatorModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/InputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/InputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/OutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/OutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/Port.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/Port.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/RampWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/RampWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SawtoothWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SawtoothWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SineWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SineWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SquareWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SquareWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/TriangleWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/TriangleWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/Wave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/Wave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/WaveManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/WaveManager.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,11 +45,15 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1Vx750YfNLjGaTfIdhwy8FXk82o" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -81,10 +112,22 @@
       <workItem from="1578192889631" duration="9916000" />
       <workItem from="1578276318407" duration="5743000" />
       <workItem from="1578282799092" duration="16259000" />
+      <workItem from="1578764867103" duration="1356000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

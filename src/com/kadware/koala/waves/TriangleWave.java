@@ -1,7 +1,11 @@
+/**
+ * Koala - Virtual Modular Synthesizer
+ * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ */
+
 package com.kadware.koala.waves;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.exceptions.BadSignalValueException;
 
 public class TriangleWave implements Wave {
 
@@ -19,18 +23,21 @@ public class TriangleWave implements Wave {
         final double position,
         final double pulseWidth
     ) {
-        if (position < 0.0 || position >= 1.0) {
-            throw new BadSignalValueException(position);
-        } else if (pulseWidth < 0.0 || pulseWidth > 1.0) {
-            throw new BadSignalValueException(pulseWidth);
+        double effectivePosition = position;
+        double effectivePulseWidth = pulseWidth;
+
+        if (position < 0.0) {
+            effectivePosition = 0.0;
+        } else if (position > 1.0) {
+            effectivePosition = 1.0;
         }
 
-        if (position == 0.5) {
+        if (effectivePosition == 0.5) {
             return 0.0;
-        } else if (position < 0.5) {
-            return (position * 4 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
+        } else if (effectivePosition < 0.5) {
+            return (effectivePosition * 4 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
         } else {
-            return ((1.0 - position) * 4 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
+            return ((1.0 - effectivePosition) * 4 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
         }
     }
 

@@ -1,6 +1,9 @@
-package com.kadware.koala.waves;
+/**
+ * Koala - Virtual Modular Synthesizer
+ * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ */
 
-import com.kadware.koala.exceptions.BadSignalValueException;
+package com.kadware.koala.waves;
 
 public class SineWave implements Wave {
 
@@ -18,12 +21,6 @@ public class SineWave implements Wave {
         final double position,
         final double pulseWidth
     ) {
-        if (position < 0.0 || position >= 1.0) {
-            throw new BadSignalValueException(position);
-        } else if (pulseWidth < 0.0 || pulseWidth > 1.0) {
-            throw new BadSignalValueException(pulseWidth);
-        }
-
         return Math.sin(position * (1.0d - Math.PI));
     }
 

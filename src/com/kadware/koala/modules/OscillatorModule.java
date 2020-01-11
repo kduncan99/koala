@@ -1,3 +1,8 @@
+/**
+ * Koala - Virtual Modular Synthesizer
+ * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ */
+
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
@@ -8,12 +13,6 @@ import com.kadware.koala.waves.WaveManager;
 
 public class OscillatorModule extends Module {
 
-    public static enum Range {
-        Full,
-        Positive,
-        Negative,
-    }
-
     public static final int FREQUENCY_PORT_1 = 1;
     public static final int FREQUENCY_PORT_2 = 2;
     public static final int FREQUENCY_PORT_3 = 3;
@@ -22,7 +21,6 @@ public class OscillatorModule extends Module {
 
     private double _baseFrequency;
     private double _basePulseWidth;
-    private Range _range;
     private Wave _wave;
     private double _waveProgress;
 
@@ -53,11 +51,6 @@ public class OscillatorModule extends Module {
         double effectivePulseWidth = _basePulseWidth + (_inputPorts.get(PULSE_WIDTH_PORT).getValue() / 10.0);
 
         double value = _wave.getValue(_waveProgress, effectivePulseWidth);
-        if (_range == Range.Negative) {
-            value = (value - Koala.MAX_PORT_MAGNITUDE) / 2.0d;
-        } else if (_range == Range.Positive) {
-            value = (value + Koala.MAX_PORT_MAGNITUDE) / 2.0d;
-        }
         _outputPorts.get(OUTPUT_PORT).setCurrentValue(value);
     }
 
@@ -76,10 +69,6 @@ public class OscillatorModule extends Module {
     @Override
     public ModuleType getModuleType() {
         return ModuleType.TestTone;
-    }
-
-    public Range getRange() {
-        return _range;
     }
 
     public Wave getWave() {
@@ -101,12 +90,6 @@ public class OscillatorModule extends Module {
         final double value
     ) {
         _basePulseWidth = value;
-    }
-
-    public void setRange(
-        final Range value
-    ) {
-        _range = value;
     }
 
     public void setWave(
