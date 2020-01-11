@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -7,8 +7,8 @@ package com.kadware.koala.waves;
 
 public class WaveManager {
 
-    public static Wave createWave(
-        final Wave.WaveType waveType
+    public static IWave createWave(
+        final IWave.WaveType waveType
     ) {
         switch (waveType) {
             case Ramp:      return new RampWave();

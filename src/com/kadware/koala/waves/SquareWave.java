@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -7,7 +7,7 @@ package com.kadware.koala.waves;
 
 import com.kadware.koala.Koala;
 
-public class SquareWave implements Wave {
+public class SquareWave implements IWave {
 
     SquareWave() {}
 
@@ -19,11 +19,11 @@ public class SquareWave implements Wave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public double getValue(
-        final double position,
-        final double pulseWidth
+    public float getValue(
+        final float position,
+        final float pulseWidth
     ) {
-        return (position >= pulseWidth) ? Koala.MAX_PORT_VALUE : Koala.MIN_PORT_VALUE;
+        return (position >= pulseWidth) ? Koala.MAX_CVPORT_VALUE : Koala.MIN_CVPORT_VALUE;
     }
 
     @Override

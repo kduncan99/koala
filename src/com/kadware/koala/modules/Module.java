@@ -1,14 +1,13 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
 
-import com.kadware.koala.exceptions.BadPortException;
-import com.kadware.koala.ports.InputPort;
-import com.kadware.koala.ports.OutputPort;
-import com.kadware.koala.ports.Port;
+import com.kadware.koala.exceptions.BadPortIndexException;
+import com.kadware.koala.ports.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,12 +16,15 @@ public abstract class Module {
     public static enum ModuleType {
         Amplifier,              //  Basic VCA
         AREnvelopeGenerator,    //  Simple envelope generator
+        Clock,                  //  Logic clock pulse generator
+        DualNoise,              //  Dual (STEREO) noise source
         Inverter,               //  Inverts the input
         MonoOutput,             //  Routes input to system sound
         Noise,                  //  White noise generator
         Oscillator,             //  General-purpose single-mode oscillator
-        TestTone,               //  Fixed (but settable) frequency square-wave oscillator
+        DiscreteSequencer,      //  Step sequencer with discrete output values
         StereoOutput,           //  Routes L/R channels to system sound
+        TestTone,               //  Fixed (but settable) frequency square-wave oscillator
         //  TODO ADSR HADSR VCF Mixer PanningVCA S/H Delay MultiModeOsc MultiOsc (with slop)
         //  TODO Sequencer OctaveDivider PitchShifter RingModulator Compressor/Limiter
         //  TODO MIDI
@@ -30,46 +32,47 @@ public abstract class Module {
         //  TODO Linked modules, so setting one sets all the corresponding others in a polyphony set
     }
 
-    final Map<Integer, InputPort> _inputPorts = new HashMap<>();
-    final Map<Integer, OutputPort> _outputPorts = new HashMap<>();
+    final Map<Integer, IInputPort> _inputPorts = new HashMap<>();
+    final Map<Integer, IOutputPort> _outputPorts = new HashMap<>();
 
     public abstract void advance();
     public abstract void close();
 
     public final void detachAllPorts() {
-        for (InputPort port : _inputPorts.values()) {
+        for (IInputPort port : _inputPorts.values()) {
             port.disconnect();
         }
     }
 
-    public final InputPort getInputPort(
+    public final IInputPort getInputPort(
         final int portIndex
     ) {
         if (_inputPorts.containsKey(portIndex)) {
             return _inputPorts.get(portIndex);
         } else {
-            throw new BadPortException(portIndex);
+            throw new BadPortIndexException(portIndex);
         }
     }
 
+    public abstract String getModuleAbbreviation();
     public abstract String getModuleClass();
     public abstract ModuleType getModuleType();
 
-    public final OutputPort getOutputPort(
+    public final IOutputPort getOutputPort(
         final int portIndex
     ) {
         if (_outputPorts.containsKey(portIndex)) {
             return _outputPorts.get(portIndex);
         } else {
-            throw new BadPortException(portIndex);
+            throw new BadPortIndexException(portIndex);
         }
     }
 
     public void reset() {
-        for (Port port : _inputPorts.values()) {
+        for (IInputPort port : _inputPorts.values()) {
             port.reset();
         }
-        for (Port port : _outputPorts.values()) {
+        for (IOutputPort port : _outputPorts.values()) {
             port.reset();
         }
     }

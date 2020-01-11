@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -6,49 +6,56 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.ports.InputPort;
-import com.kadware.koala.ports.OutputPort;
+import com.kadware.koala.ports.ContinuousOutputPort;
+import com.kadware.koala.ports.LogicInputPort;
 
 public class AREnvelopeModule extends Module {
 
-    public static final int GATE_PORT = 0;
-    public static final int TRIGGER_PORT = 1;
-    public static final int SIGNAL_PORT = 0;
+    public static final int GATE_INPUT_PORT = 0;
+    public static final int TRIGGER_INPUT_PORT = 1;
+    public static final int SIGNAL_OUTPUT_PORT = 2;
 
-    private double _attackTime = 0.0;           //  in msec
-    private double _decrementPerSample = 0.0;   //  release mode
-    private double _incrementPerSample = 0.0;   //  attack mode
-    private boolean _gateOpen = false;
-    private double _releaseTime = 0.0;          //  in msec
+    private float _attackTime = 0.0f;           //  in milliseconds
+    private float _decrementPerSample = 0.0f;   //  in release mode
+    private float _incrementPerSample = 0.0f;   //  in attack mode
+    private boolean _manualGateOpen = false;
+    private float _releaseTime = 0.0f;          //  in milliseconds
     private boolean _triggered = false;
-    private double _value = Koala.MIN_PORT_VALUE;
+    private float _value = Koala.MIN_CVPORT_VALUE;
 
     AREnvelopeModule() {
-        _inputPorts.put(GATE_PORT, new InputPort("Gate"));
-        _inputPorts.put(TRIGGER_PORT, new InputPort("Trigger"));
-        _outputPorts.put(SIGNAL_PORT, new OutputPort("Output"));
+        _inputPorts.put(GATE_INPUT_PORT, new LogicInputPort("Gate", "GTE"));
+        _inputPorts.put(TRIGGER_INPUT_PORT, new LogicInputPort("Trigger", "TRG"));
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Output", "OUT"));
         reset();
     }
 
     @Override
     public void advance() {
-        boolean effectiveGate = _triggered || _gateOpen || _inputPorts.get(GATE_PORT).getValue() > 0;
+        LogicInputPort gateInput = (LogicInputPort) _inputPorts.get(GATE_INPUT_PORT);
+        LogicInputPort triggerInput = (LogicInputPort) _inputPorts.get(TRIGGER_INPUT_PORT);
+        _triggered = triggerInput.getValue();
+        boolean effectiveGate = _triggered || _manualGateOpen || gateInput.getValue();
         if (effectiveGate) {
-            if (_value < Koala.MAX_PORT_VALUE) {
+            if (_value < Koala.MAX_CVPORT_VALUE) {
                 _value += _incrementPerSample;
-                if (_value >= Koala.MAX_PORT_VALUE) {
-                    _value = Koala.MAX_PORT_VALUE;
+                if (_value >= Koala.MAX_CVPORT_VALUE) {
+                    _value = Koala.MAX_CVPORT_VALUE;
                     _triggered = false;
                 }
-                _outputPorts.get(SIGNAL_PORT).setCurrentValue(_value);
+
+                ContinuousOutputPort outputPort = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
+                outputPort.setCurrentValue(_value);
             }
         } else {
-            if (_value > Koala.MIN_PORT_VALUE) {
+            if (_value > Koala.MIN_CVPORT_VALUE) {
                 _value -= _decrementPerSample;
-                if (_value < Koala.MIN_PORT_VALUE) {
-                    _value = Koala.MIN_PORT_VALUE;
+                if (_value < Koala.MIN_CVPORT_VALUE) {
+                    _value = Koala.MIN_CVPORT_VALUE;
                 }
-                _outputPorts.get(SIGNAL_PORT).setCurrentValue(_value);
+
+                ContinuousOutputPort outputPort = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
+                outputPort.setCurrentValue(_value);
             }
         }
     }
@@ -56,17 +63,22 @@ public class AREnvelopeModule extends Module {
     @Override
     public void close() {}
 
-    @Override
-    public String getModuleClass() {
-        return "AR Envelope Generator";
-    }
-
-    public double getAttackTime() {
+    public float getAttackTime() {
         return _attackTime;
     }
 
-    public double getReleaseTime() {
-        return _releaseTime;
+    public boolean getManualGateOpen() {
+        return _manualGateOpen;
+    }
+
+    @Override
+    public String getModuleAbbreviation() {
+        return "AR";
+    }
+
+    @Override
+    public String getModuleClass() {
+        return "AR Envelope Generator";
     }
 
     @Override
@@ -74,33 +86,49 @@ public class AREnvelopeModule extends Module {
         return ModuleType.AREnvelopeGenerator;
     }
 
+    public float getReleaseTime() {
+        return _releaseTime;
+    }
+
     @Override
     public void reset() {
-        _value = Koala.MIN_PORT_VALUE;
-        _gateOpen = false;
+        _value = Koala.MIN_CVPORT_VALUE;
+        _manualGateOpen = false;
     }
 
     public void setAttackTime(
-        final double value
+        final float value
     ) {
         _attackTime = value;
-        _incrementPerSample = (10000 / (Koala.SAMPLE_RATE * _attackTime)) - Koala.MIN_PORT_VALUE;
+        if (_attackTime <= 0.0) {
+            _incrementPerSample = Koala.CVPORT_VALUE_RANGE;
+        } else {
+            _incrementPerSample = Koala.CVPORT_VALUE_RANGE / (_attackTime / 1000 * Koala.SAMPLE_RATE);
+        }
     }
 
-    public void setGate(
+    public void setManualGateOpen(
         final boolean value
     ) {
-        _gateOpen = value;
+        if (!_manualGateOpen && value) {
+            _value = Koala.MIN_CVPORT_VALUE;
+        }
+        _manualGateOpen = value;
     }
 
     public void setTriggered() {
         _triggered = true;
+        _value = 0.0f;
     }
 
     public void setReleaseTime(
-        final double value
+        final float value
     ) {
         _releaseTime = value;
-        _decrementPerSample = (10000 / (Koala.SAMPLE_RATE * _releaseTime)) - Koala.MIN_PORT_VALUE;
+        if (_releaseTime <= 0.0) {
+            _decrementPerSample = Koala.CVPORT_VALUE_RANGE;
+        } else {
+            _decrementPerSample = Koala.CVPORT_VALUE_RANGE / (_releaseTime / 1000 * Koala.SAMPLE_RATE);
+        }
     }
 }

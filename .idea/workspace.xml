@@ -2,12 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/CannotConnectPortException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/ClockModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteSequencerModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DualNoiseModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteInputPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteOutputPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscretePort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/IInputPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/IOutputPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicInputPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicOutputPort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadParameter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadParameter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadPortException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadPortException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadSignalValueException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadPortException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/exceptions/BadPortIndexException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/AREnvelopeModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/AREnvelopeModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/AmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/AmplifierModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" afterDir="false" />
@@ -18,15 +28,15 @@
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/OscillatorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/OscillatorModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/InputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/InputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/OutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/OutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/InputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/OutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousOutputPort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/Port.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/Port.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/RampWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/RampWave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SawtoothWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SawtoothWave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SineWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SineWave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SquareWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SquareWave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/TriangleWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/TriangleWave.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/Wave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/Wave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/Wave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/IWave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/WaveManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/WaveManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,6 +77,7 @@
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.kadware.koala.modules" />
+      <recent name="com.kadware.koala.ports" />
       <recent name="com.kadware.koala.exceptions" />
       <recent name="com.kadware.koala.waves" />
       <recent name="com.kadware.samurai.exceptions" />
@@ -112,7 +123,7 @@
       <workItem from="1578192889631" duration="9916000" />
       <workItem from="1578276318407" duration="5743000" />
       <workItem from="1578282799092" duration="16259000" />
-      <workItem from="1578764867103" duration="1356000" />
+      <workItem from="1578764867103" duration="18970000" />
     </task>
     <servers />
   </component>

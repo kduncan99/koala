@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -6,7 +6,7 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.ports.InputPort;
+import com.kadware.koala.ports.ContinuousInputPort;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -16,8 +16,8 @@ import javax.sound.sampled.SourceDataLine;
 @SuppressWarnings("Duplicates")
 public class StereoOutputModule extends Module {
 
-    public static final int LEFT_CHANNEL_INPUT_PORT = 0;
-    public static final int RIGHT_CHANNEL_INPUT_PORT = 1;
+    public static final int LEFT_SIGNAL_INPUT_PORT = 0;
+    public static final int RIGHT_SIGNAL_INPUT_PORT = 1;
 
     private static final int CHANNELS = 2;
     private static final boolean SIGNED = true;
@@ -29,23 +29,23 @@ public class StereoOutputModule extends Module {
     private SourceDataLine _sourceDataLine = null;
 
     StereoOutputModule() {
-        _inputPorts.put(LEFT_CHANNEL_INPUT_PORT, new InputPort("Left Input"));
-        _inputPorts.put(RIGHT_CHANNEL_INPUT_PORT, new InputPort("Right Input"));
+        _inputPorts.put(LEFT_SIGNAL_INPUT_PORT, new ContinuousInputPort("Left Input", "LFT"));
+        _inputPorts.put(RIGHT_SIGNAL_INPUT_PORT, new ContinuousInputPort("Right Input", "RGT"));
         reset();
     }
 
     @Override
     public void advance(
     ) {
-        double leftScaled = scale(_inputPorts.get(LEFT_CHANNEL_INPUT_PORT).getValue());
-        double rightScaled = scale(_inputPorts.get(RIGHT_CHANNEL_INPUT_PORT).getValue());
-        int leftInt = (int)leftScaled;
-        int rightInt = (int)rightScaled;
+        ContinuousInputPort inLeft = (ContinuousInputPort) _inputPorts.get(LEFT_SIGNAL_INPUT_PORT);
+        ContinuousInputPort inRight = (ContinuousInputPort) _inputPorts.get(RIGHT_SIGNAL_INPUT_PORT);
+        int leftScaled = scale(inLeft.getValue());
+        int rightScaled = scale(inRight.getValue());
 
-        byte[] buffer = {(byte) (leftInt >> 8),
-                         (byte) leftInt,
-                         (byte) (rightInt >> 8),
-                         (byte) rightInt};
+        byte[] buffer = {(byte) (leftScaled >> 8),
+                         (byte) leftScaled,
+                         (byte) (rightScaled >> 8),
+                         (byte) rightScaled};
         _sourceDataLine.write(buffer, 0, 4);
     }
 
@@ -55,6 +55,11 @@ public class StereoOutputModule extends Module {
         _sourceDataLine.flush();
         _sourceDataLine.close();
         _sourceDataLine = null;
+    }
+
+    @Override
+    public String getModuleAbbreviation() {
+        return "OUT";
     }
 
     @Override
@@ -83,11 +88,15 @@ public class StereoOutputModule extends Module {
         }
     }
 
-    private double scale(
-        final double input
+    /**
+     * Converts an input value scaled according to our port min/max, to a signed integer value
+     * scaled according to our sample bit size.
+     */
+    private int scale(
+        final float input
     ) {
         //  adjust the input value which varies from MIN_PORT_VALUE to MAX_PORT_VALUE,
         //  such that it fits nicely within the SAMPLE_SIZE_IN_BITS range.
-        return input * SAMPLE_MAGNITUDE / Koala.MAX_PORT_MAGNITUDE;
+        return (int) (input * SAMPLE_MAGNITUDE / Koala.CVPORT_VALUE_RANGE);
     }
 }

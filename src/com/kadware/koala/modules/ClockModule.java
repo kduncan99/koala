@@ -6,9 +6,9 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.ports.ContinuousOutputPort;
+import com.kadware.koala.ports.LogicOutputPort;
 
-public class TestToneModule extends Module {
+public class ClockModule extends Module {
 
     public static final int SIGNAL_OUTPUT_PORT = 0;
 
@@ -17,16 +17,16 @@ public class TestToneModule extends Module {
     private int _transitionLimit;
     private int _resetLimit;
 
-    TestToneModule() {
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Signal Output", "OUT"));
+    ClockModule() {
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new LogicOutputPort("Signal Output", "OUT"));
         setBaseFrequency(440);
     }
 
     @Override
     public void advance(
     ) {
-        float value = _cycleCounter >= _transitionLimit ? Koala.MIN_CVPORT_VALUE : Koala.MAX_CVPORT_VALUE;
-        ContinuousOutputPort port = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
+        boolean value = _cycleCounter >= _transitionLimit;
+        LogicOutputPort port = (LogicOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
         port.setCurrentValue(value);
         _cycleCounter++;
         if (_cycleCounter >= _resetLimit) {
@@ -43,17 +43,17 @@ public class TestToneModule extends Module {
 
     @Override
     public String getModuleAbbreviation() {
-        return "TST";
+        return "CLK";
     }
 
     @Override
     public String getModuleClass() {
-        return "Test Tone";
+        return "Logic Clock";
     }
 
     @Override
     public ModuleType getModuleType() {
-        return ModuleType.TestTone;
+        return ModuleType.Clock;
     }
 
     @Override

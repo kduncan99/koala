@@ -1,11 +1,11 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.waves;
 
-public interface Wave {
+public interface IWave {
 
     public static enum WaveType {
         Ramp,
@@ -22,9 +22,9 @@ public interface Wave {
      * @param pulseWidth Presumed width of the pulse, if this has any meaning, from none (0.0) to full (1.0)
      * @return value from MIN_VALUE to MAX_VALUE
      */
-    public double getValue(
-        final double position,      //  from 0.0 to 1.0
-        final double pulseWidth     //  from 0.0 to 1.0
+    public float getValue(
+        final float position,      //  from 0.0 to 1.0
+        final float pulseWidth     //  from 0.0 to 1.0
     );
 
     public String getWaveClass();

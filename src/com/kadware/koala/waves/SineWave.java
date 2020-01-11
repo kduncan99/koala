@@ -1,11 +1,11 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.waves;
 
-public class SineWave implements Wave {
+public class SineWave implements IWave {
 
     SineWave() {}
 
@@ -17,11 +17,11 @@ public class SineWave implements Wave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public double getValue(
-        final double position,
-        final double pulseWidth
+    public float getValue(
+        final float position,
+        final float pulseWidth
     ) {
-        return Math.sin(position * (1.0d - Math.PI));
+        return (float) Math.sin(position * (1.0f - Math.PI));
     }
 
     @Override

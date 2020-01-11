@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -7,7 +7,7 @@ package com.kadware.koala.waves;
 
 import com.kadware.koala.Koala;
 
-public class TriangleWave implements Wave {
+public class TriangleWave implements IWave {
 
     TriangleWave() {}
 
@@ -19,25 +19,24 @@ public class TriangleWave implements Wave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public double getValue(
-        final double position,
-        final double pulseWidth
+    public float getValue(
+        final float position,
+        final float pulseWidth
     ) {
-        double effectivePosition = position;
-        double effectivePulseWidth = pulseWidth;
+        float effectivePosition = position;
 
-        if (position < 0.0) {
-            effectivePosition = 0.0;
-        } else if (position > 1.0) {
-            effectivePosition = 1.0;
+        if (position < 0.0f) {
+            effectivePosition = 0.0f;
+        } else if (position > 1.0f) {
+            effectivePosition = 1.0f;
         }
 
-        if (effectivePosition == 0.5) {
-            return 0.0;
-        } else if (effectivePosition < 0.5) {
-            return (effectivePosition * 4 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
+        if (effectivePosition == 0.5f) {
+            return 0.0f;
+        } else if (effectivePosition < 0.5f) {
+            return (effectivePosition * 2.0f * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
         } else {
-            return ((1.0 - effectivePosition) * 4 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
+            return ((1.0f - effectivePosition) * 2.0f * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
         }
     }
 

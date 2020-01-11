@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -7,7 +7,7 @@ package com.kadware.koala.waves;
 
 import com.kadware.koala.Koala;
 
-public class SawtoothWave implements Wave {
+public class SawtoothWave implements IWave {
 
     SawtoothWave() {}
 
@@ -19,20 +19,20 @@ public class SawtoothWave implements Wave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public double getValue(
-        final double position,
-        final double pulseWidth
+    public float getValue(
+        final float position,
+        final float pulseWidth
     ) {
-        double effectivePosition = position;
-        double effectivePulseWidth = pulseWidth;
+        float effectivePosition = position;
+        float effectivePulseWidth = pulseWidth;
 
         if (position < 0.0) {
-            effectivePosition = 0.0;
+            effectivePosition = 0.0f;
         } else if (position > 1.0) {
-            effectivePosition = 1.0;
+            effectivePosition = 1.0f;
         }
 
-        return ((1.0 - effectivePosition) * 2 * Koala.MAX_PORT_MAGNITUDE) + Koala.MIN_PORT_VALUE;
+        return ((1.0f - effectivePosition) * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
     }
 
     @Override

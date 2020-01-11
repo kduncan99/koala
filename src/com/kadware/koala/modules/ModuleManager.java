@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -70,6 +70,15 @@ public class ModuleManager {
                 break;
             case AREnvelopeGenerator:
                 module = new AREnvelopeModule();
+                break;
+            case Clock:
+                module = new ClockModule();
+                break;
+            case DiscreteSequencer:
+                module = new DiscreteSequencerModule();
+                break;
+            case DualNoise:
+                module = new DualNoiseModule();
                 break;
             case Inverter:
                 module = new InverterModule();

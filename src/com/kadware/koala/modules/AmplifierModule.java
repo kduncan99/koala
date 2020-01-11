@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -6,39 +6,48 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.ports.InputPort;
-import com.kadware.koala.ports.OutputPort;
+import com.kadware.koala.ports.ContinuousInputPort;
+import com.kadware.koala.ports.ContinuousOutputPort;
 
+/**
+ * Basic value-controlled amplifier.
+ * Something of a misnomer, since we don't amplify; we attenuate.
+ * The input voltage is compared to the range, and converted to a scaled value of 0.0 to 1.0,
+ * then is used as a multiplier against the input signal to product the output signal.
+ */
 public class AmplifierModule extends Module {
 
-    public static final int INPUT_PORT = 0;
-    public static final int CONTROL_PORT_1 = 1;
-    public static final int CONTROL_PORT_2 = 2;
-    public static final int CONTROL_PORT_3 = 3;
-    public static final int CONTROL_PORT_4 = 4;
-    public static final int OUTPUT_PORT = 0;
+    public static final int SIGNAL_INPUT_PORT = 0;
+    public static final int CONTROL_INPUT_PORT_1 = 1;
+    public static final int CONTROL_INPUT_PORT_2 = 2;
+    public static final int SIGNAL_OUTPUT_PORT = 3;
 
-    private double _baseValue = 5.0;
+    private float _baseValue = 5.0f;
 
     AmplifierModule() {
-        _inputPorts.put(INPUT_PORT, new InputPort("Signal Input"));
-        _inputPorts.put(CONTROL_PORT_1, new InputPort("Control 1"));
-        _inputPorts.put(CONTROL_PORT_2, new InputPort("Control 2"));
-        _inputPorts.put(CONTROL_PORT_3, new InputPort("Control 3"));
-        _inputPorts.put(CONTROL_PORT_4, new InputPort("Control 4"));
-        _outputPorts.put(OUTPUT_PORT, new OutputPort("Signal Output"));
+        _inputPorts.put(SIGNAL_INPUT_PORT, new ContinuousInputPort("Signal Input", "IN"));
+        _inputPorts.put(CONTROL_INPUT_PORT_1, new ContinuousInputPort("Control Input 1", "CV1"));
+        _inputPorts.put(CONTROL_INPUT_PORT_2, new ContinuousInputPort("Control Input 2", "CV2"));
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Signal Output", "OUT"));
     }
 
     @Override
     public void advance(
     ) {
-        double multiplier = _baseValue;
-        multiplier += _inputPorts.get(CONTROL_PORT_1).getValue();
-        multiplier += _inputPorts.get(CONTROL_PORT_2).getValue();
-        multiplier += _inputPorts.get(CONTROL_PORT_3).getValue();
-        multiplier += _inputPorts.get(CONTROL_PORT_4).getValue();
-        double value = _inputPorts.get(INPUT_PORT).getValue() * multiplier / Koala.MAX_PORT_MAGNITUDE;
-        _outputPorts.get(OUTPUT_PORT).setCurrentValue(value);
+        //  sum of control value is expected to vary from _minimum to _maximum.
+        //  rescale and rebias this such that we get a multiplier from 0.0 to 1.0,
+        //  then apply it to the signal input to produce the signal output.
+        ContinuousInputPort cin1 = (ContinuousInputPort) _inputPorts.get(CONTROL_INPUT_PORT_1);
+        ContinuousInputPort cin2 = (ContinuousInputPort) _inputPorts.get(CONTROL_INPUT_PORT_2);
+        float controlValue = _baseValue + cin1.getValue() + cin2.getValue();
+        float multiplier = (controlValue - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE;
+
+        ContinuousInputPort sigin = (ContinuousInputPort) _inputPorts.get(SIGNAL_INPUT_PORT);
+        float signalInValue = sigin.getValue();
+        float signalOutValue = multiplier * signalInValue;
+
+        ContinuousOutputPort sigout = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
+        sigout.setCurrentValue(signalOutValue);
     }
 
     @Override
@@ -49,8 +58,13 @@ public class AmplifierModule extends Module {
     }
 
     @Override
+    public String getModuleAbbreviation() {
+        return "VCA";
+    }
+
+    @Override
     public String getModuleClass() {
-        return "Amplifier";
+        return "CV Controlled Amplifier";
     }
 
     @Override
@@ -62,7 +76,7 @@ public class AmplifierModule extends Module {
     public void reset() {}
 
     public void setBaseValue(
-        final double value
+        final float value
     ) {
         _baseValue = value;
     }

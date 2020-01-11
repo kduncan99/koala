@@ -6,8 +6,7 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.ports.InputPort;
-
+import com.kadware.koala.ports.ContinuousInputPort;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
@@ -16,26 +15,27 @@ import javax.sound.sampled.SourceDataLine;
 @SuppressWarnings("Duplicates")
 public class MonoOutputModule extends Module {
 
-    public static final int INPUT_PORT = 0;
+    public static final int SIGNAL_INPUT_PORT = 0;
 
     private static final int CHANNELS = 2;
     private static final boolean SIGNED = true;
     private static final boolean BIG_ENDIAN = true;
     private static final AudioFormat AUDIO_FORMAT =
         new AudioFormat(Koala.SAMPLE_RATE, Koala.SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
-    private static final double SAMPLE_MAGNITUDE = (1 << (Koala.SAMPLE_SIZE_IN_BITS - 1)) - 1;
+    private static final float SAMPLE_MAGNITUDE = (1 << (Koala.SAMPLE_SIZE_IN_BITS - 1)) - 1;
 
     private SourceDataLine _sourceDataLine = null;
 
     MonoOutputModule() {
-        _inputPorts.put(INPUT_PORT, new InputPort("Input"));
+        _inputPorts.put(SIGNAL_INPUT_PORT, new ContinuousInputPort("Input", "IN"));
         reset();
     }
 
     @Override
     public void advance(
     ) {
-        int scaled = (int) scale(_inputPorts.get(INPUT_PORT).getValue());
+        ContinuousInputPort inp = (ContinuousInputPort) _inputPorts.get(SIGNAL_INPUT_PORT);
+        int scaled = scale(inp.getValue());
         byte hibyte = (byte) (scaled >> 8);
         byte lobyte = (byte) scaled;
         byte[] buffer = {hibyte, lobyte, hibyte, lobyte};
@@ -48,6 +48,11 @@ public class MonoOutputModule extends Module {
         _sourceDataLine.flush();
         _sourceDataLine.close();
         _sourceDataLine = null;
+    }
+
+    @Override
+    public String getModuleAbbreviation() {
+        return "OUT";
     }
 
     @Override
@@ -76,11 +81,15 @@ public class MonoOutputModule extends Module {
         }
     }
 
-    private double scale(
-        final double input
+    /**
+     * Converts an input value scaled according to our port min/max, to a signed integer value
+     * scaled according to our sample bit size.
+     */
+    private int scale(
+        final float input
     ) {
         //  adjust the input value which varies from MIN_PORT_VALUE to MAX_PORT_VALUE,
         //  such that it fits nicely within the SAMPLE_SIZE_IN_BITS range.
-        return input * SAMPLE_MAGNITUDE / Koala.MAX_PORT_MAGNITUDE;
+        return (int) (input * SAMPLE_MAGNITUDE / Koala.CVPORT_VALUE_RANGE);
     }
 }
