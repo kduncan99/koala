@@ -15,39 +15,41 @@ import com.kadware.koala.ports.ContinuousOutputPort;
  * The input voltage is compared to the range, and converted to a scaled value of 0.0 to 1.0,
  * then is used as a multiplier against the input signal to product the output signal.
  */
-public class AmplifierModule extends Module {
+public class VCAmplifierModule extends Module {
 
     public static final int SIGNAL_INPUT_PORT = 0;
     public static final int CONTROL_INPUT_PORT_1 = 1;
     public static final int CONTROL_INPUT_PORT_2 = 2;
     public static final int SIGNAL_OUTPUT_PORT = 3;
 
+    private final ContinuousInputPort _signalIn;
+    private final ContinuousInputPort _controlIn1;
+    private final ContinuousInputPort _controlIn2;
+    private final ContinuousOutputPort _signalOut;
+
     private float _baseValue = 5.0f;
 
-    AmplifierModule() {
-        _inputPorts.put(SIGNAL_INPUT_PORT, new ContinuousInputPort("Signal Input", "IN"));
-        _inputPorts.put(CONTROL_INPUT_PORT_1, new ContinuousInputPort("Control Input 1", "CV1"));
-        _inputPorts.put(CONTROL_INPUT_PORT_2, new ContinuousInputPort("Control Input 2", "CV2"));
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Signal Output", "OUT"));
+    VCAmplifierModule() {
+        _signalIn = new ContinuousInputPort("Signal Input", "IN");
+        _controlIn1 = new ContinuousInputPort("Control Input 1", "CV1");
+        _controlIn2 = new ContinuousInputPort("Control Input 2", "CV2");
+        _signalOut = new ContinuousOutputPort("Signal Output", "OUT");
+        _inputPorts.put(SIGNAL_INPUT_PORT, _signalIn);
+        _inputPorts.put(CONTROL_INPUT_PORT_1, _controlIn1);
+        _inputPorts.put(CONTROL_INPUT_PORT_2, _controlIn2);
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, _signalOut);
     }
 
     @Override
     public void advance(
     ) {
         //  sum of control value is expected to vary from _minimum to _maximum.
-        //  rescale and rebias this such that we get a multiplier from 0.0 to 1.0,
+        //  re-scale and re-bias this such that we get a multiplier from 0.0 to 1.0,
         //  then apply it to the signal input to produce the signal output.
-        ContinuousInputPort cin1 = (ContinuousInputPort) _inputPorts.get(CONTROL_INPUT_PORT_1);
-        ContinuousInputPort cin2 = (ContinuousInputPort) _inputPorts.get(CONTROL_INPUT_PORT_2);
-        float controlValue = _baseValue + cin1.getValue() + cin2.getValue();
+        float controlValue = _baseValue + _controlIn1.getValue() + _controlIn2.getValue();
         float multiplier = (controlValue - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE;
-
-        ContinuousInputPort sigin = (ContinuousInputPort) _inputPorts.get(SIGNAL_INPUT_PORT);
-        float signalInValue = sigin.getValue();
-        float signalOutValue = multiplier * signalInValue;
-
-        ContinuousOutputPort sigout = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
-        sigout.setCurrentValue(signalOutValue);
+        float signalOutValue = multiplier * _signalIn.getValue();
+        _signalOut.setCurrentValue(signalOutValue);
     }
 
     @Override
@@ -64,12 +66,12 @@ public class AmplifierModule extends Module {
 
     @Override
     public String getModuleClass() {
-        return "CV Controlled Amplifier";
+        return "Value Controlled Amplifier";
     }
 
     @Override
     public ModuleType getModuleType() {
-        return ModuleType.Amplifier;
+        return ModuleType.VCAmplifier;
     }
 
     @Override

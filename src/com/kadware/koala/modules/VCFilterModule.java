@@ -10,7 +10,7 @@ import com.kadware.koala.ports.DiscreteInputPort;
 import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
 
-public class SimpleFilterModule extends Module {
+public class VCFilterModule extends Module {
 
     public enum Type {
         Two_Pole,
@@ -40,7 +40,7 @@ public class SimpleFilterModule extends Module {
     private float[] _stateValues = { 0.0f, 0.0f, 0.0f, 0.0f };
     private Type _type = Type.Two_Pole;
 
-    public SimpleFilterModule() {
+    public VCFilterModule() {
         _signalInputPort = new ContinuousInputPort("Signal Input", "IN");
         _frequencyInputPort = new DiscreteInputPort("Frequency", "Fc1");
         _frequencyModInputPort1 = new ContinuousInputPort("Frequency Modulation 1", "Fm1");
@@ -132,7 +132,7 @@ public class SimpleFilterModule extends Module {
 
     @Override
     public ModuleType getModuleType() {
-        return ModuleType.SimpleFilter;
+        return ModuleType.VCFilter;
     }
 
     @Override

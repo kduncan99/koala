@@ -65,9 +65,6 @@ public class ModuleManager {
     ) {
         Module module = null;
         switch (moduleType) {
-            case Amplifier:
-                module = new AmplifierModule();
-                break;
             case AREnvelopeGenerator:
                 module = new AREnvelopeModule();
                 break;
@@ -83,6 +80,15 @@ public class ModuleManager {
             case DualNoise:
                 module = new DualNoiseModule();
                 break;
+            case FixedAmplifier:
+                module = new FixedAmplifierModule();
+                break;
+            case FixedMixer:
+                module = new FixedMixerModule();
+                break;
+            case FixedPanner:
+                module = new FixedPanningModule();
+                break;
             case Inverter:
                 module = new InverterModule();
                 break;
@@ -92,17 +98,26 @@ public class ModuleManager {
             case Noise:
                 module = new NoiseModule();
                 break;
-            case Oscillator:
-                module = new OscillatorModule();
-                break;
-            case SimpleFilter:
-                module = new SimpleFilterModule();
-                break;
             case StereoOutput:
                 module = new StereoOutputModule();
                 break;
             case TestTone:
                 module = new TestToneModule();
+                break;
+            case VCAmplifier:
+                module = new VCAmplifierModule();
+                break;
+            case VCFilter:
+                module = new VCFilterModule();
+                break;
+            case VCMixer:
+                module = new VCMixerModule();
+                break;
+            case VCOscillator:
+                module = new VCOscillatorModule();
+                break;
+            case VCPanner:
+                module = new VCPanningModule();
                 break;
         }
 

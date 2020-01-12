@@ -14,24 +14,24 @@ import java.util.Map;
 public abstract class Module {
 
     public static enum ModuleType {
-        Amplifier,              //  Basic VCA
         AREnvelopeGenerator,    //  Simple envelope generator
         Clock,                  //  Logic clock pulse generator
+        DiscreteGlide,          //  Portamento for discrete signals
+        DiscreteSequencer,      //  Step sequencer with discrete output values
         DualNoise,              //  Dual (STEREO) noise source
+        FixedAmplifier,         //  Basic amplifier (actually an attenuator)
+        FixedPanner,            //  Basic stereo pan control
+        FixedMixer,             //  Simple 4x2x1 mixer
         Inverter,               //  Inverts the input
         MonoOutput,             //  Routes input to system sound
         Noise,                  //  White noise generator
-        Oscillator,             //  General-purpose single-mode oscillator
-        DiscreteGlide,          //  Portamento for discrete signals
-        DiscreteSequencer,      //  Step sequencer with discrete output values
-        SimpleFilter,           //  Simple VCFilter
         StereoOutput,           //  Routes L/R channels to system sound
         TestTone,               //  Fixed (but settable) frequency square-wave oscillator
-        //  TODO ADSR HADSR VCF Mixer PanningVCA S/H Delay MultiModeOsc MultiOsc (with slop)
-        //  TODO Sequencer OctaveDivider PitchShifter RingModulator Compressor/Limiter
-        //  TODO MIDI
-        //  TODO Voice (owns a set of connected modules) (so we can duplicate it for polyphony)
-        //  TODO Linked modules, so setting one sets all the corresponding others in a polyphony set
+        VCAmplifier,            //  Modulatable amplifier
+        VCFilter,               //  Simple VCFilter
+        VCMixer,                //  Mixer where level and pan are controlled by modulation inputs
+        VCOscillator,           //  General-purpose single-mode oscillator
+        VCPanner,               //  Stereo panner with modulation control
     }
 
     final Map<Integer, IInputPort> _inputPorts = new HashMap<>();

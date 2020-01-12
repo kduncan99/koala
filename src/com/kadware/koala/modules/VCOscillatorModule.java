@@ -12,7 +12,7 @@ import com.kadware.koala.ports.DiscreteInputPort;
 import com.kadware.koala.waves.IWave;
 import com.kadware.koala.waves.WaveManager;
 
-public class OscillatorModule extends Module {
+public class VCOscillatorModule extends Module {
 
     public static final int FREQUENCY_INPUT_PORT = 0;
     public static final int FREQUENCY_MOD_INPUT_PORT_1 = 1;
@@ -25,7 +25,7 @@ public class OscillatorModule extends Module {
     private IWave _wave;
     private float _waveProgress;
 
-    OscillatorModule() {
+    VCOscillatorModule() {
         _inputPorts.put(FREQUENCY_INPUT_PORT, new DiscreteInputPort("Frequency x 1000", "FC"));
         _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_1, new ContinuousInputPort("Frequency Modulation 1", "FM"));
         _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_2, new ContinuousInputPort("Frequency Modulatoin 2", "FM"));
@@ -85,7 +85,7 @@ public class OscillatorModule extends Module {
 
     @Override
     public ModuleType getModuleType() {
-        return ModuleType.TestTone;
+        return ModuleType.VCOscillator;
     }
 
     public IWave getWave() {

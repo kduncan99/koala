@@ -68,24 +68,24 @@ public class Koala {
         DiscreteOutputPort glideOutput = (DiscreteOutputPort) glide.getOutputPort(DiscreteGlideModule.SIGNAL_OUTPUT_PORT);
 
         //  audio modules
-        OscillatorModule vco = (OscillatorModule) ModuleManager.createModule(Module.ModuleType.Oscillator);
+        VCOscillatorModule vco = (VCOscillatorModule) ModuleManager.createModule(Module.ModuleType.VCOscillator);
         vco.setWave(WaveManager.createWave(IWave.WaveType.Triangle));
         vco.setBaseFrequency(0f);
-        DiscreteInputPort vcoFreqIn = (DiscreteInputPort) vco.getInputPort(OscillatorModule.FREQUENCY_INPUT_PORT);
-        ContinuousOutputPort vcoOutput = (ContinuousOutputPort) vco.getOutputPort(OscillatorModule.OUTPUT_PORT);
+        DiscreteInputPort vcoFreqIn = (DiscreteInputPort) vco.getInputPort(VCOscillatorModule.FREQUENCY_INPUT_PORT);
+        ContinuousOutputPort vcoOutput = (ContinuousOutputPort) vco.getOutputPort(VCOscillatorModule.OUTPUT_PORT);
 
-        SimpleFilterModule vcf = (SimpleFilterModule) ModuleManager.createModule(Module.ModuleType.SimpleFilter);
+        VCFilterModule vcf = (VCFilterModule) ModuleManager.createModule(Module.ModuleType.VCFilter);
         vcf.setBaseFrequency(100.0f);
         vcf.setBaseResonance(0.9f);
-        ContinuousInputPort vcfIn = (ContinuousInputPort) vcf.getInputPort(SimpleFilterModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort vcfMod = (ContinuousInputPort) vcf.getInputPort(SimpleFilterModule.FREQUENCY_MOD_INPUT_PORT_1);
-        ContinuousOutputPort lowPassOut = (ContinuousOutputPort) vcf.getOutputPort(SimpleFilterModule.LOWPASS_SIGNAL_OUTPUT_PORT);
+        ContinuousInputPort vcfIn = (ContinuousInputPort) vcf.getInputPort(VCFilterModule.SIGNAL_INPUT_PORT);
+        ContinuousInputPort vcfMod = (ContinuousInputPort) vcf.getInputPort(VCFilterModule.FREQUENCY_MOD_INPUT_PORT_1);
+        ContinuousOutputPort lowPassOut = (ContinuousOutputPort) vcf.getOutputPort(VCFilterModule.LOWPASS_SIGNAL_OUTPUT_PORT);
 
-        AmplifierModule vca = (AmplifierModule) ModuleManager.createModule(Module.ModuleType.Amplifier);
+        VCAmplifierModule vca = (VCAmplifierModule) ModuleManager.createModule(Module.ModuleType.VCAmplifier);
         vca.setBaseValue(0.0f);
-        ContinuousInputPort vcaInput = (ContinuousInputPort) vca.getInputPort(AmplifierModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort vcaControl = (ContinuousInputPort) vca.getInputPort(AmplifierModule.CONTROL_INPUT_PORT_1);
-        ContinuousOutputPort vcaOutput = (ContinuousOutputPort) vca.getOutputPort(AmplifierModule.SIGNAL_OUTPUT_PORT);
+        ContinuousInputPort vcaInput = (ContinuousInputPort) vca.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
+        ContinuousInputPort vcaControl = (ContinuousInputPort) vca.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
+        ContinuousOutputPort vcaOutput = (ContinuousOutputPort) vca.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT);
 
         Module master = ModuleManager.createModule(Module.ModuleType.StereoOutput);
         ContinuousInputPort masterLeft = (ContinuousInputPort) master.getInputPort(StereoOutputModule.LEFT_SIGNAL_INPUT_PORT);
@@ -101,8 +101,8 @@ public class Koala {
         vcaControl.connectTo(envOutput);
         vcaInput.connectTo(lowPassOut);
 
-        masterLeft.connectTo(noiseLeft);
-        masterRight.connectTo(noiseRight);
+        masterLeft.connectTo(vcaOutput);
+        masterRight.connectTo(vcaOutput);
 
         Thread.sleep(10000);
 
