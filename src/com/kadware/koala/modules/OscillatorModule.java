@@ -30,6 +30,7 @@ public class OscillatorModule extends Module {
         _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_1, new ContinuousInputPort("Frequency Modulation 1", "FM"));
         _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_2, new ContinuousInputPort("Frequency Modulatoin 2", "FM"));
         _inputPorts.put(PULSE_WIDTH_MOD_INPUT_PORT, new ContinuousInputPort("Pulse Width Modulation", "PWM"));
+        //  TODO sync input and sync output logic ports
         _outputPorts.put(OUTPUT_PORT, new ContinuousOutputPort("Signal Output", "OUT"));
         _wave = WaveManager.createWave(IWave.WaveType.Square);
         _baseFrequency = 440.0f;

@@ -34,6 +34,9 @@ public class AREnvelopeModule extends Module {
     public void advance() {
         LogicInputPort gateInput = (LogicInputPort) _inputPorts.get(GATE_INPUT_PORT);
         LogicInputPort triggerInput = (LogicInputPort) _inputPorts.get(TRIGGER_INPUT_PORT);
+        //  TODO - debounce trigger input - basically, only react when it goes from low to high
+        //  TODO        should we have a TriggerInputPort which does this automagically?
+        //  TODO        it would have to extend the LogicInputPort...
         _triggered = triggerInput.getValue();
         boolean effectiveGate = _triggered || _manualGateOpen || gateInput.getValue();
         if (effectiveGate) {

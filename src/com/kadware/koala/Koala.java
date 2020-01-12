@@ -63,7 +63,7 @@ public class Koala {
         DiscreteOutputPort seqSignal = (DiscreteOutputPort) seq.getOutputPort(DiscreteSequencerModule.SIGNAL_OUTPUT_PORT);
 
         DiscreteGlideModule glide = (DiscreteGlideModule) ModuleManager.createModule(Module.ModuleType.DiscreteGlide);
-        glide.setGlideTime(50.0f);
+        glide.setGlideTime(0.0f);
         DiscreteInputPort glideIn = (DiscreteInputPort) glide.getInputPort(DiscreteGlideModule.SIGNAL_INPUT_PORT);
         DiscreteOutputPort glideOutput = (DiscreteOutputPort) glide.getOutputPort(DiscreteGlideModule.SIGNAL_OUTPUT_PORT);
 
@@ -73,6 +73,13 @@ public class Koala {
         vco.setBaseFrequency(0f);
         DiscreteInputPort vcoFreqIn = (DiscreteInputPort) vco.getInputPort(OscillatorModule.FREQUENCY_INPUT_PORT);
         ContinuousOutputPort vcoOutput = (ContinuousOutputPort) vco.getOutputPort(OscillatorModule.OUTPUT_PORT);
+
+        SimpleFilterModule vcf = (SimpleFilterModule) ModuleManager.createModule(Module.ModuleType.SimpleFilter);
+        vcf.setBaseFrequency(100.0f);
+        vcf.setBaseResonance(0.9f);
+        ContinuousInputPort vcfIn = (ContinuousInputPort) vcf.getInputPort(SimpleFilterModule.SIGNAL_INPUT_PORT);
+        ContinuousInputPort vcfMod = (ContinuousInputPort) vcf.getInputPort(SimpleFilterModule.FREQUENCY_MOD_INPUT_PORT_1);
+        ContinuousOutputPort lowPassOut = (ContinuousOutputPort) vcf.getOutputPort(SimpleFilterModule.LOWPASS_SIGNAL_OUTPUT_PORT);
 
         AmplifierModule vca = (AmplifierModule) ModuleManager.createModule(Module.ModuleType.Amplifier);
         vca.setBaseValue(0.0f);
@@ -88,8 +95,10 @@ public class Koala {
         envTrigger.connectTo(clockOutput);
         glideIn.connectTo(seqSignal);
         vcoFreqIn.connectTo(glideOutput);
+        vcfIn.connectTo(vcoOutput);
+        vcfMod.connectTo(envOutput);
         vcaControl.connectTo(envOutput);
-        vcaInput.connectTo(vcoOutput);
+        vcaInput.connectTo(lowPassOut);
         masterInput.connectTo(vcaOutput);
 
         Thread.sleep(10000);

@@ -95,6 +95,9 @@ public class ModuleManager {
             case Oscillator:
                 module = new OscillatorModule();
                 break;
+            case SimpleFilter:
+                module = new SimpleFilterModule();
+                break;
             case StereoOutput:
                 module = new StereoOutputModule();
                 break;

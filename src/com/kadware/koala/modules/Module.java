@@ -24,6 +24,7 @@ public abstract class Module {
         Oscillator,             //  General-purpose single-mode oscillator
         DiscreteGlide,          //  Portamento for discrete signals
         DiscreteSequencer,      //  Step sequencer with discrete output values
+        SimpleFilter,           //  Simple VCFilter
         StereoOutput,           //  Routes L/R channels to system sound
         TestTone,               //  Fixed (but settable) frequency square-wave oscillator
         //  TODO ADSR HADSR VCF Mixer PanningVCA S/H Delay MultiModeOsc MultiOsc (with slop)
