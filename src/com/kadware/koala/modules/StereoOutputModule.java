@@ -27,20 +27,22 @@ public class StereoOutputModule extends Module {
     private static final double SAMPLE_MAGNITUDE = (1 << (Koala.SAMPLE_SIZE_IN_BITS - 1)) - 1;
 
     private SourceDataLine _sourceDataLine = null;
+    private final ContinuousInputPort _leftInput;
+    private final ContinuousInputPort _rightInput;
 
     StereoOutputModule() {
-        _inputPorts.put(LEFT_SIGNAL_INPUT_PORT, new ContinuousInputPort("Left Input", "LFT"));
-        _inputPorts.put(RIGHT_SIGNAL_INPUT_PORT, new ContinuousInputPort("Right Input", "RGT"));
+        _leftInput = new ContinuousInputPort("Left Input", "LFT");
+        _rightInput = new ContinuousInputPort("Right Input", "RGT");
+        _inputPorts.put(LEFT_SIGNAL_INPUT_PORT, _leftInput);
+        _inputPorts.put(RIGHT_SIGNAL_INPUT_PORT, _rightInput);
         reset();
     }
 
     @Override
     public void advance(
     ) {
-        ContinuousInputPort inLeft = (ContinuousInputPort) _inputPorts.get(LEFT_SIGNAL_INPUT_PORT);
-        ContinuousInputPort inRight = (ContinuousInputPort) _inputPorts.get(RIGHT_SIGNAL_INPUT_PORT);
-        int leftScaled = scale(inLeft.getValue());
-        int rightScaled = scale(inRight.getValue());
+        int leftScaled = scale(_leftInput.getValue());
+        int rightScaled = scale(_rightInput.getValue());
 
         byte[] buffer = {(byte) (leftScaled >> 8),
                          (byte) leftScaled,

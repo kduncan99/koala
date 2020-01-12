@@ -14,11 +14,16 @@ public class DualNoiseModule extends Module {
 
     public static final int LEFT_SIGNAL_OUTPUT_PORT = 0;
     public static final int RIGHT_SIGNAL_OUTPUT_PORT = 1;
-    public final Random _random = new Random(System.currentTimeMillis());
+
+    private final Random _random = new Random(System.currentTimeMillis());
+    private final ContinuousOutputPort _leftOutput;
+    private final ContinuousOutputPort _rightOutput;
 
     DualNoiseModule() {
-        _outputPorts.put(LEFT_SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Left Output", "LFT"));
-        _outputPorts.put(RIGHT_SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Right Output", "RGT"));
+        _leftOutput = new ContinuousOutputPort("Left Output", "LFT");
+        _rightOutput = new ContinuousOutputPort("Right Output", "RGT");
+        _outputPorts.put(LEFT_SIGNAL_OUTPUT_PORT, _leftOutput);
+        _outputPorts.put(RIGHT_SIGNAL_OUTPUT_PORT, _rightOutput);
     }
 
     @Override
@@ -26,10 +31,8 @@ public class DualNoiseModule extends Module {
     ) {
         float leftValue = (_random.nextFloat() * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
         float rightValue = (_random.nextFloat() * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
-        ContinuousOutputPort leftOut = (ContinuousOutputPort) _outputPorts.get(LEFT_SIGNAL_OUTPUT_PORT);
-        ContinuousOutputPort rightOut = (ContinuousOutputPort) _outputPorts.get(RIGHT_SIGNAL_OUTPUT_PORT);
-        leftOut.setCurrentValue(leftValue);
-        rightOut.setCurrentValue(rightValue);
+        _leftOutput.setCurrentValue(leftValue);
+        _rightOutput.setCurrentValue(rightValue);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class DualNoiseModule extends Module {
 
     @Override
     public String getModuleAbbreviation() {
-        return "NS";
+        return "DNS";
     }
 
     @Override
