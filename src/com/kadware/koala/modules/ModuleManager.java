@@ -74,6 +74,9 @@ public class ModuleManager {
             case Clock:
                 module = new ClockModule();
                 break;
+            case DiscreteGlide:
+                module = new DiscreteGlideModule();
+                break;
             case DiscreteSequencer:
                 module = new DiscreteSequencerModule();
                 break;

@@ -22,6 +22,7 @@ public abstract class Module {
         MonoOutput,             //  Routes input to system sound
         Noise,                  //  White noise generator
         Oscillator,             //  General-purpose single-mode oscillator
+        DiscreteGlide,          //  Portamento for discrete signals
         DiscreteSequencer,      //  Step sequencer with discrete output values
         StereoOutput,           //  Routes L/R channels to system sound
         TestTone,               //  Fixed (but settable) frequency square-wave oscillator

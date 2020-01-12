@@ -62,6 +62,11 @@ public class Koala {
         LogicInputPort seqTrigger = (LogicInputPort) seq.getInputPort(DiscreteSequencerModule.TRIGGER_INPUT_PORT);
         DiscreteOutputPort seqSignal = (DiscreteOutputPort) seq.getOutputPort(DiscreteSequencerModule.SIGNAL_OUTPUT_PORT);
 
+        DiscreteGlideModule glide = (DiscreteGlideModule) ModuleManager.createModule(Module.ModuleType.DiscreteGlide);
+        glide.setGlideTime(50.0f);
+        DiscreteInputPort glideIn = (DiscreteInputPort) glide.getInputPort(DiscreteGlideModule.SIGNAL_INPUT_PORT);
+        DiscreteOutputPort glideOutput = (DiscreteOutputPort) glide.getOutputPort(DiscreteGlideModule.SIGNAL_OUTPUT_PORT);
+
         //  audio modules
         OscillatorModule vco = (OscillatorModule) ModuleManager.createModule(Module.ModuleType.Oscillator);
         vco.setWave(WaveManager.createWave(IWave.WaveType.Triangle));
@@ -81,7 +86,8 @@ public class Koala {
         //  connections
         seqTrigger.connectTo(clockOutput);
         envTrigger.connectTo(clockOutput);
-        vcoFreqIn.connectTo(seqSignal);
+        glideIn.connectTo(seqSignal);
+        vcoFreqIn.connectTo(glideOutput);
         vcaControl.connectTo(envOutput);
         vcaInput.connectTo(vcoOutput);
         masterInput.connectTo(vcaOutput);
