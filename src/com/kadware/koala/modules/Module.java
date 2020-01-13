@@ -16,6 +16,7 @@ public abstract class Module {
     public static enum ModuleType {
         AREnvelopeGenerator,    //  Simple envelope generator
         Clock,                  //  Logic clock pulse generator
+        DADSREnvelopeGenerator, //  Full-featured envelope generator
         DiscreteGlide,          //  Portamento for discrete signals
         DiscreteSequencer,      //  Step sequencer with discrete output values
         DualNoise,              //  Dual (STEREO) noise source

@@ -7,7 +7,7 @@ package com.kadware.koala.ports;
 
 import com.kadware.koala.exceptions.CannotConnectPortException;
 
-public final class LogicInputPort extends DiscretePort implements IInputPort {
+public class LogicInputPort extends DiscretePort implements IInputPort {
 
     private LogicOutputPort _source = null;
 

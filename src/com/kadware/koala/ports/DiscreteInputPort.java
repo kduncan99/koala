@@ -5,7 +5,6 @@
 
 package com.kadware.koala.ports;
 
-import com.kadware.koala.Koala;
 import com.kadware.koala.exceptions.CannotConnectPortException;
 
 public final class DiscreteInputPort extends ContinuousPort implements IInputPort {

@@ -71,6 +71,9 @@ public class ModuleManager {
             case Clock:
                 module = new ClockModule();
                 break;
+            case DADSREnvelopeGenerator:
+                module = new DADSREnvelopeModule();
+                break;
             case DiscreteGlide:
                 module = new DiscreteGlideModule();
                 break;
