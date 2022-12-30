@@ -19,8 +19,7 @@ public class NoiseModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         ContinuousOutputPort outp = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
         float value = (_random.nextFloat() * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
         outp.setCurrentValue(value);

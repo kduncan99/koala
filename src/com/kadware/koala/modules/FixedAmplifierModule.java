@@ -31,8 +31,7 @@ public class FixedAmplifierModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         float multiplier = (_baseValue - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE;
         float signalOutValue = multiplier * _signalIn.getValue();
         _signalOut.setCurrentValue(signalOutValue);

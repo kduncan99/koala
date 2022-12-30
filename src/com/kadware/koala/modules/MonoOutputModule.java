@@ -1,4 +1,4 @@
-/**
+/*
  * Koala - Virtual Modular Synthesizer
  * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
  */
@@ -12,7 +12,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-@SuppressWarnings("Duplicates")
 public class MonoOutputModule extends Module {
 
     public static final int SIGNAL_INPUT_PORT = 0;
@@ -32,8 +31,7 @@ public class MonoOutputModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         ContinuousInputPort inp = (ContinuousInputPort) _inputPorts.get(SIGNAL_INPUT_PORT);
         int scaled = scale(inp.getValue());
         byte hibyte = (byte) (scaled >> 8);

@@ -41,8 +41,7 @@ public class VCAmplifierModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         //  sum of control value is expected to vary from _minimum to _maximum.
         //  re-scale and re-bias this such that we get a multiplier from 0.0 to 1.0,
         //  then apply it to the signal input to produce the signal output.

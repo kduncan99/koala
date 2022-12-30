@@ -2,15 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DADSREnvelopeModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/TriggerInputPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/ClockModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/ClockModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DADSREnvelopeModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DADSREnvelopeModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteGlideModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteGlideModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteSequencerModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteSequencerModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DualNoiseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DualNoiseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedAmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedAmplifierModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedMixerModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedMixerModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedPanningModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedPanningModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteInputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/MonoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/MonoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/NoiseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/NoiseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCAmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCAmplifierModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCFilterModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCFilterModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCMixerModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCMixerModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCPanningModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCPanningModule.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +46,13 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1Vx750YfNLjGaTfIdhwy8FXk82o" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -55,22 +74,21 @@
       <recent name="com.kadware.samurai.exceptions" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="Koala" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kadware.koala.Koala" />
       <module name="Koala" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -81,6 +99,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -96,11 +115,12 @@
       <workItem from="1578276318407" duration="5743000" />
       <workItem from="1578282799092" duration="16259000" />
       <workItem from="1578764867103" duration="45509000" />
+      <workItem from="1672356450814" duration="3352000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -112,5 +132,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -23,8 +23,7 @@ public class TestToneModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         float value = _cycleCounter >= _transitionLimit ? Koala.MIN_CVPORT_VALUE : Koala.MAX_CVPORT_VALUE;
         ContinuousOutputPort port = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
         port.setCurrentValue(value);

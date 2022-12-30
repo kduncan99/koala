@@ -61,8 +61,7 @@ public class VCFilterModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         //  TODO also implement https://www.musicdsp.org/en/latest/Filters/259-simple-biquad-filter-from-apple-com.html
         //  TODO also implement https://www.musicdsp.org/en/latest/Filters/26-moog-vcf-variation-2.html
 

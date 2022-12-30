@@ -24,8 +24,7 @@ public class InverterModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         _output.setCurrentValue(0 - _input.getValue());
     }
 

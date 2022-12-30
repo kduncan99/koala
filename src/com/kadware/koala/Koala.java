@@ -19,7 +19,7 @@ public class Koala {
     public static final float MIN_CVPORT_VALUE = -5.0f;
     public static final float CVPORT_VALUE_RANGE = MAX_CVPORT_VALUE - MIN_CVPORT_VALUE;
 
-    //  Note frequencies for C4 up through B4 - divide or multiple for other octaves
+    //  Note frequencies for C4 up through B4 - divide or multiply for other octaves
     private static final float NF_C = 261.63f;
     private static final float NF_CS = 277.18f;
     private static final float NF_D = 293.66f;
@@ -34,7 +34,7 @@ public class Koala {
     private static final float NF_B = 493.88f;
 
     public static void main(
-        final String args[]
+        final String[] args
     ) throws Exception {
         ModuleManager.start();
 

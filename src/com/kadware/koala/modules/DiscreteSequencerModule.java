@@ -5,7 +5,6 @@
 
 package com.kadware.koala.modules;
 
-import com.kadware.koala.Koala;
 import com.kadware.koala.ports.DiscreteOutputPort;
 import com.kadware.koala.ports.LogicInputPort;
 
@@ -25,8 +24,7 @@ public class DiscreteSequencerModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         LogicInputPort inPort = (LogicInputPort) _inputPorts.get(TRIGGER_INPUT_PORT);
         boolean newTriggerState = inPort.getValue();
         if (_values != null && newTriggerState && !_lastTriggerState) {

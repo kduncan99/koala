@@ -9,7 +9,6 @@ import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ports.Port;
 
-@SuppressWarnings("Duplicates")
 public class VCMixerModule extends Module {
 
     public static final int SIGNAL_INPUT_PORT_1 = 0;
@@ -142,8 +141,7 @@ public class VCMixerModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         _ampModule1.advance();
         _ampModule2.advance();
         _ampModule3.advance();

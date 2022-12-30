@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2022 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -15,13 +15,13 @@ import com.kadware.koala.ports.TriggerInputPort;
  */
 public class DADSREnvelopeModule extends Module {
 
-    public static enum State {
-        Dormant,
-        Delay,
-        Attack,
-        Decay,
-        Sustain,
-        Release,
+    public enum State {
+        Dormant,    //  pre-trigger, or post-release
+        Delay,      //  trigger takes us to this state
+        Attack,     //  this state is established after the delay period, while gate is still asserted
+        Decay,      //  this state is established after the attack completes, and while gate is still asserted
+        Sustain,    //  this state is established after the decay completes, and while gate is still asserted
+        Release,    //  this state is established when gate transitions from asserted to not asserted
     }
 
     public static final int TRIGGER_INPUT_PORT = 0;
@@ -38,11 +38,14 @@ public class DADSREnvelopeModule extends Module {
     private float _sustainLevel;    //  standard range
     private float _releaseTime;     //  in msec
 
-    private int _delayCounter;
+    private int _stateCounter;
+    private float _attackIncrement;
+    private float _decayDecrement;
     private int _delaySamples;
     private boolean _gated;
     private boolean _manualGate;
     private boolean _manualTrigger;
+    private float _releaseDecrement;
     private State _state;
     private boolean _triggered;
 
@@ -56,17 +59,16 @@ public class DADSREnvelopeModule extends Module {
         _outputPorts.put(SIGNAL_OUTPUT_PORT, _output);
 
         setDelayTime(0.0f);
-        _attackTime = 0.0f;
-        _decayTime = 0.0f;
-        _sustainLevel = Koala.MAX_CVPORT_VALUE;
-        _releaseTime = 0.0f;
+        setAttackTime(0.0f);
+        setDecayTime(0.0f);
+        setSustainLevel(Koala.MAX_CVPORT_VALUE);
+        setReleaseTime(0.0f);
 
         reset();
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         _triggered = _trigger.getValue() || _manualTrigger;
         boolean gateRaised = !_gated && (_gate.getValue() || _manualGate);
         _gated = gateRaised;
@@ -85,25 +87,48 @@ public class DADSREnvelopeModule extends Module {
 
             case Delay:
                 if (!_gated && !_triggered) {
-                    establishState(State.Dormant);
-                } else if (_delayCounter == 0) {
+                    establishState(State.Dormant);  //  we can go dormant since we haven't yet gone to attack
+                } else if (_stateCounter == 0) {
                     establishState(State.Attack);
                 } else {
-                    --_delayCounter;
+                    --_stateCounter;
                 }
                 break;
 
             case Attack:
-                //TODO
+                if (!_gated && !_triggered) {
+                    establishState(State.Release);
+                } else if (_output.getCurrentValue() >= Koala.MAX_CVPORT_VALUE) {
+                    establishState(State.Decay);
+                } else {
+                    _output.setCurrentValue(_output.getCurrentValue() + _attackIncrement);
+                }
+                break;
 
             case Decay:
-                //TODO
+                if (!_gated && !_triggered) {
+                    establishState(State.Release);
+                } else if (_stateCounter == 0) {
+                    establishState(State.Sustain);
+                } else {
+                    _output.setCurrentValue(_output.getCurrentValue() - _decayDecrement);
+                }
+                break;
 
             case Sustain:
-                //TODO
+                //  just stay here until the gate is released
+                if (!_gated) {
+                    establishState(State.Release);
+                }
+                break;
 
             case Release:
-                //TODO
+                if (_stateCounter == 0) {
+                    establishState(State.Dormant);
+                } else {
+                    _output.setCurrentValue(_output.getCurrentValue() - _releaseDecrement);
+                }
+                break;
         }
     }
 
@@ -121,20 +146,14 @@ public class DADSREnvelopeModule extends Module {
                 break;
 
             case Delay:
-                _delayCounter = _delaySamples;
+                _stateCounter = _delaySamples;
                 break;
 
             case Attack:
-                //TODO
-
             case Decay:
-                //TODO
-
             case Sustain:
-                //TODO
-
             case Release:
-                //TODO
+                break;
         }
 
         _state = state;
@@ -181,6 +200,22 @@ public class DADSREnvelopeModule extends Module {
         establishState(State.Dormant);
     }
 
+    public void setAttackTime(
+        final float milliseconds
+    ) {
+        _attackTime = milliseconds;
+        var samples = _attackTime * Koala.SAMPLE_RATE / 1000.0f;
+        _attackIncrement = (Koala.MAX_CVPORT_VALUE - Koala.MIN_CVPORT_VALUE) / samples;
+    }
+
+    public void setDecayTime(
+        final float milliseconds
+    ) {
+        _decayTime = milliseconds;
+        var samples = _decayTime * Koala.SAMPLE_RATE / 1000.0f;
+        _decayDecrement = (Koala.MAX_CVPORT_VALUE - _sustainLevel) / samples;
+    }
+
     public void setDelayTime(
         final float milliseconds
     ) {
@@ -192,6 +227,20 @@ public class DADSREnvelopeModule extends Module {
         final boolean value
     ) {
         _manualGate = value;
+    }
+
+    public void setReleaseTime(
+        final float milliseconds
+    ) {
+        _releaseTime = milliseconds;
+        var samples = _releaseTime * Koala.SAMPLE_RATE / 1000.0f;
+        _releaseDecrement = (_sustainLevel - Koala.MIN_CVPORT_VALUE) / samples;
+    }
+
+    public void setSustainLevel(
+        final float level
+    ) {
+        _sustainLevel = Math.min(Math.max(level, Koala.MIN_CVPORT_VALUE), Koala.MAX_CVPORT_VALUE);
     }
 
     public void trigger() {

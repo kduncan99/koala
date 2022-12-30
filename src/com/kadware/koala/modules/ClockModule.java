@@ -23,8 +23,7 @@ public class ClockModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         boolean value = _cycleCounter >= _transitionLimit;
         LogicOutputPort port = (LogicOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
         port.setCurrentValue(value);

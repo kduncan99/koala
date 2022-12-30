@@ -13,7 +13,7 @@ import java.util.Map;
 
 public abstract class Module {
 
-    public static enum ModuleType {
+    public enum ModuleType {
         AREnvelopeGenerator,    //  Simple envelope generator
         Clock,                  //  Logic clock pulse generator
         DADSREnvelopeGenerator, //  Full-featured envelope generator
@@ -28,7 +28,7 @@ public abstract class Module {
         Noise,                  //  White noise generator
         StereoOutput,           //  Routes L/R channels to system sound
         TestTone,               //  Fixed (but settable) frequency square-wave oscillator
-        VCAmplifier,            //  Modulatable amplifier
+        VCAmplifier,            //  Modulate-able amplifier
         VCFilter,               //  Simple VCFilter
         VCMixer,                //  Mixer where level and pan are controlled by modulation inputs
         VCOscillator,           //  General-purpose single-mode oscillator

@@ -10,6 +10,7 @@ import com.kadware.koala.ports.ContinuousOutputPort;
 
 import java.util.Random;
 
+//  TODO This should be implemented as a meta-module, containing two simple noise modules
 public class DualNoiseModule extends Module {
 
     public static final int LEFT_SIGNAL_OUTPUT_PORT = 0;
@@ -27,8 +28,7 @@ public class DualNoiseModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         float leftValue = (_random.nextFloat() * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
         float rightValue = (_random.nextFloat() * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
         _leftOutput.setCurrentValue(leftValue);

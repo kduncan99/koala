@@ -13,7 +13,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-@SuppressWarnings("Duplicates")
 public class StereoOutputModule extends Module {
 
     public static final int LEFT_SIGNAL_INPUT_PORT = 0;
@@ -39,8 +38,7 @@ public class StereoOutputModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         int leftScaled = scale(_leftInput.getValue());
         int rightScaled = scale(_rightInput.getValue());
 

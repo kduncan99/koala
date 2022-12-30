@@ -27,8 +27,7 @@ public class DiscreteGlideModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         DiscreteInputPort inp = (DiscreteInputPort) _inputPorts.get(SIGNAL_INPUT_PORT);
         int inpValue = inp.getValue();
         if (inpValue != _targetValue) {

@@ -40,8 +40,7 @@ public class FixedPanningModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         float signal = _signalIn.getValue();
         _leftOut.setCurrentValue(_leftScalar * signal);
         _rightOut.setCurrentValue(_rightScalar * signal);
@@ -96,10 +95,8 @@ public class FixedPanningModule extends Module {
     ) {
         if (value > Koala.MAX_CVPORT_VALUE) {
             _baseValue = Koala.MAX_CVPORT_VALUE;
-        } else if (value < Koala.MIN_CVPORT_VALUE) {
-            _baseValue = Koala.MIN_CVPORT_VALUE;
         } else {
-            _baseValue = value;
+            _baseValue = Math.max(value, Koala.MIN_CVPORT_VALUE);
         }
 
         float rightTemp = rescale(_baseValue);

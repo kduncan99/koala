@@ -9,7 +9,6 @@ import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
 
-@SuppressWarnings("Duplicates")
 public class VCPanningModule extends Module {
 
     public static final int SIGNAL_INPUT_PORT = 0;
@@ -41,8 +40,7 @@ public class VCPanningModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         float signal = _signalIn.getValue();
 
         float control = _baseValue + _controlIn1.getValue() + _controlIn2.getValue();
@@ -103,10 +101,8 @@ public class VCPanningModule extends Module {
     ) {
         if (value > Koala.MAX_CVPORT_VALUE) {
             _baseValue = Koala.MAX_CVPORT_VALUE;
-        } else if (value < Koala.MIN_CVPORT_VALUE) {
-            _baseValue = Koala.MIN_CVPORT_VALUE;
         } else {
-            _baseValue = value;
+            _baseValue = Math.max(value, Koala.MIN_CVPORT_VALUE);
         }
     }
 }

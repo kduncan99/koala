@@ -105,8 +105,7 @@ public class FixedMixerModule extends Module {
     }
 
     @Override
-    public void advance(
-    ) {
+    public void advance() {
         _ampMod1.advance();
         _ampMod2.advance();
         _ampMod3.advance();
