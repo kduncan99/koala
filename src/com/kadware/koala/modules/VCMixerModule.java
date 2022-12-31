@@ -9,6 +9,9 @@ import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ports.Port;
 
+/**
+ * A 4x2 mixer with voltage-controlled level and pan per input channel
+ */
 public class VCMixerModule extends Module {
 
     public static final int SIGNAL_INPUT_PORT_1 = 0;

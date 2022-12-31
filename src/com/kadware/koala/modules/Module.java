@@ -11,6 +11,8 @@ import com.kadware.koala.ports.*;
 import java.util.HashMap;
 import java.util.Map;
 
+//  TODO we should implement a descriptor so that the (eventual) GUI has something to display to the user
+
 public abstract class Module {
 
     public enum ModuleType {
@@ -26,6 +28,7 @@ public abstract class Module {
         Inverter,               //  Inverts the input
         MonoOutput,             //  Routes input to system sound
         Noise,                  //  White noise generator
+        Patch,                  //  A patch module
         StereoOutput,           //  Routes L/R channels to system sound
         TestTone,               //  Fixed (but settable) frequency square-wave oscillator
         VCAmplifier,            //  Modulate-able amplifier
