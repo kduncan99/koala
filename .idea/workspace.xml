@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/patches/DingSmearPatch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/patches/Patch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/SimpleEchoModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCMixerModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCMixerModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCOscillatorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCOscillatorModule.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +50,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.kadware.koala.ports" />
       <recent name="com.kadware.koala.modules" />
+      <recent name="com.kadware.koala.ports" />
       <recent name="com.kadware.koala.exceptions" />
       <recent name="com.kadware.koala.waves" />
       <recent name="com.kadware.samurai.exceptions" />
@@ -100,7 +98,7 @@
       <workItem from="1578276318407" duration="5743000" />
       <workItem from="1578282799092" duration="16259000" />
       <workItem from="1578764867103" duration="45509000" />
-      <workItem from="1672356450814" duration="6270000" />
+      <workItem from="1672356450814" duration="8184000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

@@ -29,6 +29,7 @@ public abstract class Module {
         MonoOutput,             //  Routes input to system sound
         Noise,                  //  White noise generator
         Patch,                  //  A patch module
+        SimpleEcho,             //  Single tap echo, no VC
         StereoOutput,           //  Routes L/R channels to system sound
         TestTone,               //  Fixed (but settable) frequency square-wave oscillator
         VCAmplifier,            //  Modulate-able amplifier

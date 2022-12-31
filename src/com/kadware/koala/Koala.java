@@ -87,6 +87,11 @@ public class Koala {
         ContinuousInputPort vcaControl = (ContinuousInputPort) vca.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
         ContinuousOutputPort vcaOutput = (ContinuousOutputPort) vca.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT);
 
+        SimpleEchoModule echo = (SimpleEchoModule) ModuleManager.createModule(Module.ModuleType.SimpleEcho);
+        echo.setDelayInMillis(100);
+        ContinuousInputPort echoInput = (ContinuousInputPort) echo.getInputPort(SimpleEchoModule.SIGNAL_INPUT_PORT);
+        ContinuousOutputPort echoOutput = (ContinuousOutputPort) echo.getOutputPort(SimpleEchoModule.SIGNAL_OUTPUT_PORT);
+
         Module master = ModuleManager.createModule(Module.ModuleType.StereoOutput);
         ContinuousInputPort masterLeft = (ContinuousInputPort) master.getInputPort(StereoOutputModule.LEFT_SIGNAL_INPUT_PORT);
         ContinuousInputPort masterRight = (ContinuousInputPort) master.getInputPort(StereoOutputModule.RIGHT_SIGNAL_INPUT_PORT);
@@ -100,9 +105,9 @@ public class Koala {
         vcfMod.connectTo(envOutput);
         vcaControl.connectTo(envOutput);
         vcaInput.connectTo(lowPassOut);
-
+        echoInput.connectTo(vcaOutput);
         masterLeft.connectTo(vcaOutput);
-        masterRight.connectTo(vcaOutput);
+        masterRight.connectTo(echoOutput);
 
         Thread.sleep(10000);
 

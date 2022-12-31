@@ -101,6 +101,9 @@ public class ModuleManager {
             case Noise:
                 module = new NoiseModule();
                 break;
+            case SimpleEcho:
+                module = new SimpleEchoModule();
+                break;
             case StereoOutput:
                 module = new StereoOutputModule();
                 break;
