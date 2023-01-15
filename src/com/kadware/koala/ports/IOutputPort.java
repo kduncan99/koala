@@ -9,5 +9,7 @@ package com.kadware.koala.ports;
  * Methods which must be implemented by an output port.
  */
 public interface IOutputPort {
-    public void reset();
+
+    Port getPort();
+    void reset();
 }

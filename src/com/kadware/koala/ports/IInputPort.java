@@ -10,12 +10,13 @@ package com.kadware.koala.ports;
  */
 public interface IInputPort {
 
-    public void connectTo(
+    void connectTo(
         final IOutputPort outputPort
     );
 
-    public void disconnect();
-    public IOutputPort getSourcePort();
-    public boolean isConnected();
-    public void reset();
+    void disconnect();
+    Port getPort();
+    IOutputPort getSourcePort();
+    boolean isConnected();
+    void reset();
 }

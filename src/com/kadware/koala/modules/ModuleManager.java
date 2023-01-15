@@ -63,69 +63,29 @@ public class ModuleManager {
     public static synchronized Module createModule(
         final Module.ModuleType moduleType
     ) {
-        Module module = null;
-        switch (moduleType) {
-            case AREnvelopeGenerator:
-                module = new AREnvelopeModule();
-                break;
-            case Clock:
-                module = new ClockModule();
-                break;
-            case DADSREnvelopeGenerator:
-                module = new DADSREnvelopeModule();
-                break;
-            case DiscreteGlide:
-                module = new DiscreteGlideModule();
-                break;
-            case DiscreteSequencer:
-                module = new DiscreteSequencerModule();
-                break;
-            case DualNoise:
-                module = new DualNoiseModule();
-                break;
-            case FixedAmplifier:
-                module = new FixedAmplifierModule();
-                break;
-            case FixedMixer:
-                module = new FixedMixerModule();
-                break;
-            case FixedPanner:
-                module = new FixedPanningModule();
-                break;
-            case Inverter:
-                module = new InverterModule();
-                break;
-            case MonoOutput:
-                module = new MonoOutputModule();
-                break;
-            case Noise:
-                module = new NoiseModule();
-                break;
-            case SimpleEcho:
-                module = new SimpleEchoModule();
-                break;
-            case StereoOutput:
-                module = new StereoOutputModule();
-                break;
-            case TestTone:
-                module = new TestToneModule();
-                break;
-            case VCAmplifier:
-                module = new VCAmplifierModule();
-                break;
-            case VCFilter:
-                module = new VCFilterModule();
-                break;
-            case VCMixer:
-                module = new VCMixerModule();
-                break;
-            case VCOscillator:
-                module = new VCOscillatorModule();
-                break;
-            case VCPanner:
-                module = new VCPanningModule();
-                break;
-        }
+        Module module = switch (moduleType) {
+            case AREnvelopeGenerator -> new AREnvelopeModule();
+            case Clock -> new ClockModule();
+            case DADSREnvelopeGenerator -> new DADSREnvelopeModule();
+            case DiscreteGlide -> new DiscreteGlideModule();
+            case DiscreteSequencer -> new DiscreteSequencerModule();
+            case DualNoise -> new DualNoiseModule();
+            case FixedAmplifier -> new FixedAmplifierModule();
+            case FixedMixer -> new FixedMixerModule();
+            case FixedPanner -> new FixedPanningModule();
+            case Inverter -> new InverterModule();
+            case MonoOutput -> new MonoOutputModule();
+            case Noise -> new NoiseModule();
+            case SimpleEcho -> new SimpleEchoModule();
+            case StereoOutput -> new StereoOutputModule();
+            case TestTone -> new TestToneModule();
+            case VCAmplifier -> new VCAmplifierModule();
+            case VCFilter -> new VCFilterModule();
+            case VCMixer -> new VCMixerModule();
+            case VCOscillator -> new VCOscillatorModule();
+            case VCPanner -> new VCPanningModule();
+            default -> null;
+        };
 
         _modules.add(module);
         return module;

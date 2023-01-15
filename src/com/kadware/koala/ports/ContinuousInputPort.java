@@ -44,6 +44,11 @@ public final class ContinuousInputPort extends ContinuousPort implements IInputP
     }
 
     @Override
+    public Port getPort() {
+        return this;
+    }
+
+    @Override
     public IOutputPort getSourcePort() {
         return _source;
     }

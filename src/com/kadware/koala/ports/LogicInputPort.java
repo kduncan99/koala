@@ -39,6 +39,11 @@ public class LogicInputPort extends DiscretePort implements IInputPort {
         return _source;
     }
 
+    @Override
+    public Port getPort() {
+        return this;
+    }
+
     public boolean getValue() {
         if (_source == null) {
             return false;

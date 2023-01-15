@@ -38,6 +38,11 @@ public final class ContinuousOutputPort extends ContinuousPort implements IOutpu
     }
 
     @Override
+    public Port getPort() {
+        return this;
+    }
+
+    @Override
     public void reset() {
         super.reset();
         _currentValue = 0.0f;

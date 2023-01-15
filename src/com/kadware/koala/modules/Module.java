@@ -6,14 +6,13 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.exceptions.BadPortIndexException;
+import com.kadware.koala.messages.Sender;
 import com.kadware.koala.ports.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-//  TODO we should implement a descriptor so that the (eventual) GUI has something to display to the user
-
-public abstract class Module {
+public abstract class Module extends Sender {
 
     public enum ModuleType {
         AREnvelopeGenerator,    //  Simple envelope generator
@@ -61,8 +60,8 @@ public abstract class Module {
         }
     }
 
-    public abstract String getModuleAbbreviation();
-    public abstract String getModuleClass();
+    public abstract String getModuleAbbreviation(); //  TODO this probably should be in the Panel, not the Module
+    public abstract String getModuleClass();        //  TODO this as well
     public abstract ModuleType getModuleType();
 
     public final IOutputPort getOutputPort(

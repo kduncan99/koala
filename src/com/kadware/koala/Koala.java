@@ -1,17 +1,22 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020-2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala;
 
-import com.kadware.koala.modules.*;
 import com.kadware.koala.modules.Module;
+import com.kadware.koala.modules.*;
 import com.kadware.koala.ports.*;
-import com.kadware.koala.waves.IWave;
-import com.kadware.koala.waves.WaveManager;
+import com.kadware.koala.waves.*;
+import com.kadware.koala.modules.ModuleManager;
+import com.kadware.koala.ui.Rack;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Koala {
+public class Koala extends Application {
 
     public static final float SAMPLE_RATE = 44100.0f;
     public static final int SAMPLE_SIZE_IN_BITS = 16;
@@ -33,85 +38,115 @@ public class Koala {
     private static final float NF_AS = 466.16f;
     private static final float NF_B = 493.88f;
 
-    public static void main(
-        final String[] args
+    @Override
+    public void start(Stage stage) throws Exception {
+        //  TODO later we'll do load/save, have a starting dialog, all that crap
+        var root = new Group();
+        var scene = new Scene(root);
+
+        var r = Rack.createEmptyRack(1, 10);
+        root.getChildren().add(r);
+
+        stage.setTitle("Koala - v1.0");//   TODO later pull version from somewhere useful
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void init(
     ) throws Exception {
+        super.init();
         ModuleManager.start();
+    }
 
-        //  controller modules
-        ClockModule clock = (ClockModule) ModuleManager.createModule(Module.ModuleType.Clock);
-        clock.setBaseFrequency(4.0f);
-        LogicOutputPort clockOutput = (LogicOutputPort) clock.getOutputPort(ClockModule.SIGNAL_OUTPUT_PORT);
-
-        AREnvelopeModule env = (AREnvelopeModule) ModuleManager.createModule(Module.ModuleType.AREnvelopeGenerator);
-        env.setAttackTime(0);
-        env.setReleaseTime(300);
-        LogicInputPort envTrigger = (LogicInputPort) env.getInputPort(AREnvelopeModule.TRIGGER_INPUT_PORT);
-        ContinuousOutputPort envOutput = (ContinuousOutputPort) env.getOutputPort(AREnvelopeModule.SIGNAL_OUTPUT_PORT);
-
-        int[] sequence = {(int) (NF_C * 1000),
-                          (int) (NF_C * 1000),
-                          (int) (NF_G * 1000),
-                          (int) (NF_DS * 1000),
-                          (int) (NF_AS * 1000),
-                          (int) (NF_F * 1000),
-                          (int) (NF_G * 1000),
-                          (int) (NF_C * 2 * 1000)};
-        DiscreteSequencerModule seq = (DiscreteSequencerModule) ModuleManager.createModule(Module.ModuleType.DiscreteSequencer);
-        seq.setValues(sequence);
-        LogicInputPort seqTrigger = (LogicInputPort) seq.getInputPort(DiscreteSequencerModule.TRIGGER_INPUT_PORT);
-        DiscreteOutputPort seqSignal = (DiscreteOutputPort) seq.getOutputPort(DiscreteSequencerModule.SIGNAL_OUTPUT_PORT);
-
-        DiscreteGlideModule glide = (DiscreteGlideModule) ModuleManager.createModule(Module.ModuleType.DiscreteGlide);
-        glide.setGlideTime(0.0f);
-        DiscreteInputPort glideIn = (DiscreteInputPort) glide.getInputPort(DiscreteGlideModule.SIGNAL_INPUT_PORT);
-        DiscreteOutputPort glideOutput = (DiscreteOutputPort) glide.getOutputPort(DiscreteGlideModule.SIGNAL_OUTPUT_PORT);
-
-        //  audio modules
-        VCOscillatorModule vco = (VCOscillatorModule) ModuleManager.createModule(Module.ModuleType.VCOscillator);
-        vco.setWave(WaveManager.createWave(IWave.WaveType.Triangle));
-        vco.setBaseFrequency(0f);
-        DiscreteInputPort vcoFreqIn = (DiscreteInputPort) vco.getInputPort(VCOscillatorModule.FREQUENCY_INPUT_PORT);
-        ContinuousOutputPort vcoOutput = (ContinuousOutputPort) vco.getOutputPort(VCOscillatorModule.OUTPUT_PORT);
-
-        VCFilterModule vcf = (VCFilterModule) ModuleManager.createModule(Module.ModuleType.VCFilter);
-        vcf.setBaseFrequency(100.0f);
-        vcf.setBaseResonance(0.9f);
-        ContinuousInputPort vcfIn = (ContinuousInputPort) vcf.getInputPort(VCFilterModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort vcfMod = (ContinuousInputPort) vcf.getInputPort(VCFilterModule.FREQUENCY_MOD_INPUT_PORT_1);
-        ContinuousOutputPort lowPassOut = (ContinuousOutputPort) vcf.getOutputPort(VCFilterModule.LOWPASS_SIGNAL_OUTPUT_PORT);
-
-        VCAmplifierModule vca = (VCAmplifierModule) ModuleManager.createModule(Module.ModuleType.VCAmplifier);
-        vca.setBaseValue(0.0f);
-        ContinuousInputPort vcaInput = (ContinuousInputPort) vca.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort vcaControl = (ContinuousInputPort) vca.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        ContinuousOutputPort vcaOutput = (ContinuousOutputPort) vca.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT);
-
-        SimpleEchoModule echo = (SimpleEchoModule) ModuleManager.createModule(Module.ModuleType.SimpleEcho);
-        echo.setDelayInMillis(100);
-        ContinuousInputPort echoInput = (ContinuousInputPort) echo.getInputPort(SimpleEchoModule.SIGNAL_INPUT_PORT);
-        ContinuousOutputPort echoOutput = (ContinuousOutputPort) echo.getOutputPort(SimpleEchoModule.SIGNAL_OUTPUT_PORT);
-
-        Module master = ModuleManager.createModule(Module.ModuleType.StereoOutput);
-        ContinuousInputPort masterLeft = (ContinuousInputPort) master.getInputPort(StereoOutputModule.LEFT_SIGNAL_INPUT_PORT);
-        ContinuousInputPort masterRight = (ContinuousInputPort) master.getInputPort(StereoOutputModule.RIGHT_SIGNAL_INPUT_PORT);
-
-        //  connections
-        seqTrigger.connectTo(clockOutput);
-        envTrigger.connectTo(clockOutput);
-        glideIn.connectTo(seqSignal);
-        vcoFreqIn.connectTo(glideOutput);
-        vcfIn.connectTo(vcoOutput);
-        vcfMod.connectTo(envOutput);
-        vcaControl.connectTo(envOutput);
-        vcaInput.connectTo(lowPassOut);
-        echoInput.connectTo(vcaOutput);
-        masterLeft.connectTo(vcaOutput);
-        masterRight.connectTo(echoOutput);
-
-        Thread.sleep(10000);
-
+    @Override
+    public void stop(
+    ) throws Exception {
         ModuleManager.clear();
         ModuleManager.stop();
+
+        super.stop();
     }
+
+//    public static void main(
+//        final String[] args
+//    ) throws Exception {
+//        ModuleManager.start();
+//
+//        //  controller modules
+//        ClockModule clock = (ClockModule) ModuleManager.createModule(Module.ModuleType.Clock);
+//        clock.setBaseFrequency(4.0f);
+//        LogicOutputPort clockOutput = (LogicOutputPort) clock.getOutputPort(ClockModule.SIGNAL_OUTPUT_PORT);
+//
+//        AREnvelopeModule env = (AREnvelopeModule) ModuleManager.createModule(Module.ModuleType.AREnvelopeGenerator);
+//        env.setAttackTime(0);
+//        env.setReleaseTime(300);
+//        LogicInputPort envTrigger = (LogicInputPort) env.getInputPort(AREnvelopeModule.TRIGGER_INPUT_PORT);
+//        ContinuousOutputPort envOutput = (ContinuousOutputPort) env.getOutputPort(AREnvelopeModule.SIGNAL_OUTPUT_PORT);
+//
+//        int[] sequence = {(int) (NF_C * 1000),
+//                          (int) (NF_C * 1000),
+//                          (int) (NF_G * 1000),
+//                          (int) (NF_DS * 1000),
+//                          (int) (NF_AS * 1000),
+//                          (int) (NF_F * 1000),
+//                          (int) (NF_G * 1000),
+//                          (int) (NF_C * 2 * 1000)};
+//        DiscreteSequencerModule seq = (DiscreteSequencerModule) ModuleManager.createModule(Module.ModuleType.DiscreteSequencer);
+//        seq.setValues(sequence);
+//        LogicInputPort seqTrigger = (LogicInputPort) seq.getInputPort(DiscreteSequencerModule.TRIGGER_INPUT_PORT);
+//        DiscreteOutputPort seqSignal = (DiscreteOutputPort) seq.getOutputPort(DiscreteSequencerModule.SIGNAL_OUTPUT_PORT);
+//
+//        DiscreteGlideModule glide = (DiscreteGlideModule) ModuleManager.createModule(Module.ModuleType.DiscreteGlide);
+//        glide.setGlideTime(0.0f);
+//        DiscreteInputPort glideIn = (DiscreteInputPort) glide.getInputPort(DiscreteGlideModule.SIGNAL_INPUT_PORT);
+//        DiscreteOutputPort glideOutput = (DiscreteOutputPort) glide.getOutputPort(DiscreteGlideModule.SIGNAL_OUTPUT_PORT);
+//
+//        //  audio modules
+//        VCOscillatorModule vco = (VCOscillatorModule) ModuleManager.createModule(Module.ModuleType.VCOscillator);
+//        vco.setWave(WaveManager.createWave(IWave.WaveType.Triangle));
+//        vco.setBaseFrequency(0f);
+//        DiscreteInputPort vcoFreqIn = (DiscreteInputPort) vco.getInputPort(VCOscillatorModule.FREQUENCY_INPUT_PORT);
+//        ContinuousOutputPort vcoOutput = (ContinuousOutputPort) vco.getOutputPort(VCOscillatorModule.OUTPUT_PORT);
+//
+//        VCFilterModule vcf = (VCFilterModule) ModuleManager.createModule(Module.ModuleType.VCFilter);
+//        vcf.setBaseFrequency(100.0f);
+//        vcf.setBaseResonance(0.9f);
+//        ContinuousInputPort vcfIn = (ContinuousInputPort) vcf.getInputPort(VCFilterModule.SIGNAL_INPUT_PORT);
+//        ContinuousInputPort vcfMod = (ContinuousInputPort) vcf.getInputPort(VCFilterModule.FREQUENCY_MOD_INPUT_PORT_1);
+//        ContinuousOutputPort lowPassOut = (ContinuousOutputPort) vcf.getOutputPort(VCFilterModule.LOWPASS_SIGNAL_OUTPUT_PORT);
+//
+//        VCAmplifierModule vca = (VCAmplifierModule) ModuleManager.createModule(Module.ModuleType.VCAmplifier);
+//        vca.setBaseValue(0.0f);
+//        ContinuousInputPort vcaInput = (ContinuousInputPort) vca.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
+//        ContinuousInputPort vcaControl = (ContinuousInputPort) vca.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
+//        ContinuousOutputPort vcaOutput = (ContinuousOutputPort) vca.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT);
+//
+//        SimpleEchoModule echo = (SimpleEchoModule) ModuleManager.createModule(Module.ModuleType.SimpleEcho);
+//        echo.setDelayInMillis(100);
+//        ContinuousInputPort echoInput = (ContinuousInputPort) echo.getInputPort(SimpleEchoModule.SIGNAL_INPUT_PORT);
+//        ContinuousOutputPort echoOutput = (ContinuousOutputPort) echo.getOutputPort(SimpleEchoModule.SIGNAL_OUTPUT_PORT);
+//
+//        Module master = ModuleManager.createModule(Module.ModuleType.StereoOutput);
+//        ContinuousInputPort masterLeft = (ContinuousInputPort) master.getInputPort(StereoOutputModule.LEFT_SIGNAL_INPUT_PORT);
+//        ContinuousInputPort masterRight = (ContinuousInputPort) master.getInputPort(StereoOutputModule.RIGHT_SIGNAL_INPUT_PORT);
+//
+//        //  connections
+//        seqTrigger.connectTo(clockOutput);
+//        envTrigger.connectTo(clockOutput);
+//        glideIn.connectTo(seqSignal);
+//        vcoFreqIn.connectTo(glideOutput);
+//        vcfIn.connectTo(vcoOutput);
+//        vcfMod.connectTo(envOutput);
+//        vcaControl.connectTo(envOutput);
+//        vcaInput.connectTo(lowPassOut);
+//        echoInput.connectTo(vcaOutput);
+//        masterLeft.connectTo(vcaOutput);
+//        masterRight.connectTo(echoOutput);
+//
+//        Thread.sleep(10000);
+//
+//        ModuleManager.clear();
+//        ModuleManager.stop();
+//    }
 }

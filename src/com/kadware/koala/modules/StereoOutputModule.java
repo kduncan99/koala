@@ -7,6 +7,7 @@ package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousInputPort;
+import com.kadware.koala.ports.ContinuousOutputPort;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -29,24 +30,45 @@ public class StereoOutputModule extends Module {
     private final ContinuousInputPort _leftInput;
     private final ContinuousInputPort _rightInput;
 
+    private boolean _dimEnabled;
+    private boolean _testToneEnabled;
+    private final TestToneModule _testToneModule;
+    private final ContinuousOutputPort _testToneOut;
+    private final byte[] _buffer = new byte[4];
+
     StereoOutputModule() {
         _leftInput = new ContinuousInputPort("Left Input", "LFT");
         _rightInput = new ContinuousInputPort("Right Input", "RGT");
         _inputPorts.put(LEFT_SIGNAL_INPUT_PORT, _leftInput);
         _inputPorts.put(RIGHT_SIGNAL_INPUT_PORT, _rightInput);
+
+        _dimEnabled = false;
+
+        _testToneModule = new TestToneModule();
+        _testToneOut = (ContinuousOutputPort) _testToneModule.getOutputPort(TestToneModule.SIGNAL_OUTPUT_PORT);
+        _testToneEnabled = false;
+
         reset();
     }
 
     @Override
     public void advance() {
-        int leftScaled = scale(_leftInput.getValue());
-        int rightScaled = scale(_rightInput.getValue());
+        _testToneModule.advance();
 
-        byte[] buffer = {(byte) (leftScaled >> 8),
-                         (byte) leftScaled,
-                         (byte) (rightScaled >> 8),
-                         (byte) rightScaled};
-        _sourceDataLine.write(buffer, 0, 4);
+        var leftCombined = _leftInput.getValue();
+        var rightCombined = _rightInput.getValue();
+        if (_testToneEnabled) {
+            leftCombined += _testToneOut.getCurrentValue();
+            rightCombined += _testToneOut.getCurrentValue();
+        }
+        int leftScaled = scale(leftCombined);
+        int rightScaled = scale(rightCombined);
+
+        _buffer[0] = (byte) (leftScaled >> 8);
+        _buffer[1] = (byte) leftScaled;
+        _buffer[2] = (byte) (rightScaled >> 8);
+        _buffer[3] = (byte) rightScaled;
+        _sourceDataLine.write(_buffer, 0, 4);
     }
 
     @Override
@@ -74,19 +96,51 @@ public class StereoOutputModule extends Module {
 
     @Override
     public void reset() {
+        _testToneModule.reset();
         if (_sourceDataLine != null) {
             close();
         }
 
         try {
             SourceDataLine sdl = AudioSystem.getSourceDataLine(AUDIO_FORMAT);
-            sdl.open();
+            sdl.open(AUDIO_FORMAT, 4096);
             sdl.start();
             _sourceDataLine = sdl;
         } catch (LineUnavailableException ex) {
             System.out.println(ex.getMessage());
         }
     }
+
+    public void disableDim() {
+        _dimEnabled = false;
+    }
+
+    public void disableTestTone() {
+        _testToneEnabled = false;
+    }
+
+    public void enableDim() {
+        _dimEnabled = true;
+    }
+
+    public void enableTestTone(
+        final float frequency
+    ) {
+        _testToneModule.setBaseFrequency(frequency);
+        _testToneEnabled = true;
+    }
+
+    public void toggleDim() {
+        _dimEnabled = !_dimEnabled;
+    }
+
+    public void toggleTestTone() {
+        _testToneEnabled = !_testToneEnabled;
+    }
+
+    public float getTestToneFrequency() { return _testToneModule.getBaseFrequency(); }
+    public boolean isDimEnabled() { return _dimEnabled; }
+    public boolean isTestToneEnabled() { return _testToneEnabled; }
 
     /**
      * Converts an input value scaled according to our port min/max, to a signed integer value
@@ -97,6 +151,10 @@ public class StereoOutputModule extends Module {
     ) {
         //  adjust the input value which varies from MIN_PORT_VALUE to MAX_PORT_VALUE,
         //  such that it fits nicely within the SAMPLE_SIZE_IN_BITS range.
-        return (int) (input * SAMPLE_MAGNITUDE / Koala.CVPORT_VALUE_RANGE);
+        var result = input * SAMPLE_MAGNITUDE / Koala.CVPORT_VALUE_RANGE;
+        if (_dimEnabled) {
+            result *= 0.8;
+        }
+        return (int) result;
     }
 }

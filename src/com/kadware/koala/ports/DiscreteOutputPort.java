@@ -21,6 +21,11 @@ public final class DiscreteOutputPort extends DiscretePort implements IOutputPor
     }
 
     @Override
+    public Port getPort() {
+        return this;
+    }
+
+    @Override
     public void reset() {
         _currentValue = 0;
     }

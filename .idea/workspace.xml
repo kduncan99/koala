@@ -2,10 +2,61 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/SimpleEchoModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Listener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Sender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/Rack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/Shelf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/InputConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/BorderPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/Case.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/Rack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/BarGraph.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/Cell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/Connector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/Display.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/Fader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/InputConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/OutputConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/Vernier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/BasePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/BlankDoublePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/BlankPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/BlankSinglePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/BlankTriplePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/ConnectorsSubPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/ContentSubPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/ControlsSubPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/DualNoisePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/ModulePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/panels/old/PanelWidth.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/BlankPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ConnectionsSection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ControlsSection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ModulePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/Panel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/PanelWidth.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/StereoOutputPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Koala.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Koala.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/IInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/IInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/IOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/IOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/RampWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/RampWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SawtoothWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SawtoothWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SineWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SineWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/SquareWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/SquareWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/TriangleWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/TriangleWave.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,12 +69,21 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
@@ -34,6 +94,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -43,35 +108,46 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.26386404" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="com.kadware.koala.ui.panels" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.kadware.koala.ui.panels" />
+      <recent name="com.kadware.koala.ui" />
+      <recent name="com.kadware.koala.ui.elements" />
       <recent name="com.kadware.koala.modules" />
       <recent name="com.kadware.koala.ports" />
-      <recent name="com.kadware.koala.exceptions" />
-      <recent name="com.kadware.koala.waves" />
-      <recent name="com.kadware.samurai.exceptions" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="Koala" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kadware.koala.Koala" />
       <module name="Koala" />
+      <option name="VM_PARAMETERS" value="--module-path lib --add-modules javafx.controls,javafx.graphics" />
+      <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+        <option name="credential" />
+        <option name="region" />
+        <option name="useCurrentConnection" value="false" />
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -98,7 +174,8 @@
       <workItem from="1578276318407" duration="5743000" />
       <workItem from="1578282799092" duration="16259000" />
       <workItem from="1578764867103" duration="45509000" />
-      <workItem from="1672356450814" duration="8184000" />
+      <workItem from="1672356450814" duration="11555000" />
+      <workItem from="1672605023891" duration="78021000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

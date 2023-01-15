@@ -21,6 +21,11 @@ public final class LogicOutputPort extends DiscretePort implements IOutputPort {
     }
 
     @Override
+    public Port getPort() {
+        return this;
+    }
+
+    @Override
     public void reset() {
         _currentValue = false;
     }

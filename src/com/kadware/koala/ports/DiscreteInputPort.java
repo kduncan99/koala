@@ -35,6 +35,11 @@ public final class DiscreteInputPort extends ContinuousPort implements IInputPor
     }
 
     @Override
+    public Port getPort() {
+        return this;
+    }
+
+    @Override
     public IOutputPort getSourcePort() {
         return _source;
     }
