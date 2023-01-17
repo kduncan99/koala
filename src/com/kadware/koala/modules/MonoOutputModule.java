@@ -26,7 +26,7 @@ public class MonoOutputModule extends Module {
     private SourceDataLine _sourceDataLine = null;
 
     MonoOutputModule() {
-        _inputPorts.put(SIGNAL_INPUT_PORT, new ContinuousInputPort("Input", "IN"));
+        _inputPorts.put(SIGNAL_INPUT_PORT, new ContinuousInputPort());
         reset();
     }
 
@@ -46,16 +46,6 @@ public class MonoOutputModule extends Module {
         _sourceDataLine.flush();
         _sourceDataLine.close();
         _sourceDataLine = null;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "OUT";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Mono Output";
     }
 
     @Override

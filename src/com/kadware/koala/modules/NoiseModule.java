@@ -15,7 +15,7 @@ public class NoiseModule extends Module {
     public final Random _random = new Random(System.currentTimeMillis());
 
     NoiseModule() {
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Signal Output", "OUT"));
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort());
     }
 
     @Override
@@ -27,16 +27,6 @@ public class NoiseModule extends Module {
 
     @Override
     public void close() {}
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "NS";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Noise Source";
-    }
 
     @Override
     public ModuleType getModuleType() {

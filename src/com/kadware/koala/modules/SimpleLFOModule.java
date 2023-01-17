@@ -6,57 +6,44 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
-import com.kadware.koala.ports.DiscreteInputPort;
 import com.kadware.koala.waves.IWave;
 import com.kadware.koala.waves.WaveManager;
 
-public class VCOscillatorModule extends Module {
+public class SimpleLFOModule extends Module {
 
-    public static final int FREQUENCY_INPUT_PORT = 0;
-    public static final int FREQUENCY_MOD_INPUT_PORT_1 = 1;
-    public static final int FREQUENCY_MOD_INPUT_PORT_2 = 2;
-    public static final int PULSE_WIDTH_MOD_INPUT_PORT = 3;
     public static final int OUTPUT_PORT = 0;
 
     private float _baseFrequency;
     private float _basePulseWidth;
+    private boolean _isBiased;      //  true -> min value == MIN_CVPORT_VALUE; false -> min value == 0.0
     private IWave _wave;
     private float _waveProgress;
 
-    VCOscillatorModule() {
-        _inputPorts.put(FREQUENCY_INPUT_PORT, new DiscreteInputPort());//Frequency x 1000
-        _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_1, new ContinuousInputPort());
-        _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_2, new ContinuousInputPort());
-        _inputPorts.put(PULSE_WIDTH_MOD_INPUT_PORT, new ContinuousInputPort());
-        //  TODO sync input and sync output logic ports
+    SimpleLFOModule() {
         _outputPorts.put(OUTPUT_PORT, new ContinuousOutputPort());
         _wave = WaveManager.createWave(IWave.WaveType.Square);
         _baseFrequency = 440.0f;
         _basePulseWidth = 0.5f;
+        _isBiased = false;
         reset();
     }
 
     @Override
     public void advance() {
-        DiscreteInputPort fcIn = (DiscreteInputPort) _inputPorts.get(FREQUENCY_INPUT_PORT);
-        float frequency = _baseFrequency + ((float)fcIn.getValue() / 1000);
-
-        ContinuousInputPort fmIn1 = (ContinuousInputPort) _inputPorts.get(FREQUENCY_MOD_INPUT_PORT_1);
-        ContinuousInputPort fmIn2 = (ContinuousInputPort) _inputPorts.get(FREQUENCY_MOD_INPUT_PORT_2);
-        float modulation = fmIn1.getValue() + fmIn2.getValue();
-
-        float effectiveFrequency = (float)(frequency * Math.pow(2, modulation));
-        float segmentsPerCycle = effectiveFrequency / Koala.SAMPLE_RATE;
+        float segmentsPerCycle = _baseFrequency / Koala.SAMPLE_RATE;
         _waveProgress += segmentsPerCycle;
         if (_waveProgress >= 1.0f) {
             _waveProgress -= 1.0f;
         }
 
-        ContinuousInputPort pwIn = (ContinuousInputPort) _inputPorts.get(PULSE_WIDTH_MOD_INPUT_PORT);
-        float effectivePulseWidth = _basePulseWidth + (pwIn.getValue() / 10.0f);
-        float value = _wave.getValue(_waveProgress, effectivePulseWidth);
+        //  wave objects return values in the range of MIN_CVPORT_VALUE to MAX_CVPORT_VALUE.
+        //  We take MIN to be a negative value, with MAX as positive, although we don't assume magnitudes of 5.
+        //  We need to get the raw value, then adjust it if necessary given the bias selection.
+        float value = _wave.getValue(_waveProgress, _basePulseWidth);
+        if (_isBiased) {
+            value = (value - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE * value;
+        }
 
         ContinuousOutputPort out = (ContinuousOutputPort) _outputPorts.get(OUTPUT_PORT);
         out.setCurrentValue(value);
@@ -75,11 +62,15 @@ public class VCOscillatorModule extends Module {
 
     @Override
     public ModuleType getModuleType() {
-        return ModuleType.VCOscillator;
+        return ModuleType.SimpleLFO;
     }
 
     public IWave getWave() {
         return _wave;
+    }
+
+    public boolean isBiased() {
+        return _isBiased;
     }
 
     @Override
@@ -91,6 +82,12 @@ public class VCOscillatorModule extends Module {
         final float value
     ) {
         _baseFrequency = value;
+    }
+
+    public void setIsBiased(
+        final boolean value
+    ) {
+        _isBiased = value;
     }
 
     public void setPulseWidth(

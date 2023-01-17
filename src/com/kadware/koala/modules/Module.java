@@ -29,6 +29,7 @@ public abstract class Module extends Sender {
         Noise,                  //  White noise generator
         Patch,                  //  A patch module
         SimpleEcho,             //  Single tap echo, no VC
+        SimpleLFO,              //  Basic low-frequency oscillator
         StereoOutput,           //  Routes L/R channels to system sound
         TestTone,               //  Fixed (but settable) frequency square-wave oscillator
         VCAmplifier,            //  Modulate-able amplifier
@@ -60,8 +61,6 @@ public abstract class Module extends Sender {
         }
     }
 
-    public abstract String getModuleAbbreviation(); //  TODO this probably should be in the Panel, not the Module
-    public abstract String getModuleClass();        //  TODO this as well
     public abstract ModuleType getModuleType();
 
     public final IOutputPort getOutputPort(

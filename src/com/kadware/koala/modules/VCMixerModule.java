@@ -74,44 +74,20 @@ public class VCMixerModule extends Module {
         _pan4RightOut = (ContinuousOutputPort) _panModule4.getOutputPort(FixedPanningModule.RIGHT_OUTPUT_PORT);
 
         ContinuousInputPort signalIn1 = (ContinuousInputPort) _ampModule1.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn1.changeAbbreviation("IN1");
-        signalIn1.changeName("Signal 1 Input");
         ContinuousInputPort levelIn1 = (ContinuousInputPort) _ampModule1.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        levelIn1.changeAbbreviation("LV1");
-        levelIn1.changeName("Level 1 Modulation");
         ContinuousInputPort panIn1 = (ContinuousInputPort) _panModule1.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
-        panIn1.changeAbbreviation("PN1");
-        panIn1.changeName("Pan 1 Modulation");
 
         ContinuousInputPort signalIn2 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn2.changeAbbreviation("IN2");
-        signalIn2.changeName("Signal 2 Input");
         ContinuousInputPort levelIn2 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        levelIn2.changeAbbreviation("LV2");
-        levelIn2.changeName("Level 2 Modulation");
         ContinuousInputPort panIn2 = (ContinuousInputPort) _panModule2.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
-        panIn2.changeAbbreviation("PN2");
-        panIn2.changeName("Pan 2 Modulation");
 
         ContinuousInputPort signalIn3 = (ContinuousInputPort) _ampModule3.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn3.changeAbbreviation("IN3");
-        signalIn3.changeName("Signal 3 Input");
         ContinuousInputPort levelIn3 = (ContinuousInputPort) _ampModule3.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        levelIn3.changeAbbreviation("LV3");
-        levelIn3.changeName("Level 3 Modulation");
         ContinuousInputPort panIn3 = (ContinuousInputPort) _panModule3.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
-        panIn3.changeAbbreviation("PN3");
-        panIn3.changeName("Pan 3 Modulation");
 
         ContinuousInputPort signalIn4 = (ContinuousInputPort) _ampModule4.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn4.changeAbbreviation("IN4");
-        signalIn4.changeName("Signal 4 Input");
         ContinuousInputPort levelIn4 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        levelIn4.changeAbbreviation("LV4");
-        levelIn4.changeName("Level 4 Modulation");
         ContinuousInputPort panIn4 = (ContinuousInputPort) _panModule2.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
-        panIn4.changeAbbreviation("PN4");
-        panIn4.changeName("Pan 4 Modulation");
 
         Port.connectPorts(_ampModule1.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT),
                           _panModule1.getInputPort(VCPanningModule.SIGNAL_INPUT_PORT));
@@ -122,9 +98,9 @@ public class VCMixerModule extends Module {
         Port.connectPorts(_ampModule4.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT),
                           _panModule4.getInputPort(VCPanningModule.SIGNAL_INPUT_PORT));
 
-        _monoOut = new ContinuousOutputPort("Mono Output", "OUT");
-        _leftOut = new ContinuousOutputPort("Left Output", "LFT");
-        _rightOut = new ContinuousOutputPort("Right Output", "RGT");
+        _monoOut = new ContinuousOutputPort();
+        _leftOut = new ContinuousOutputPort();
+        _rightOut = new ContinuousOutputPort();
 
         _inputPorts.put(SIGNAL_INPUT_PORT_1, signalIn1);
         _inputPorts.put(SIGNAL_INPUT_PORT_2, signalIn2);
@@ -171,16 +147,6 @@ public class VCMixerModule extends Module {
 
     @Override
     public void close() {}
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "VCMIX";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Value Controlled Mixer";
-    }
 
     @Override
     public ModuleType getModuleType() {

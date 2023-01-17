@@ -25,8 +25,8 @@ public class SimpleEchoModule extends Module {
     private float[] _cache;
 
     SimpleEchoModule() {
-        _input = new ContinuousInputPort("Signal Input", "IN");
-        _output = new ContinuousOutputPort("Signal Output", "OUT");
+        _input = new ContinuousInputPort();
+        _output = new ContinuousOutputPort();
         _inputPorts.put(SIGNAL_INPUT_PORT, _input);
         _outputPorts.put(SIGNAL_OUTPUT_PORT, _output);
 
@@ -49,16 +49,6 @@ public class SimpleEchoModule extends Module {
 
     @Override
     public void close() {}
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "ECH1";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Simple Delay";
-    }
 
     @Override
     public ModuleType getModuleType() {

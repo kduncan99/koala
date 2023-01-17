@@ -9,12 +9,7 @@ public final class LogicOutputPort extends DiscretePort implements IOutputPort {
 
     private boolean _currentValue = false;
 
-    public LogicOutputPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public LogicOutputPort() {}
 
     public boolean getCurrentValue() {
         return _currentValue;

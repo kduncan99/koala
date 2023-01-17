@@ -21,8 +21,8 @@ public class DualNoiseModule extends Module {
     private final ContinuousOutputPort _rightOutput;
 
     DualNoiseModule() {
-        _leftOutput = new ContinuousOutputPort("Left Output", "LFT");
-        _rightOutput = new ContinuousOutputPort("Right Output", "RGT");
+        _leftOutput = new ContinuousOutputPort();
+        _rightOutput = new ContinuousOutputPort();
         _outputPorts.put(LEFT_SIGNAL_OUTPUT_PORT, _leftOutput);
         _outputPorts.put(RIGHT_SIGNAL_OUTPUT_PORT, _rightOutput);
     }
@@ -37,16 +37,6 @@ public class DualNoiseModule extends Module {
 
     @Override
     public void close() {}
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "DNS";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Dual Noise Source";
-    }
 
     @Override
     public ModuleType getModuleType() {

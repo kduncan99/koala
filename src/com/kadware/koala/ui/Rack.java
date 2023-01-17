@@ -22,7 +22,7 @@ public class Rack extends VBox {
         var r = new Rack();
 
         for (int sx = 0; sx < shelves; ++sx) {
-            var s = Shelf.createEmptyShelf(spaces);
+            var s = Shelf.createEmptyShelf(spaces, sx == 0);
             r.getChildren().add(s);
         }
 

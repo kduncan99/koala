@@ -50,9 +50,9 @@ public class DADSREnvelopeModule extends Module {
     private boolean _triggered;
 
     DADSREnvelopeModule() {
-        _trigger = new TriggerInputPort("Trigger", "TRG");
-        _gate = new LogicInputPort("Gate", "GTE");
-        _output = new ContinuousOutputPort("Signal Output", "OUT");
+        _trigger = new TriggerInputPort();
+        _gate = new LogicInputPort();
+        _output = new ContinuousOutputPort();
 
         _inputPorts.put(TRIGGER_INPUT_PORT, _trigger);
         _inputPorts.put(GATE_INPUT_PORT, _gate);
@@ -165,16 +165,6 @@ public class DADSREnvelopeModule extends Module {
 
     public boolean getManualTrigger() {
         return _manualTrigger;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "DADSR";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Envelope Generator";
     }
 
     @Override

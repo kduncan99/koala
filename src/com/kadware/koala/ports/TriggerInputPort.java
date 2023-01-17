@@ -14,12 +14,7 @@ public final class TriggerInputPort extends LogicInputPort {
 
     private boolean _state;
 
-    public TriggerInputPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public TriggerInputPort() {}
 
     public void clearTrigger() {
         _state = false;

@@ -2,15 +2,62 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/BlankConnectorPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/ConnectorJack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/ConnectorPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/InputConnectorPane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/SimpleLFOModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/SimpleLFOPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/ControlsEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/Control.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/indicators/DBFSMeter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/indicators/Indicator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/indicators/Meter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/InputConnector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/Koala.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/AREnvelopeModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/AREnvelopeModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/ClockModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/ClockModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DADSREnvelopeModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DADSREnvelopeModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteGlideModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteGlideModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteSequencerModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DiscreteSequencerModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/DualNoiseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/DualNoiseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedAmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedAmplifierModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedMixerModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedMixerModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedPanningModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/FixedPanningModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/InverterModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/ModuleManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/MonoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/MonoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/NoiseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/NoiseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/SimpleEchoModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/SimpleEchoModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/StereoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/TestToneModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCAmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCAmplifierModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCFilterModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCFilterModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCMixerModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCMixerModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCOscillatorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCOscillatorModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCPanningModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/VCPanningModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/patches/DingSmearPatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/patches/DingSmearPatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/patches/Patch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/patches/Patch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/ContinuousPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscreteOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscretePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/DiscretePort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/LogicOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/Port.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/Port.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ports/TriggerInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ports/TriggerInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/Rack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/Shelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/BlankConnectorPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/connections/BlankConnectorPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/ConnectorJack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/connections/ConnectorJack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/ConnectorPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/connections/ConnectorPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/elements/InputConnectorPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/connections/InputConnectorPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/Connector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/old/elements/old/Connector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ConnectionsSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ConnectionsSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ControlsSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ControlsSection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ModulePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ModulePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/Panel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/Panel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/StereoOutputPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/StereoOutputPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/waves/IWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/waves/IWave.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,17 +112,17 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.26386404" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RecentsManager">
     <key name="MoveInnerDialog.RECENTS_KEY">
       <recent name="com.kadware.koala.ui.panels" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.kadware.koala.ui.elements" />
-      <recent name="com.kadware.koala.ui.panels" />
-      <recent name="com.kadware.koala.ui" />
       <recent name="com.kadware.koala.modules" />
+      <recent name="com.kadware.koala.ui.panels" />
+      <recent name="com.kadware.koala.ui.elements" />
+      <recent name="com.kadware.koala.ui" />
       <recent name="com.kadware.koala.ports" />
     </key>
   </component>
@@ -129,7 +176,7 @@
       <workItem from="1578282799092" duration="16259000" />
       <workItem from="1578764867103" duration="45509000" />
       <workItem from="1672356450814" duration="11555000" />
-      <workItem from="1672605023891" duration="84476000" />
+      <workItem from="1672605023891" duration="103627000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

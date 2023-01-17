@@ -41,14 +41,14 @@ public class VCFilterModule extends Module {
     private Type _type = Type.Two_Pole;
 
     public VCFilterModule() {
-        _signalInputPort = new ContinuousInputPort("Signal Input", "IN");
-        _frequencyInputPort = new DiscreteInputPort("Frequency", "Fc1");
-        _frequencyModInputPort1 = new ContinuousInputPort("Frequency Modulation 1", "Fm1");
-        _frequencyModInputPort2 = new ContinuousInputPort("Frequency Modulation 2", "Fm2");
-        _resonanceModInputPort = new ContinuousInputPort("Resonance Modulation", "Fqm");
-        _lowpassOutputPort = new ContinuousOutputPort("Lowpass Output", "LP");
-        _bandpassOutputPort = new ContinuousOutputPort("Bandpass Output", "BP");
-        _highpassOutputPort = new ContinuousOutputPort("Highpass Output", "HP");
+        _signalInputPort = new ContinuousInputPort();
+        _frequencyInputPort = new DiscreteInputPort();
+        _frequencyModInputPort1 = new ContinuousInputPort();
+        _frequencyModInputPort2 = new ContinuousInputPort();
+        _resonanceModInputPort = new ContinuousInputPort();
+        _lowpassOutputPort = new ContinuousOutputPort();
+        _bandpassOutputPort = new ContinuousOutputPort();
+        _highpassOutputPort = new ContinuousOutputPort();
 
         _inputPorts.put(SIGNAL_INPUT_PORT, _signalInputPort);
         _inputPorts.put(FREQUENCY_INPUT_PORT, _frequencyInputPort);
@@ -117,16 +117,6 @@ public class VCFilterModule extends Module {
 
     public float getBaseResonance() {
         return _baseResonance;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "VCF";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Value Controlled Filter";
     }
 
     @Override

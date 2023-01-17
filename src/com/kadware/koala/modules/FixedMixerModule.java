@@ -67,20 +67,9 @@ public class FixedMixerModule extends Module {
         _pan4RightOut = (ContinuousOutputPort) _panMod4.getOutputPort(FixedPanningModule.RIGHT_OUTPUT_PORT);
 
         ContinuousInputPort signalIn1 = (ContinuousInputPort) _ampMod1.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn1.changeAbbreviation("IN1");
-        signalIn1.changeName("Signal 1 Input");
-
         ContinuousInputPort signalIn2 = (ContinuousInputPort) _ampMod2.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn2.changeAbbreviation("IN2");
-        signalIn2.changeName("Signal 2 Input");
-
         ContinuousInputPort signalIn3 = (ContinuousInputPort) _ampMod3.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn3.changeAbbreviation("IN3");
-        signalIn3.changeName("Signal 3 Input");
-
         ContinuousInputPort signalIn4 = (ContinuousInputPort) _ampMod4.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        signalIn4.changeAbbreviation("IN4");
-        signalIn4.changeName("Signal 4 Input");
 
         Port.connectPorts(_ampMod1.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT),
                           _panMod1.getInputPort(VCPanningModule.SIGNAL_INPUT_PORT));
@@ -91,9 +80,9 @@ public class FixedMixerModule extends Module {
         Port.connectPorts(_ampMod4.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT),
                           _panMod4.getInputPort(VCPanningModule.SIGNAL_INPUT_PORT));
 
-        _monoOut = new ContinuousOutputPort("Mono Output", "OUT");
-        _leftOut = new ContinuousOutputPort("Left Output", "LFT");
-        _rightOut = new ContinuousOutputPort("Right Output", "RGT");
+        _monoOut = new ContinuousOutputPort();
+        _leftOut = new ContinuousOutputPort();
+        _rightOut = new ContinuousOutputPort();
 
         _inputPorts.put(SIGNAL_INPUT_PORT_1, signalIn1);
         _inputPorts.put(SIGNAL_INPUT_PORT_2, signalIn2);
@@ -132,16 +121,6 @@ public class FixedMixerModule extends Module {
 
     @Override
     public void close() {}
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "MIX";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Mixer";
-    }
 
     @Override
     public ModuleType getModuleType() {

@@ -7,29 +7,32 @@ package com.kadware.koala.ui.panels;
 
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-public abstract class ControlsSection extends StackPane {
+public class ControlsSection extends GridPane {
 
-    private static final int PIXELS_PER_SECTION_HEIGHT = 500;
+    private static final int VERTICAL_CELLS = 6;
+
+    private final PanelWidth _panelWidth;
 
     public ControlsSection(
         final PanelWidth panelWidth
     ) {
-        var w = (panelWidth._spaceCount * Panel.PIXELS_PER_PANEL_SPACE_WIDTH) - (2 * Panel.MARGIN_PIXELS);
-        var h = PIXELS_PER_SECTION_HEIGHT;
+        _panelWidth = panelWidth;
+
+        var hCells = (_panelWidth._spaceCount * Panel.PIXELS_PER_PANEL_SPACE_WIDTH) / Panel.PIXELS_PER_CELL_EDGE;
+        var w = hCells * Panel.PIXELS_PER_CELL_EDGE;
+        var h = VERTICAL_CELLS * Panel.PIXELS_PER_CELL_EDGE;
         setPrefSize(w, h);
 
         var c = new Canvas(w, h);
         var gc = c.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
+        gc.setFill(Panel.PANEL_TRIM_COLOR);
         gc.fillRect(0, 0, w, h);
-        gc.setFill(Color.LIGHTGREY);
+        gc.setFill(Panel.PANEL_SECTION_BACKGROUND_COLOR);
         gc.fillRect(1, 1, w - 2, h - 3);
         getChildren().add(c);
-        getChildren().add(createContentGroup());
     }
-
-    public abstract Group createContentGroup();
 }

@@ -102,7 +102,7 @@ public class Connector extends Cell {
 
         add(jackContainer);
 
-        var label = new Label(jackContainer._port.getAbbreviation());
+        var label = new Label("In");
         label.setBackground(BasePanel.PANEL_COLOR);
         label.setFont(BasePanel.PANEL_FONT);
         label.setAlignment(Label.CENTER);

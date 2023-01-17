@@ -10,21 +10,14 @@ public final class ContinuousOutputPort extends ContinuousPort implements IOutpu
     private float _currentValue = 0.0f;
 
     public ContinuousOutputPort(
-        final String name,
-        final String abbreviation,
         final float minimumValue,
         final float maximumValue,
         final float multiplier
     ) {
-        super(name, abbreviation, minimumValue, maximumValue, multiplier);
+        super(minimumValue, maximumValue, multiplier);
     }
 
-    public ContinuousOutputPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public ContinuousOutputPort() {}
 
     public float getCurrentValue() {
         float value = _currentValue * _multiplier;

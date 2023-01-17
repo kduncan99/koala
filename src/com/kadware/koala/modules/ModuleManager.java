@@ -77,6 +77,7 @@ public class ModuleManager {
             case MonoOutput -> new MonoOutputModule();
             case Noise -> new NoiseModule();
             case SimpleEcho -> new SimpleEchoModule();
+            case SimpleLFO -> new SimpleLFOModule();
             case StereoOutput -> new StereoOutputModule();
             case TestTone -> new TestToneModule();
             case VCAmplifier -> new VCAmplifierModule();

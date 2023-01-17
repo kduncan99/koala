@@ -18,8 +18,8 @@ public class DiscreteSequencerModule extends Module {
     private int _valueIndex = 0;
 
     DiscreteSequencerModule() {
-        _inputPorts.put(TRIGGER_INPUT_PORT, new LogicInputPort("Logic Clock In", "CLK"));
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new DiscreteOutputPort("Discrete Signal Out", "OUT"));
+        _inputPorts.put(TRIGGER_INPUT_PORT, new LogicInputPort());
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new DiscreteOutputPort());
         reset();
     }
 
@@ -42,16 +42,6 @@ public class DiscreteSequencerModule extends Module {
 
     @Override
     public void close() {}
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "SEQ";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Discrete Sequencer";
-    }
 
     @Override
     public ModuleType getModuleType() {

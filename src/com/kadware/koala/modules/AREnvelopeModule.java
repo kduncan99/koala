@@ -24,9 +24,9 @@ public class AREnvelopeModule extends Module {
     private float _value = Koala.MIN_CVPORT_VALUE;
 
     AREnvelopeModule() {
-        _inputPorts.put(GATE_INPUT_PORT, new LogicInputPort("Gate", "GTE"));
-        _inputPorts.put(TRIGGER_INPUT_PORT, new LogicInputPort("Trigger", "TRG"));
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Output", "OUT"));
+        _inputPorts.put(GATE_INPUT_PORT, new LogicInputPort());
+        _inputPorts.put(TRIGGER_INPUT_PORT, new LogicInputPort());
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort());
         reset();
     }
 
@@ -72,16 +72,6 @@ public class AREnvelopeModule extends Module {
 
     public boolean getManualGateOpen() {
         return _manualGateOpen;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "AR";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "AR Envelope Generator";
     }
 
     @Override

@@ -18,7 +18,7 @@ public class ClockModule extends Module {
     private int _resetLimit;
 
     ClockModule() {
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new LogicOutputPort("Signal Output", "OUT"));
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new LogicOutputPort());
         setBaseFrequency(440);
     }
 
@@ -38,16 +38,6 @@ public class ClockModule extends Module {
 
     public float getBaseFrequency() {
         return _baseFrequency;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "CLK";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Logic Clock";
     }
 
     @Override

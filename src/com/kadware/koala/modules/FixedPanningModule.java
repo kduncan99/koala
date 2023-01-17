@@ -28,9 +28,9 @@ public class FixedPanningModule extends Module {
     private float _rightScalar;
 
     FixedPanningModule() {
-        _signalIn = new ContinuousInputPort("Signal Input", "IN");
-        _leftOut = new ContinuousOutputPort("Left Output", "LFT");
-        _rightOut = new ContinuousOutputPort("Right Output", "RGT");
+        _signalIn = new ContinuousInputPort();
+        _leftOut = new ContinuousOutputPort();
+        _rightOut = new ContinuousOutputPort();
 
         _inputPorts.put(SIGNAL_INPUT_PORT, _signalIn);
         _outputPorts.put(LEFT_OUTPUT_PORT, _leftOut);
@@ -55,16 +55,6 @@ public class FixedPanningModule extends Module {
      */
     public float getBaseValue() {
         return _baseValue;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "PAN";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Panner";
     }
 
     @Override

@@ -37,8 +37,8 @@ public class StereoOutputModule extends Module {
     private final byte[] _buffer = new byte[4];
 
     StereoOutputModule() {
-        _leftInput = new ContinuousInputPort("Left Input", "LFT");
-        _rightInput = new ContinuousInputPort("Right Input", "RGT");
+        _leftInput = new ContinuousInputPort();
+        _rightInput = new ContinuousInputPort();
         _inputPorts.put(LEFT_SIGNAL_INPUT_PORT, _leftInput);
         _inputPorts.put(RIGHT_SIGNAL_INPUT_PORT, _rightInput);
 
@@ -77,16 +77,6 @@ public class StereoOutputModule extends Module {
         _sourceDataLine.flush();
         _sourceDataLine.close();
         _sourceDataLine = null;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "OUT";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Stereo Output";
     }
 
     @Override

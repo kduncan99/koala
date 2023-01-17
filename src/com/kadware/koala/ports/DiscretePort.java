@@ -12,12 +12,7 @@ package com.kadware.koala.ports;
  */
 public abstract class DiscretePort extends Port {
 
-    public DiscretePort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public DiscretePort() {}
 
     @Override
     public abstract void reset();

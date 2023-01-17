@@ -16,8 +16,8 @@ public interface IWave {
     }
 
     /**
-     * Retrieves the value of the wave, from MIN_VALUE to MAX_VALUE,
-     * at the given position presuming the given pulsewidth.
+     * Retrieves the value of the wave, from Koala.MIN_CVPORT_VALUE to Koala.MAX_CVPORT_VALUE
+     * at the given position, optionally with respect to the given pulse-width.
      * @param position Position from the beginning of the wave (0.0) to the end (1.0)
      * @param pulseWidth Presumed width of the pulse, if this has any meaning, from none (0.0) to full (1.0)
      * @return value from MIN_VALUE to MAX_VALUE

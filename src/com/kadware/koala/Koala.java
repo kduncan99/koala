@@ -5,15 +5,12 @@
 
 package com.kadware.koala;
 
-import com.kadware.koala.modules.Module;
-import com.kadware.koala.modules.*;
-import com.kadware.koala.ports.*;
-import com.kadware.koala.waves.*;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.ui.Rack;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 public class Koala extends Application {
@@ -42,10 +39,11 @@ public class Koala extends Application {
     public void start(Stage stage) throws Exception {
         //  TODO later we'll do load/save, have a starting dialog, all that crap
         var root = new Group();
-        var scene = new Scene(root);
+        var scroller = new ScrollPane(root);
+        var scene = new Scene(scroller);
 
-        var r = Rack.createEmptyRack(1, 10);
-        root.getChildren().add(r);
+        var rack = Rack.createEmptyRack(2, 10);
+        root.getChildren().add(rack);
 
         stage.setTitle("Koala - v1.0");//   TODO later pull version from somewhere useful
         stage.setScene(scene);

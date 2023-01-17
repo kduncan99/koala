@@ -25,11 +25,6 @@ public abstract class Patch extends Module {
     }
 
     @Override
-    public final String getModuleAbbreviation() {
-        return "PCH";
-    }
-
-    @Override
     public final ModuleType getModuleType() {
         return ModuleType.Patch;
     }

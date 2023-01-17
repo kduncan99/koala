@@ -12,21 +12,14 @@ public final class ContinuousInputPort extends ContinuousPort implements IInputP
     private ContinuousOutputPort _source = null;
 
     public ContinuousInputPort(
-        final String name,
-        final String abbreviation,
         final float minimumValue,
         final float maximumValue,
         final float multiplier
     ) {
-        super(name, abbreviation, minimumValue, maximumValue, multiplier);
+        super(minimumValue, maximumValue, multiplier);
     }
 
-    public ContinuousInputPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public ContinuousInputPort() {}
 
     @Override
     public void connectTo(

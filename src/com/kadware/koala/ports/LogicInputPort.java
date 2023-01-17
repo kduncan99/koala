@@ -11,12 +11,7 @@ public class LogicInputPort extends DiscretePort implements IInputPort {
 
     private LogicOutputPort _source = null;
 
-    public LogicInputPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public LogicInputPort() {}
 
     @Override
     public void connectTo(

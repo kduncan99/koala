@@ -17,8 +17,8 @@ public class InverterModule extends Module {
     public final ContinuousOutputPort _output;
 
     InverterModule() {
-        _input = new ContinuousInputPort("Signal Input", "IN");
-        _output = new ContinuousOutputPort("Signal Output", "OUT");
+        _input = new ContinuousInputPort();
+        _output = new ContinuousOutputPort();
         _inputPorts.put(SIGNAL_INPUT_PORT, _input);
         _outputPorts.put(SIGNAL_OUTPUT_PORT, _output);
     }
@@ -30,16 +30,6 @@ public class InverterModule extends Module {
 
     @Override
     public void close() {}
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "INV";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Inverter";
-    }
 
     @Override
     public ModuleType getModuleType() {

@@ -11,12 +11,7 @@ public final class DiscreteInputPort extends ContinuousPort implements IInputPor
 
     private DiscreteOutputPort _source = null;
 
-    public DiscreteInputPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public DiscreteInputPort() {}
 
     @Override
     public void connectTo(

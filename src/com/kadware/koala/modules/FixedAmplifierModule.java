@@ -24,8 +24,8 @@ public class FixedAmplifierModule extends Module {
     private float _baseValue = 5.0f;
 
     FixedAmplifierModule() {
-        _signalIn = new ContinuousInputPort("Signal Input", "IN");
-        _signalOut = new ContinuousOutputPort("Signal Output", "OUT");
+        _signalIn = new ContinuousInputPort();
+        _signalOut = new ContinuousOutputPort();
         _inputPorts.put(SIGNAL_INPUT_PORT, _signalIn);
         _outputPorts.put(SIGNAL_OUTPUT_PORT, _signalOut);
     }
@@ -42,16 +42,6 @@ public class FixedAmplifierModule extends Module {
 
     public double getBaseValue() {
         return _baseValue;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "AMP";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Amplifier";
     }
 
     @Override

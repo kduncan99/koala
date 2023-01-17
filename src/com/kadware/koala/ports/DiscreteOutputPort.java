@@ -9,12 +9,7 @@ public final class DiscreteOutputPort extends DiscretePort implements IOutputPor
 
     private int _currentValue = 0;
 
-    public DiscreteOutputPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
-    }
+    public DiscreteOutputPort() {}
 
     public int getCurrentValue() {
         return _currentValue;

@@ -26,11 +26,11 @@ public class VCPanningModule extends Module {
     private float _baseValue = 0.0f;    //  ranges from -5.0 (hard left) to 5.0 (hard right)
 
     VCPanningModule() {
-        _signalIn = new ContinuousInputPort("Signal Input", "IN");
-        _controlIn1 = new ContinuousInputPort("Control Input 1", "CV1");
-        _controlIn2 = new ContinuousInputPort("Control Input 2", "CV2");
-        _leftOut = new ContinuousOutputPort("Left Output", "LFT");
-        _rightOut = new ContinuousOutputPort("Right Output", "RGT");
+        _signalIn = new ContinuousInputPort();
+        _controlIn1 = new ContinuousInputPort();
+        _controlIn2 = new ContinuousInputPort();
+        _leftOut = new ContinuousOutputPort();
+        _rightOut = new ContinuousOutputPort();
 
         _inputPorts.put(SIGNAL_INPUT_PORT, _signalIn);
         _inputPorts.put(CONTROL_INPUT_PORT_1, _controlIn1);
@@ -61,16 +61,6 @@ public class VCPanningModule extends Module {
      */
     public float getBaseValue() {
         return _baseValue;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "VCPAN";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Value Controlled Panner";
     }
 
     @Override

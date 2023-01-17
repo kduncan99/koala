@@ -6,29 +6,26 @@
 package com.kadware.koala.ui;
 
 import com.kadware.koala.ui.panels.BlankPanel;
+import com.kadware.koala.ui.panels.Panel;
 import com.kadware.koala.ui.panels.PanelWidth;
 import com.kadware.koala.ui.panels.StereoOutputPanel;
 import javafx.scene.layout.HBox;
 
 public class Shelf extends HBox {
 
-    private static final int MARGIN_PIXELS = 5;
-
-    private Shelf() {
-        super(MARGIN_PIXELS);
-    }
-
     public static Shelf createEmptyShelf(
-        final int spaces
+        final int spaces,
+        final boolean withOutputModule
     ) {
         var s = new Shelf();
 
         var remaining = spaces;
-        {//TODO testing
-            var panel = new StereoOutputPanel();
-            s.getChildren().add(panel);
-            remaining -= panel.getPanelWidth()._spaceCount;
+        Panel outputPanel = null;
+        if (withOutputModule) {
+            outputPanel = new StereoOutputPanel();
+            remaining--;
         }
+
         while (remaining > 0) {
             var panel =
                 switch (remaining) {
@@ -40,7 +37,9 @@ public class Shelf extends HBox {
             remaining -= panel.getPanelWidth()._spaceCount;
         }
 
-        s.setVisible(true);
+        if (outputPanel != null)
+            s.getChildren().add(outputPanel);
+
         return s;
     }
 }

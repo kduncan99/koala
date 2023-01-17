@@ -18,9 +18,4 @@ public class DingSmearPatch extends Patch {
         //  TODO disconnect modules
         _modules.forEach(Module::close);
     }
-
-    @Override
-    public String getModuleClass() {
-        return "P:Ding Smear";
-    }
 }

@@ -18,7 +18,7 @@ public class TestToneModule extends Module {
     private int _resetLimit;
 
     TestToneModule() {
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort("Signal Output", "OUT"));
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new ContinuousOutputPort());
         setBaseFrequency(440);
     }
 
@@ -38,16 +38,6 @@ public class TestToneModule extends Module {
 
     public float getBaseFrequency() {
         return _baseFrequency;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "TST";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Test Tone";
     }
 
     @Override

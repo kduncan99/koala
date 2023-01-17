@@ -21,8 +21,8 @@ public class DiscreteGlideModule extends Module {
     private int _targetValue = 0;
 
     DiscreteGlideModule() {
-        _inputPorts.put(SIGNAL_INPUT_PORT, new DiscreteInputPort("Signal Input", "IN"));
-        _outputPorts.put(SIGNAL_OUTPUT_PORT, new DiscreteOutputPort("Signal Output", "OUT"));
+        _inputPorts.put(SIGNAL_INPUT_PORT, new DiscreteInputPort());
+        _outputPorts.put(SIGNAL_OUTPUT_PORT, new DiscreteOutputPort());
         reset();
     }
 
@@ -63,16 +63,6 @@ public class DiscreteGlideModule extends Module {
 
     public float getGlideTime() {
         return _glideTime;
-    }
-
-    @Override
-    public String getModuleAbbreviation() {
-        return "GLD";
-    }
-
-    @Override
-    public String getModuleClass() {
-        return "Glide";
     }
 
     @Override

@@ -8,7 +8,7 @@ package com.kadware.koala.ui.panels;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.StereoOutputModule;
-import com.kadware.koala.ui.elements.InputConnectorPane;
+import com.kadware.koala.ui.panels.elements.connections.InputConnectorPane;
 
 public class StereoOutputPanel extends ModulePanel {
 

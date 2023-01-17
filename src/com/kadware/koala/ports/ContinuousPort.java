@@ -23,23 +23,16 @@ public abstract class ContinuousPort extends Port {
     boolean _overload = false;
 
     public ContinuousPort(
-        final String name,
-        final String abbreviation,
         final float minimumValue,
         final float maximumValue,
         final float multiplier
     ) {
-        super(name, abbreviation);
         _maximumValue = maximumValue;
         _minimumValue = minimumValue;
         _multiplier = multiplier;
     }
 
-    public ContinuousPort(
-        final String name,
-        final String abbreviation
-    ) {
-        super(name, abbreviation);
+    public ContinuousPort() {
         _maximumValue = Koala.MAX_CVPORT_VALUE;
         _minimumValue = Koala.MIN_CVPORT_VALUE;
         _multiplier = 1.0f;
