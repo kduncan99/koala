@@ -5,35 +5,54 @@
 
 package com.kadware.koala.ui.panels;
 
-import com.kadware.koala.ui.panels.elements.connections.ConnectorPane;
-import javafx.geometry.Insets;
-import javafx.scene.layout.*;
+import com.kadware.koala.ui.panels.elements.connections.BlankConnectionPane;
+import com.kadware.koala.ui.panels.elements.connections.ConnectionPane;
+import javafx.scene.control.Label;
 
-public class ConnectionsSection extends StackPane {
+public class ConnectionsSection extends PanelSection {
 
-    public static final BackgroundFill BACKGROUND_FILL = new BackgroundFill(Panel.PANEL_SECTION_BACKGROUND_COLOR,
-                                                                            CornerRadii.EMPTY,
-                                                                            new Insets(1));
-    public static final Background BACKGROUND = new Background(BACKGROUND_FILL);
-    private static final BorderStroke BORDER_STROKE = new BorderStroke(Panel.PANEL_TRIM_COLOR,
-                                                                       BorderStrokeStyle.SOLID,
-                                                                       CornerRadii.EMPTY,
-                                                                       new BorderWidths(1),
-                                                                       new Insets(0));
-    private static final Border BORDER = new Border(BORDER_STROKE);
-
-    protected static final int VERTICAL_CELLS = 2;
-
-    protected final int _horizontalCells;
-    protected final PanelWidth _panelWidth;
+    protected static final int OUTPUT_CAPTION_ROW_INDEX = 0;
+    protected static final int OUTPUT_ROW_INDEX = 1;
+    protected static final int INPUT_CAPTION_ROW_INDEX = 2;
+    protected static final int INPUT_ROW_INDEX = 3;
 
     public ConnectionsSection(
         final PanelWidth panelWidth
     ) {
-        setPadding(new Insets(2));
-        setBorder(BORDER);
-        setBackground(BACKGROUND);
-        _panelWidth = panelWidth;
-        _horizontalCells = (_panelWidth._spaceCount * Panel.PIXELS_PER_PANEL_SPACE_WIDTH) / ConnectorPane.EDGE_PIXELS;
+        super(panelWidth);
+
+        var outputLabel = new Label("Outputs");
+        outputLabel.setTextFill(Panel.PANEL_LEGEND_COLOR);
+        add(outputLabel, 0, OUTPUT_CAPTION_ROW_INDEX, _horizontalCellCount, 1);
+
+        var inputLabel = new Label("Inputs");
+        inputLabel.setTextFill(Panel.PANEL_LEGEND_COLOR);
+        add(inputLabel, 0, INPUT_CAPTION_ROW_INDEX, _horizontalCellCount, 1);
+
+        for (int rx : new int[]{OUTPUT_ROW_INDEX, INPUT_ROW_INDEX}) {
+            for (int cx = 0; cx < _horizontalCellCount; ++cx) {
+                add(new BlankConnectionPane(), cx, rx, 1, 1);
+            }
+        }
+    }
+
+    void setInputConnection(
+        final int index,
+        final ConnectionPane connection
+    ) {
+        if (index < 0 || index >= _horizontalCellCount)
+            throw new RuntimeException("input connection index out of range:" + index);
+        //  Assumes only one input row
+        add(connection, index, INPUT_ROW_INDEX);
+    }
+
+    void setOutputConnection(
+        final int index,
+        final ConnectionPane connection
+    ) {
+        if (index < 0 || index >= _horizontalCellCount)
+            throw new RuntimeException("input connection index out of range:" + index);
+        //  Assumes only one output row
+        add(connection, _horizontalCellCount - index - 1, OUTPUT_ROW_INDEX);
     }
 }

@@ -5,9 +5,12 @@
 
 package com.kadware.koala.ui.panels.elements.connections;
 
-public class BlankConnectorPane extends ConnectorPane {
+public class BlankConnectionPane extends ConnectionPane {
 
-    public BlankConnectorPane() {
+    public BlankConnectionPane() {
         super();
     }
+
+    @Override
+    public void paint() {}
 }

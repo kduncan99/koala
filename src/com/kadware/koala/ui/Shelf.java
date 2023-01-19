@@ -5,10 +5,7 @@
 
 package com.kadware.koala.ui;
 
-import com.kadware.koala.ui.panels.BlankPanel;
-import com.kadware.koala.ui.panels.Panel;
-import com.kadware.koala.ui.panels.PanelWidth;
-import com.kadware.koala.ui.panels.StereoOutputPanel;
+import com.kadware.koala.ui.panels.*;
 import javafx.scene.layout.HBox;
 
 public class Shelf extends HBox {
@@ -26,6 +23,10 @@ public class Shelf extends HBox {
             remaining--;
         }
 
+        {//TODO test
+            s.getChildren().add(new SimpleLFOPanel());
+            remaining--;
+        }
         while (remaining > 0) {
             var panel =
                 switch (remaining) {

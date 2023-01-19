@@ -8,6 +8,8 @@ package com.kadware.koala.ui.panels;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.SimpleLFOModule;
+import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
+import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
 
 public class SimpleLFOPanel extends ModulePanel {
 
@@ -19,15 +21,37 @@ public class SimpleLFOPanel extends ModulePanel {
     public void populateControls() {
         //TODO
         //  wave selector
-        //  low bias (-5, +0)
-        //  dual VU/PEAK meters
-        //  test-tone push-on-off button
-        //  dim push-on-off button
+        //  range (-5, +0) switch
+        //  coarse frequency control
+        //  fine frequency control
+        //  frequency indicator
+        //  reset button
+        //  meter indicator
+        //  reset trigger input
+        /*
+         *    -----------
+         *    |FreqDisp |
+         *    -----------
+         *    |Crse|Fine|
+         *    -----------
+         *    |Wave|Rnge|
+         *    -----------
+         *    |PWdt|    |
+         *    -----|    |
+         *    |    |Metr|
+         *    -----|    |
+         *    |Rset|    |
+         *    -----------
+         */
     }
 
     @Override
     public void populateConnections() {
-        //TODO
+        var section = getConnectionsSection();
+        var input = new InputConnectionPane("Reset", getModule().getInputPort(SimpleLFOModule.RESET_INPUT_PORT));
+        section.setInputConnection(0, input);
+        var output = new OutputConnectionPane("Signal", getModule().getOutputPort(SimpleLFOModule.OUTPUT_PORT));
+        section.setOutputConnection(0, output);
     }
 
     public SimpleLFOModule getModule() {

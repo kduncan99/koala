@@ -8,7 +8,7 @@ package com.kadware.koala.ui.panels;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.StereoOutputModule;
-import com.kadware.koala.ui.panels.elements.connections.InputConnectorPane;
+import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 
 public class StereoOutputPanel extends ModulePanel {
 
@@ -28,13 +28,11 @@ public class StereoOutputPanel extends ModulePanel {
 
     @Override
     public void populateConnections() {
-        //TODO
-        //  left, right inputs
-        var leftIn = new InputConnectorPane("Left", getModule().getInputPort(StereoOutputModule.LEFT_SIGNAL_INPUT_PORT));
-        var rightIn = new InputConnectorPane("Right", getModule().getInputPort(StereoOutputModule.RIGHT_SIGNAL_INPUT_PORT));
-        _connectionsPane.add(leftIn, 0, 1);
-        _connectionsPane.add(rightIn, 1, 1);
-//        getModule().enableTestTone(440);
+        var section = getConnectionsSection();
+        var leftIn = new InputConnectionPane("Left", getModule().getInputPort(StereoOutputModule.LEFT_SIGNAL_INPUT_PORT));
+        var rightIn = new InputConnectionPane("Right", getModule().getInputPort(StereoOutputModule.RIGHT_SIGNAL_INPUT_PORT));
+        section.setInputConnection(0, leftIn);
+        section.setInputConnection(1, rightIn);
     }
 
     public StereoOutputModule getModule() {

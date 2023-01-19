@@ -18,8 +18,8 @@ public class Koala extends Application {
     public static final float SAMPLE_RATE = 44100.0f;
     public static final int SAMPLE_SIZE_IN_BITS = 16;
     public static final float MAX_CVPORT_VALUE = 5.0f;
-    public static final float MIN_CVPORT_VALUE = -5.0f;
-    public static final float CVPORT_VALUE_RANGE = MAX_CVPORT_VALUE - MIN_CVPORT_VALUE;
+    public static final float MIN_CVPORT_VALUE = -MAX_CVPORT_VALUE;
+    public static final float CVPORT_VALUE_RANGE = 2 * MAX_CVPORT_VALUE;
 
     //  Note frequencies for C4 up through B4 - divide or multiply for other octaves
     private static final float NF_C = 261.63f;
@@ -42,7 +42,7 @@ public class Koala extends Application {
         var scroller = new ScrollPane(root);
         var scene = new Scene(scroller);
 
-        var rack = Rack.createEmptyRack(2, 10);
+        var rack = Rack.createEmptyRack(2, 11);
         root.getChildren().add(rack);
 
         stage.setTitle("Koala - v1.0");//   TODO later pull version from somewhere useful
@@ -64,6 +64,39 @@ public class Koala extends Application {
         ModuleManager.stop();
 
         super.stop();
+    }
+
+
+    public static int getBounded(
+        final int lowLimit,
+        final int value,
+        final int highLimit
+    ) {
+        return Math.min(Math.max(lowLimit, value), highLimit);
+    }
+
+    public static long getBounded(
+        final long lowLimit,
+        final long value,
+        final long highLimit
+    ) {
+        return Math.min(Math.max(lowLimit, value), highLimit);
+    }
+
+    public static float getBounded(
+        final float lowLimit,
+        final float value,
+        final float highLimit
+    ) {
+        return Math.min(Math.max(lowLimit, value), highLimit);
+    }
+
+    public static double getBounded(
+        final double lowLimit,
+        final double value,
+        final double highLimit
+    ) {
+        return Math.min(Math.max(lowLimit, value), highLimit);
     }
 
 //    public static void main(

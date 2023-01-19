@@ -6,8 +6,6 @@
 package com.kadware.koala.ui.panels;
 
 import com.kadware.koala.modules.Module;
-import com.kadware.koala.ui.panels.elements.connections.BlankConnectorPane;
-import javafx.scene.layout.GridPane;
 
 public abstract class ModulePanel extends Panel {
 

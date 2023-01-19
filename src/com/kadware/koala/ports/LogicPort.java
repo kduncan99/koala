@@ -10,9 +10,9 @@ package com.kadware.koala.ports;
  * in any way by the input and output ports which implement them.
  * There are no arbitrary restrictions on the range of values, nor the individual values.
  */
-public abstract class DiscretePort extends Port {
+public abstract class LogicPort extends DiscretePort {
 
-    protected DiscretePort() {}
+    protected LogicPort() {}
 
     @Override
     public abstract void reset();

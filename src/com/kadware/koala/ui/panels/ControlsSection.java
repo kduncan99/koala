@@ -5,34 +5,21 @@
 
 package com.kadware.koala.ui.panels;
 
-import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import com.kadware.koala.ui.panels.elements.controlEntities.BlankControlEntity;
 
-public class ControlsSection extends GridPane {
+public class ControlsSection extends PanelSection {
 
     private static final int VERTICAL_CELLS = 6;
-
-    private final PanelWidth _panelWidth;
 
     public ControlsSection(
         final PanelWidth panelWidth
     ) {
-        _panelWidth = panelWidth;
+        super(panelWidth);
 
-        var hCells = (_panelWidth._spaceCount * Panel.PIXELS_PER_PANEL_SPACE_WIDTH) / Panel.PIXELS_PER_CELL_EDGE;
-        var w = hCells * Panel.PIXELS_PER_CELL_EDGE;
-        var h = VERTICAL_CELLS * Panel.PIXELS_PER_CELL_EDGE;
-        setPrefSize(w, h);
-
-        var c = new Canvas(w, h);
-        var gc = c.getGraphicsContext2D();
-        gc.setFill(Panel.PANEL_TRIM_COLOR);
-        gc.fillRect(0, 0, w, h);
-        gc.setFill(Panel.PANEL_SECTION_BACKGROUND_COLOR);
-        gc.fillRect(1, 1, w - 2, h - 3);
-        getChildren().add(c);
+        for (int vx = 0; vx < VERTICAL_CELLS; ++vx) {
+            for (int hx = 0; hx < _horizontalCellCount; ++hx) {
+                add(new BlankControlEntity(), hx, vx);
+            }
+        }
     }
 }

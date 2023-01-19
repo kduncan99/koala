@@ -8,12 +8,10 @@ package com.kadware.koala.ports;
 import com.kadware.koala.Koala;
 
 /**
- * Describes an input or output port with continuous values ranging from a pre-set
- * minimum to pre-set maximum value.
- * Continuous ports have built-in scalar (multiplier) values to automatically
- * adjust any input or output value.
- * The reported output value will never be less than the pre-set minimum,
- * nor greater than the pre-set maximum, but if adjustment is necessary, the overload flag will be set.
+ * Describes an input or output port with continuous values ranging from a pre-set minimum to pre-set maximum value.
+ * Continuous ports have built-in scalar (multiplier) values to automatically adjust any input or output value.
+ * The reported output value will never be less than the pre-set minimum, nor greater than the pre-set maximum,
+ * but if adjustment is necessary, the overload flag will be set.
  */
 public abstract class ContinuousPort extends Port {
 
@@ -22,7 +20,7 @@ public abstract class ContinuousPort extends Port {
     float _multiplier;
     boolean _overload = false;
 
-    public ContinuousPort(
+    protected ContinuousPort(
         final float minimumValue,
         final float maximumValue,
         final float multiplier
@@ -32,7 +30,7 @@ public abstract class ContinuousPort extends Port {
         _multiplier = multiplier;
     }
 
-    public ContinuousPort() {
+    protected ContinuousPort() {
         _maximumValue = Koala.MAX_CVPORT_VALUE;
         _minimumValue = Koala.MIN_CVPORT_VALUE;
         _multiplier = 1.0f;

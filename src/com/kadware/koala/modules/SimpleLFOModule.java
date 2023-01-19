@@ -7,23 +7,41 @@ package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousOutputPort;
+import com.kadware.koala.ports.TriggerInputPort;
 import com.kadware.koala.waves.IWave;
 import com.kadware.koala.waves.WaveManager;
 
 public class SimpleLFOModule extends Module {
 
-    public static final int OUTPUT_PORT = 0;
+    public static final int RESET_INPUT_PORT = 0;
+    public static final int OUTPUT_PORT = 1;
+
+    public static final float DEFAULT_FREQUENCY = 1.0f;
+    public static final float LOW_FREQUENCY_LIMIT = 0.001f;
+    public static final float HIGH_FREQUENCY_LIMIT = 100.0f;
+
+    public static final float DEFAULT_PULSE_WIDTH = 0.5f;
+    public static final float LOW_PULSE_WIDTH_LIMIT = 0.05f;
+    public static final float HIGH_PULSE_WIDTH_LIMIT = 0.95f;
+
+    public final TriggerInputPort _trigger;
+    public final ContinuousOutputPort _output;
 
     private float _baseFrequency;
     private float _basePulseWidth;
     private boolean _isBiased;      //  true -> min value == MIN_CVPORT_VALUE; false -> min value == 0.0
+    private boolean _isInverted;
     private IWave _wave;
     private float _waveProgress;
 
     SimpleLFOModule() {
-        _outputPorts.put(OUTPUT_PORT, new ContinuousOutputPort());
+        _trigger = new TriggerInputPort();
+        _output = new ContinuousOutputPort();
+
+        _inputPorts.put(RESET_INPUT_PORT, _trigger);
+        _outputPorts.put(OUTPUT_PORT, _output);
         _wave = WaveManager.createWave(IWave.WaveType.Square);
-        _baseFrequency = 440.0f;
+        _baseFrequency = DEFAULT_FREQUENCY;
         _basePulseWidth = 0.5f;
         _isBiased = false;
         reset();
@@ -31,6 +49,9 @@ public class SimpleLFOModule extends Module {
 
     @Override
     public void advance() {
+        if (_trigger.getValue())
+            reset();
+
         float segmentsPerCycle = _baseFrequency / Koala.SAMPLE_RATE;
         _waveProgress += segmentsPerCycle;
         if (_waveProgress >= 1.0f) {
@@ -45,8 +66,7 @@ public class SimpleLFOModule extends Module {
             value = (value - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE * value;
         }
 
-        ContinuousOutputPort out = (ContinuousOutputPort) _outputPorts.get(OUTPUT_PORT);
-        out.setCurrentValue(value);
+        _output.setCurrentValue(value);
     }
 
     @Override
@@ -90,6 +110,12 @@ public class SimpleLFOModule extends Module {
         _isBiased = value;
     }
 
+    public void setIsInverted(
+        final boolean value
+    ) {
+        _isInverted = value;
+    }
+
     public void setPulseWidth(
         final float value
     ) {
@@ -108,5 +134,15 @@ public class SimpleLFOModule extends Module {
     ) {
         _wave = WaveManager.createWave(waveType);
         reset();
+    }
+
+    public boolean toggleIsBiased() {
+        _isBiased = !_isBiased;
+        return _isBiased;
+    }
+
+    public boolean toggleIsInverted() {
+        _isInverted = !_isInverted;
+        return _isInverted;
     }
 }
