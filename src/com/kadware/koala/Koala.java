@@ -8,10 +8,14 @@ package com.kadware.koala;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.ui.Rack;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Koala extends Application {
 
@@ -22,18 +26,42 @@ public class Koala extends Application {
     public static final float CVPORT_VALUE_RANGE = 2 * MAX_CVPORT_VALUE;
 
     //  Note frequencies for C4 up through B4 - divide or multiply for other octaves
-    private static final float NF_C = 261.63f;
-    private static final float NF_CS = 277.18f;
-    private static final float NF_D = 293.66f;
-    private static final float NF_DS = 311.13f;
-    private static final float NF_E = 329.63f;
-    private static final float NF_F = 349.23f;
-    private static final float NF_FS = 349.23f;
-    private static final float NF_G = 392.00f;
-    private static final float NF_GS = 415.30f;
-    private static final float NF_A = 440f;
-    private static final float NF_AS = 466.16f;
-    private static final float NF_B = 493.88f;
+//    private static final float NF_C = 261.63f;
+//    private static final float NF_CS = 277.18f;
+//    private static final float NF_D = 293.66f;
+//    private static final float NF_DS = 311.13f;
+//    private static final float NF_E = 329.63f;
+//    private static final float NF_F = 349.23f;
+//    private static final float NF_FS = 349.23f;
+//    private static final float NF_G = 392.00f;
+//    private static final float NF_GS = 415.30f;
+//    private static final float NF_A = 440f;
+//    private static final float NF_AS = 466.16f;
+//    private static final float NF_B = 493.88f;
+
+    private static final long PAINT_PERIOD_MS = 60;
+
+    private Rack _rack;
+    private Timer _timer;
+
+    private class PaintTask extends TimerTask {
+
+        private final PaintRunnable _runnable = new PaintRunnable();
+
+        @Override
+        public void run() {
+            Platform.runLater(_runnable);
+        }
+    }
+
+    private class PaintRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            if (_rack != null)
+                _rack.repaint();
+        }
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -42,8 +70,8 @@ public class Koala extends Application {
         var scroller = new ScrollPane(root);
         var scene = new Scene(scroller);
 
-        var rack = Rack.createEmptyRack(2, 11);
-        root.getChildren().add(rack);
+        _rack = Rack.createEmptyRack(2, 11);
+        root.getChildren().add(_rack);
 
         stage.setTitle("Koala - v1.0");//   TODO later pull version from somewhere useful
         stage.setScene(scene);
@@ -54,12 +82,15 @@ public class Koala extends Application {
     public void init(
     ) throws Exception {
         super.init();
+        _timer = new Timer();
+        _timer.scheduleAtFixedRate(new PaintTask(), 0, PAINT_PERIOD_MS);
         ModuleManager.start();
     }
 
     @Override
     public void stop(
     ) throws Exception {
+        _timer.cancel();
         ModuleManager.clear();
         ModuleManager.stop();
 

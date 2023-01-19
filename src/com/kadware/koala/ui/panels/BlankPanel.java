@@ -12,4 +12,7 @@ public class BlankPanel extends Panel {
     ) {
         super(panelWidth, "- blank -");
     }
+
+    @Override
+    public void repaint() {}
 }

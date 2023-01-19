@@ -38,4 +38,9 @@ public class StereoOutputPanel extends ModulePanel {
     public StereoOutputModule getModule() {
         return (StereoOutputModule) _module;
     }
+
+    @Override
+    public void repaint() {
+        //  TODO
+    }
 }

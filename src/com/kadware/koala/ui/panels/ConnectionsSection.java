@@ -55,4 +55,13 @@ public class ConnectionsSection extends PanelSection {
         //  Assumes only one output row
         add(connection, _horizontalCellCount - index - 1, OUTPUT_ROW_INDEX);
     }
+
+    //  Only for Application thread
+    public void repaint() {
+        for (var p : getChildren()) {
+            if (p instanceof ConnectionPane cp) {
+                cp.repaint();
+            }
+        }
+    }
 }

@@ -30,9 +30,4 @@ public class InputConnectionPane extends ConnectionPane {
         super(caption, port.getPort());
         _port = port;
     }
-
-    @Override
-    public void paint() {
-        //TODO
-    }
 }

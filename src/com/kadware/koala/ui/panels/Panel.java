@@ -15,7 +15,6 @@ public abstract class Panel extends VBox {
     //  panel geometry
     public static final int MARGIN_PIXELS = 5;
     public static final Insets MARGIN_INSETS = new Insets(MARGIN_PIXELS, MARGIN_PIXELS, MARGIN_PIXELS, MARGIN_PIXELS);
-    //public static final int PIXELS_PER_PANEL_SPACE_WIDTH = 100;
     public static final Color PANEL_SECTION_BACKGROUND_COLOR = Color.rgb(223, 223, 223);
     public static final Color PANEL_CELL_BACKGROUND_COLOR = Color.rgb(200, 200, 200);
     public static final Color PANEL_TRIM_COLOR = Color.BLACK;
@@ -47,4 +46,6 @@ public abstract class Panel extends VBox {
     protected final ConnectionsSection getConnectionsSection() { return _connectionsSection; }
     protected final ControlsSection getControlsSection() { return _controlsSection; }
     public final PanelWidth getPanelWidth() { return _panelWidth; }
+
+    public abstract void repaint();
 }

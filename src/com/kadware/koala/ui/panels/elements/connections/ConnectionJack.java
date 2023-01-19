@@ -49,6 +49,7 @@ public abstract class ConnectionJack extends HBox {
         //  TODO onMouseDragEnteredProperty
         //  TODO onMouseDragReleasedProperty
         //  TODO onMousePressedProperty
+        //  TODO mouse double-click should invoke reset() on the port
     }
 
     public static ConnectionJack createConnectionJack(

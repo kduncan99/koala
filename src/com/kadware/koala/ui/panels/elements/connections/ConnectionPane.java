@@ -57,7 +57,7 @@ public abstract class ConnectionPane extends VBox {
     }
 
     //  Can only be invoked on the Application thread
-    public void paint() {
+    public void repaint() {
         if (_jack != null) {
             _jack.paint();
         }

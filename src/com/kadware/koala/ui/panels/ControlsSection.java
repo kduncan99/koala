@@ -6,6 +6,7 @@
 package com.kadware.koala.ui.panels;
 
 import com.kadware.koala.ui.panels.elements.controlEntities.BlankControlEntity;
+import com.kadware.koala.ui.panels.elements.controlEntities.ControlEntityPane;
 
 public class ControlsSection extends PanelSection {
 
@@ -21,5 +22,13 @@ public class ControlsSection extends PanelSection {
                 add(new BlankControlEntity(), hx, vx);
             }
         }
+    }
+
+    public void setControlEntity(
+        final int leftGridCell,
+        final int topGridCell,
+        final ControlEntityPane entity
+    ) {
+        add(entity, leftGridCell, topGridCell, entity.getHorizontalCellCount(), entity.getVerticalCellCount());
     }
 }

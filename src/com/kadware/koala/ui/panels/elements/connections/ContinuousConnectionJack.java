@@ -9,10 +9,10 @@ import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ports.ContinuousPort;
+import com.kadware.koala.ui.panels.elements.AnalogLED;
+import com.kadware.koala.ui.panels.elements.DigitalLED;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 /**
  * A statically-sized graphic element which depicts a physical input or output connection.
@@ -20,24 +20,20 @@ import javafx.scene.shape.Rectangle;
 public class ContinuousConnectionJack extends ConnectionJack {
 
     public static final Color RING_COLOR = Color.RED;
-    public static final Color OVERLOAD_FALSE = Color.rgb(32, 16, 0);
-    public static final Color OVERLOAD_TRUE = Color.rgb(255, 100, 0);
+    public static final Color OVERLOAD_COLOR = Color.rgb(255, 100, 0);
+    public static final Color SIGNAL_COLOR = Color.rgb(32, 255, 32);
 
     private final ContinuousPort _port;
     private final PortIndicators _indicators;
 
     private static class PortIndicators extends VBox {
 
-        private final Circle _overload;
-        private final Circle _signal;
+        private final DigitalLED _overload;
+        private final AnalogLED _signal;
 
         public PortIndicators() {
-            _overload = new Circle();
-            _overload.setRadius(INDICATOR_RADIUS);
-            _overload.setFill(OVERLOAD_FALSE);
-            _signal = new Circle();
-            _signal.setRadius(INDICATOR_RADIUS);
-            _signal.setFill(Color.BLACK);
+            _overload = new DigitalLED(INDICATOR_RADIUS, OVERLOAD_COLOR);
+            _signal = new AnalogLED(INDICATOR_RADIUS, SIGNAL_COLOR, Koala.MIN_CVPORT_VALUE, Koala.MAX_CVPORT_VALUE);
             getChildren().addAll(_overload, _signal);
         }
     }
@@ -51,19 +47,14 @@ public class ContinuousConnectionJack extends ConnectionJack {
         _port = port;
         _indicators = new PortIndicators();
         getChildren().addAll(_indicators);
-        //  TODO add double-click mouse property to clear the overload on the port
     }
 
     @Override
     public void paint() {
-        _indicators._overload.setFill(_port.getOverload() ? OVERLOAD_TRUE : OVERLOAD_FALSE);
-
-        double absValue = 0.0;
+        _indicators._overload.setValue(_port.getOverload());
         if (_port instanceof ContinuousInputPort ip)
-            absValue = Math.abs(ip.getValue());
+            _indicators._signal.setValue(ip.getValue());
         else if (_port instanceof ContinuousOutputPort op)
-            absValue = Math.abs(op.getCurrentValue());
-        double green = (absValue / Koala.MAX_CVPORT_VALUE) * 255.0;
-        _indicators._signal.setFill(Color.rgb(0, (int)green, 0));
+            _indicators._signal.setValue(op.getCurrentValue());
     }
 }

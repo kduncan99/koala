@@ -32,7 +32,7 @@ public class OutputConnectionPane extends ConnectionPane {
     }
 
     @Override
-    public void paint() {
+    public void repaint() {
         //TODO
     }
 }

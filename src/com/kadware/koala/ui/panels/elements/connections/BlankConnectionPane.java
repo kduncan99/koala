@@ -12,5 +12,5 @@ public class BlankConnectionPane extends ConnectionPane {
     }
 
     @Override
-    public void paint() {}
+    public void repaint() {}
 }
