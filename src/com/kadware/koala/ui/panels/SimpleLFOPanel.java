@@ -5,17 +5,24 @@
 
 package com.kadware.koala.ui.panels;
 
+import com.kadware.koala.CellDimensions;
+import com.kadware.koala.Range;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.SimpleLFOModule;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
 import com.kadware.koala.ui.panels.elements.controlEntities.indicators.DigitalReadout;
+import com.kadware.koala.ui.panels.elements.controlEntities.indicators.meters.GradientInfo;
+import com.kadware.koala.ui.panels.elements.controlEntities.indicators.meters.LinearMeter;
+import com.kadware.koala.ui.panels.elements.controlEntities.indicators.meters.Meter;
 import javafx.scene.paint.Color;
 
 public class SimpleLFOPanel extends ModulePanel {
 
+    private static final CellDimensions CELL_DIMENSIONS = new CellDimensions(2, 1);
     private DigitalReadout _frequencyDisplay;
+    private Meter _meter;
 
     public SimpleLFOPanel() {
         super(ModuleManager.createModule(Module.ModuleType.SimpleLFO), PanelWidth.SINGLE, "LFO");
@@ -49,8 +56,17 @@ public class SimpleLFOPanel extends ModulePanel {
          */
         var section = getControlsSection();
 
-        _frequencyDisplay = new DigitalReadout(2, 1, "Frequency", Color.GREEN);
+        _frequencyDisplay = new DigitalReadout(new CellDimensions(2, 1), "Frequency", Color.GREEN);
         section.setControlEntity(0, 0, _frequencyDisplay);
+
+        var info = new GradientInfo(Color.RED, 11, new double[]{-5.0, 0.0, 5.0});
+        _meter = new LinearMeter(new CellDimensions(2, 1),
+                                 null,
+                                 Color.RED,
+                                 LinearMeter.Mode.DOT,
+                                 new Range<>(-5.0, 5.0),
+                                 info);
+        section.setControlEntity(0, 1, _meter);
     }
 
     @Override
@@ -72,7 +88,9 @@ public class SimpleLFOPanel extends ModulePanel {
         //  update frequency display
         var text = String.format("%6.3f Hz", ((SimpleLFOModule)_module).getBaseFrequency());
         _frequencyDisplay.setText(text);
-        _frequencyDisplay.paint();
+        _frequencyDisplay.repaint();
+        //  TODO update meter
+        _meter.repaint();
 
         //  TODO other indicators which might need updated
     }

@@ -5,6 +5,7 @@
 
 package com.kadware.koala.ui.panels.elements.controlEntities.indicators;
 
+import com.kadware.koala.CellDimensions;
 import com.kadware.koala.ui.panels.Panel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,26 +30,23 @@ public class DigitalReadout extends IndicatorPane {
     private String _text;
 
     public DigitalReadout(
-        final int horizontalCellCount,
-        final int verticalCellCount,
+        final CellDimensions cellDimensions,
         final String legend,
         final Color color
     ) {
-        super(horizontalCellCount, verticalCellCount);
+        super(cellDimensions);
         var bgColor = color.darker().darker().darker();
 
-        var width = horizontalCellCount * HORIZONTAL_PIXELS;
-        var height = verticalCellCount * VERTICAL_PIXELS;
-
+        var halfHeight = _pixelDimensions.getHeight() / 2;
         _display = new Label();
         _display.setTextFill(color.brighter());
         _display.setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
-        _display.setPrefSize(width, height / 2.0);
+        _display.setPrefSize(_pixelDimensions.getWidth(), halfHeight);
         _display.setAlignment(Pos.BASELINE_CENTER);
 
         var caption = new Label(legend);
         caption.setTextFill(Panel.PANEL_LEGEND_COLOR);
-        caption.setPrefSize(width, height / 2.0);
+        caption.setPrefSize(_pixelDimensions.getWidth(), halfHeight);
         caption.setAlignment(Pos.BASELINE_CENTER);
 
         add(_display, 0, 0);
@@ -62,7 +60,7 @@ public class DigitalReadout extends IndicatorPane {
     }
 
     @Override
-    public void paint() {
+    public void repaint() {
         _display.setText(_text);
     }
 }

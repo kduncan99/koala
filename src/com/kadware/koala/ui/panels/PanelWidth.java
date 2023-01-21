@@ -5,8 +5,6 @@
 
 package com.kadware.koala.ui.panels;
 
-import com.kadware.koala.ui.old.panels.old.BasePanel;
-
 /**
  * Indicates how many horizontal panel spaces are consumed by this panel.
  * The smallest (and the resolution) is one panel space.

@@ -5,57 +5,46 @@
 
 package com.kadware.koala.ui.panels.elements.controlEntities;
 
+import com.kadware.koala.CellDimensions;
+import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.ui.panels.Panel;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+public abstract class ControlEntityPane extends GridPane {
 
-public abstract class ControlEntityPane extends GridPane implements Runnable {
-
-    public static final int HORIZONTAL_PIXELS = 40;
-    public static final int VERTICAL_PIXELS = 55;
+    public static final int HORIZONTAL_PIXELS_PER_CELL = 40;
+    public static final int VERTICAL_PIXELS_PER_CELL = 55;
     public static final BackgroundFill BACKGROUND_FILL
         = new BackgroundFill(Panel.PANEL_CELL_BACKGROUND_COLOR, null, new Insets(1));
     public static final Background BACKGROUND = new Background(BACKGROUND_FILL);
 
-    private final AtomicBoolean _paintScheduled = new AtomicBoolean();
-    protected final int _horizontalCellCount;
-    protected final int _verticalCellCount;
+    protected final CellDimensions _cellDimensions;
+    protected final PixelDimensions _pixelDimensions;
 
     public ControlEntityPane(
-        final int horizontalCellCount,
-        final int verticalCellCount
+        final CellDimensions cellDimensions
     ) {
-        _horizontalCellCount = horizontalCellCount;
-        _verticalCellCount = verticalCellCount;
+        _cellDimensions = cellDimensions;
+        _pixelDimensions = toPixelDimensions(cellDimensions);
 
-        int width = _horizontalCellCount * HORIZONTAL_PIXELS;
-        int height = _verticalCellCount * VERTICAL_PIXELS;
-        setPrefSize(width, height);
+        setPrefSize(_pixelDimensions.getWidth(), _pixelDimensions.getHeight());
         setBackground(BACKGROUND);
     }
 
-    //  This mechanism allows us to schedule thousands of times per second...
-    //  while only queueing a single run-later as necessary.
-    protected void schedulePaint() {
-        if (!_paintScheduled.getAndSet(true)) {
-            Platform.runLater(this);
-        }
-    }
-
-    //  This is only invoked by the Application thread via runLater()
-    public void run() {
-        _paintScheduled.set(false);
-        paint();
-    }
-
     //  Can only be invoked on the Application thread
-    public abstract void paint();
+    public abstract void repaint();
 
-    public int getHorizontalCellCount() { return _horizontalCellCount; }
-    public int getVerticalCellCount() { return _verticalCellCount; }
+    public int getHorizontalCellCount() { return _cellDimensions.getWidth(); }
+    public int getVerticalCellCount() { return _cellDimensions.getHeight(); }
+
+    public static PixelDimensions toPixelDimensions(
+        final CellDimensions cellDimensions
+    ) {
+        var w = cellDimensions.getWidth() * HORIZONTAL_PIXELS_PER_CELL;
+        var h = cellDimensions.getHeight() * VERTICAL_PIXELS_PER_CELL;
+        return new PixelDimensions(w, h);
+    }
 }

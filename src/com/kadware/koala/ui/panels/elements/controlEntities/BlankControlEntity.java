@@ -5,12 +5,15 @@
 
 package com.kadware.koala.ui.panels.elements.controlEntities;
 
+import com.kadware.koala.CellDimensions;
+
 public class BlankControlEntity extends ControlEntityPane {
 
+    private static final CellDimensions CELL_DIMENSIONS = new com.kadware.koala.CellDimensions(1, 1);
     public BlankControlEntity() {
-        super(1, 1);
+        super(CELL_DIMENSIONS);
     }
 
     @Override
-    public void paint() {}
+    public void repaint() {}
 }

@@ -5,14 +5,14 @@
 
 package com.kadware.koala.ui.panels.elements.controlEntities.indicators;
 
+import com.kadware.koala.CellDimensions;
 import com.kadware.koala.ui.panels.elements.controlEntities.ControlEntityPane;
 
 public abstract class IndicatorPane extends ControlEntityPane {
 
     protected IndicatorPane(
-        int horizontalCellCount,
-        int verticalCellCount
+        final CellDimensions cellDimensions
     ) {
-        super(horizontalCellCount, verticalCellCount);
+        super(cellDimensions);
     }
 }
