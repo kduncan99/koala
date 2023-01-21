@@ -40,7 +40,7 @@ public class SimpleLFOModule extends Module {
 
         _inputPorts.put(RESET_INPUT_PORT, _trigger);
         _outputPorts.put(OUTPUT_PORT, _output);
-        _wave = WaveManager.createWave(IWave.WaveType.Square);
+        _wave = WaveManager.createWave(IWave.WaveType.Sine);
         _baseFrequency = DEFAULT_FREQUENCY;
         _basePulseWidth = 0.5f;
         _isBiased = false;

@@ -59,23 +59,10 @@ public class HorizontalGradientPane extends GradientPane {
             t.setFont(FONT);
             var pixels = t.getLayoutBounds().getWidth() - 2;
 
-            x = findGraphCoordinate(lpt) - (pixels / 2.0);
+            x = findHorizontalGraphCoordinate(lpt) - (pixels / 2.0);
             x = Koala.getBounded(INSET_PIXELS, x, (xLimit - pixels));
             gc.fillText(text, x, y);
         }
         System.out.println();
-    }
-
-    /**
-     * Given a raw value, relative to the established low/high range,
-     * we produce a coordinate relative to the left/top edge of the graph which
-     * represents that value (clipping to min/max if/as necessary)
-     */
-    protected double findGraphCoordinate(
-        final double rawValue
-    ) {
-        var ratio = (rawValue - _range.getLowValue()) / (_range.getHighValue() - _range.getLowValue());
-        ratio = Koala.getBounded(0.0, ratio, 1.0);
-        return (ratio * getPrefWidth());
     }
 }

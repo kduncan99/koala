@@ -17,25 +17,30 @@ import javafx.scene.layout.*;
  */
 abstract class LayoutPane extends GridPane {
 
-    protected final GradientPane _gradientPane;
-    protected final Pane _graphPane;
-    protected final Group _legendPane;
-    protected final PixelDimensions _pixelDimensions;
+    private final GradientPane _gradientPane;
+    private final GraphPane _graphPane;
+    private final Group _legendPane;
+    private final PixelDimensions _pixelDimensions;
 
     protected LayoutPane(
-        final CellDimensions cellDimensions,
+        final PixelDimensions pixelDimensions,
         final Range<Double> range,
         final String legend,
         final GradientInfo info
     ) {
-        _pixelDimensions = ControlEntityPane.toPixelDimensions(cellDimensions);
+        _pixelDimensions = pixelDimensions;
         setPrefSize(_pixelDimensions.getWidth(), _pixelDimensions.getHeight());
 
         var hasLegend = !(legend == null || legend.isEmpty());
         _legendPane = createLegendPane(_pixelDimensions, legend);
-        _graphPane = createGraphPane(_pixelDimensions, hasLegend);
+        _graphPane = createGraphPane(_pixelDimensions, range, hasLegend);
         _gradientPane = createGradientPane(_pixelDimensions, range, hasLegend, info);
     }
+
+    public GradientPane getGradientPane() { return _gradientPane; }
+    public GraphPane getGraphPane() { return _graphPane; }
+    public Group getLegendPane() { return _legendPane; }
+    public PixelDimensions getPixelDimensions() { return _pixelDimensions; }
 
     public abstract GradientPane createGradientPane(
         final PixelDimensions layoutPixelDimensions,
@@ -44,8 +49,9 @@ abstract class LayoutPane extends GridPane {
         final GradientInfo info
     );
 
-    public abstract Pane createGraphPane(
+    public abstract GraphPane createGraphPane(
         final PixelDimensions layoutPixelDimensions,
+        final Range<Double> range,
         final boolean hasLegend
     );
 

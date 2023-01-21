@@ -5,14 +5,12 @@
 
 package com.kadware.koala.ui.panels.elements.controlEntities.indicators.meters;
 
-import com.kadware.koala.CellDimensions;
 import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.Range;
 import com.kadware.koala.ui.panels.Panel;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 
 /*
  * -----------------------
@@ -24,12 +22,12 @@ import javafx.scene.layout.Pane;
 class HorizontalLayoutPane extends LayoutPane {
 
     public HorizontalLayoutPane(
-        final CellDimensions cellDimensions,
+        final PixelDimensions pixelDimensions,
         final Range<Double> range,
         final String legend,
         final GradientInfo info
     ) {
-        super(cellDimensions, range, legend, info);
+        super(pixelDimensions, range, legend, info);
 
         if (legend != null && !legend.isEmpty()) {
             //  legend label needs wrapped in a Group so resizing works properly after it's rotated.
@@ -60,14 +58,16 @@ class HorizontalLayoutPane extends LayoutPane {
     }
 
     @Override
-    public Pane createGraphPane(
+    public GraphPane createGraphPane(
         final PixelDimensions layoutPixelDimensions,
+        final Range<Double> range,
         final boolean hasLegend
     ) {
         var subWidth = layoutPixelDimensions.getWidth() - (hasLegend ? 15 : 0);
 
-        var graphPane = new Pane();
-        graphPane.setPrefSize(subWidth, layoutPixelDimensions.getHeight() / 2.0);
+        var w = layoutPixelDimensions.getWidth() - (hasLegend ? 15 : 0);
+        var h = layoutPixelDimensions.getHeight() / 2;
+        var graphPane = new GraphPane(new PixelDimensions(w, h), range);
         add(graphPane, 1, 0, 1, 1);
         return graphPane;
     }

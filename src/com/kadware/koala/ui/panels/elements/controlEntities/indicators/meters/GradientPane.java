@@ -8,16 +8,12 @@ package com.kadware.koala.ui.panels.elements.controlEntities.indicators.meters;
 import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.Range;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.StackPane;
 
 /**
  * We have a background, a tick-marks canvas, and a variety of labels from bottom to top in z-order
  */
-public abstract class GradientPane extends StackPane {
+public abstract class GradientPane extends GraphPane {
 
-    protected static final int INSET_PIXELS = 2;
-
-    protected final Range<Double> _range;
     protected final Canvas _tickMarkCanvas;
 
     protected GradientPane(
@@ -25,9 +21,9 @@ public abstract class GradientPane extends StackPane {
         final Range<Double> range,
         final GradientInfo info
     ) {
-        _tickMarkCanvas = new Canvas(dimensions.getWidth(), dimensions.getHeight());
-        _range = range;
+        super(dimensions, range);
 
+        _tickMarkCanvas = new Canvas(dimensions.getWidth(), dimensions.getHeight());
         setPrefSize(dimensions.getWidth(), dimensions.getHeight());
         drawCanvas(_tickMarkCanvas, range, info);
         getChildren().add(_tickMarkCanvas);

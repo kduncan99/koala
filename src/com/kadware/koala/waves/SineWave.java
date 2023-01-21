@@ -5,6 +5,8 @@
 
 package com.kadware.koala.waves;
 
+import com.kadware.koala.Koala;
+
 public class SineWave implements IWave {
 
     SineWave() {}
@@ -21,7 +23,7 @@ public class SineWave implements IWave {
         final float position,
         final float pulseWidth
     ) {
-        return (float) Math.sin(position * (1.0f - Math.PI));
+        return (float) Math.sin(position * (2 * Math.PI)) * Koala.MAX_CVPORT_VALUE;
     }
 
     @Override

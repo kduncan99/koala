@@ -18,7 +18,7 @@ public abstract class Meter extends IndicatorPane {
 
     private final LayoutPane _layoutPane;
     private final Range<Double> _range;
-    private double _value = 0.0;
+    protected double _value = 0.0;
 
     public Meter(
         final CellDimensions cellDimensions,
@@ -31,15 +31,16 @@ public abstract class Meter extends IndicatorPane {
         _range = range;
         _value = range.getLowValue();
 
+        var pd = toPixelDimensions(cellDimensions);
         _layoutPane = switch (orientation) {
-            case HORIZONTAL -> new HorizontalLayoutPane(cellDimensions, range, legend, info);
-            case VERTICAL -> new VerticalLayoutPane(cellDimensions, range, legend, info);
+            case HORIZONTAL -> new HorizontalLayoutPane(pd, range, legend, info);
+            case VERTICAL -> new VerticalLayoutPane(pd, range, legend, info);
         };
 
         add(_layoutPane, 0, 0, 1, 1);
     }
 
-    protected void setValue(
+    public void setValue(
         final double value
     ) {
         _value = Koala.getBounded(_range.getLowValue(), value, _range.getHighValue());

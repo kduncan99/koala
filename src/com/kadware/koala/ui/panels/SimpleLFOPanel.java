@@ -10,6 +10,7 @@ import com.kadware.koala.Range;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.SimpleLFOModule;
+import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
 import com.kadware.koala.ui.panels.elements.controlEntities.indicators.DigitalReadout;
@@ -20,7 +21,6 @@ import javafx.scene.paint.Color;
 
 public class SimpleLFOPanel extends ModulePanel {
 
-    private static final CellDimensions CELL_DIMENSIONS = new CellDimensions(2, 1);
     private DigitalReadout _frequencyDisplay;
     private Meter _meter;
 
@@ -59,11 +59,11 @@ public class SimpleLFOPanel extends ModulePanel {
         _frequencyDisplay = new DigitalReadout(new CellDimensions(2, 1), "Frequency", Color.GREEN);
         section.setControlEntity(0, 0, _frequencyDisplay);
 
-        var info = new GradientInfo(Color.RED, 11, new double[]{-5.0, 0.0, 5.0});
+        var info = new GradientInfo(Color.GREEN, 11, new double[]{-5.0, 0.0, 5.0});
         _meter = new LinearMeter(new CellDimensions(2, 1),
                                  null,
-                                 Color.RED,
-                                 LinearMeter.Mode.DOT,
+                                 Color.GREEN,
+                                 LinearMeter.Mode.LINE,
                                  new Range<>(-5.0, 5.0),
                                  info);
         section.setControlEntity(0, 1, _meter);
@@ -89,7 +89,10 @@ public class SimpleLFOPanel extends ModulePanel {
         var text = String.format("%6.3f Hz", ((SimpleLFOModule)_module).getBaseFrequency());
         _frequencyDisplay.setText(text);
         _frequencyDisplay.repaint();
-        //  TODO update meter
+
+        var op = getModule().getOutputPort(SimpleLFOModule.OUTPUT_PORT).getPort();
+        var opValue = ((ContinuousOutputPort) op).getCurrentValue();
+        _meter.setValue(opValue);
         _meter.repaint();
 
         //  TODO other indicators which might need updated
