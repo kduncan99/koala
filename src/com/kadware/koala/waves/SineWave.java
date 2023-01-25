@@ -19,11 +19,11 @@ public class SineWave implements IWave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public float getValue(
-        final float position,
-        final float pulseWidth
+    public double getValue(
+        final double position,
+        final double pulseWidth
     ) {
-        return (float) Math.sin(position * (2 * Math.PI)) * Koala.MAX_CVPORT_VALUE;
+        return Math.sin(position * (2 * Math.PI)) * Koala.MAX_CVPORT_VALUE;
     }
 
     @Override
@@ -33,6 +33,6 @@ public class SineWave implements IWave {
 
     @Override
     public WaveType getWaveType() {
-        return WaveType.Sine;
+        return WaveType.SINE;
     }
 }

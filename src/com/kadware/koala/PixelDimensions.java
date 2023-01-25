@@ -13,4 +13,10 @@ public class PixelDimensions extends Dimensions<Integer> {
     ) {
         super(width, height);
     }
+
+    public PixelDimensions expandBy(
+        final int pixels
+    ) {
+        return new PixelDimensions(getWidth() + pixels, getHeight() + pixels);
+    }
 }

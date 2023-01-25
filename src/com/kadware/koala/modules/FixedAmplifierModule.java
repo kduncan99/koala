@@ -21,7 +21,7 @@ public class FixedAmplifierModule extends Module {
     private final ContinuousInputPort _signalIn;
     private final ContinuousOutputPort _signalOut;
 
-    private float _baseValue = 5.0f;
+    private double _baseValue = 5.0f;
 
     FixedAmplifierModule() {
         _signalIn = new ContinuousInputPort();
@@ -32,8 +32,8 @@ public class FixedAmplifierModule extends Module {
 
     @Override
     public void advance() {
-        float multiplier = (_baseValue - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE;
-        float signalOutValue = multiplier * _signalIn.getValue();
+        double multiplier = (_baseValue - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE;
+        double signalOutValue = multiplier * _signalIn.getValue();
         _signalOut.setCurrentValue(signalOutValue);
     }
 
@@ -53,7 +53,7 @@ public class FixedAmplifierModule extends Module {
     public void reset() {}
 
     public void setBaseValue(
-        final float value
+        final double value
     ) {
         _baseValue = value;
     }

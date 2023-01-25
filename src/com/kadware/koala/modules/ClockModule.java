@@ -12,7 +12,7 @@ public class ClockModule extends Module {
 
     public static final int SIGNAL_OUTPUT_PORT = 0;
 
-    private float _baseFrequency;       //  usable range from 0.{mumble} up to around 20kHz
+    private double _baseFrequency;       //  usable range from 0.{mumble} up to around 20kHz
     private int _cycleCounter;
     private int _transitionLimit;
     private int _resetLimit;
@@ -36,7 +36,7 @@ public class ClockModule extends Module {
     @Override
     public void close() {}
 
-    public float getBaseFrequency() {
+    public double getBaseFrequency() {
         return _baseFrequency;
     }
 
@@ -51,7 +51,7 @@ public class ClockModule extends Module {
     }
 
     public void setBaseFrequency(
-        final float value
+        final double value
     ) {
         _baseFrequency = value;
         int samplesPerCycle = (int)(Koala.SAMPLE_RATE / _baseFrequency);

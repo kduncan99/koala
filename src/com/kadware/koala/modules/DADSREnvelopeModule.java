@@ -32,20 +32,20 @@ public class DADSREnvelopeModule extends Module {
     public final LogicInputPort _gate;
     public final ContinuousOutputPort _output;
 
-    private float _delayTime;       //  in msec
-    private float _attackTime;      //  in msec
-    private float _decayTime;       //  in msec
-    private float _sustainLevel;    //  standard range
-    private float _releaseTime;     //  in msec
+    private double _delayTime;       //  in msec
+    private double _attackTime;      //  in msec
+    private double _decayTime;       //  in msec
+    private double _sustainLevel;    //  standard range
+    private double _releaseTime;     //  in msec
 
     private int _stateCounter;
-    private float _attackIncrement;
-    private float _decayDecrement;
+    private double _attackIncrement;
+    private double _decayDecrement;
     private int _delaySamples;
     private boolean _gated;
     private boolean _manualGate;
     private boolean _manualTrigger;
-    private float _releaseDecrement;
+    private double _releaseDecrement;
     private State _state;
     private boolean _triggered;
 
@@ -191,7 +191,7 @@ public class DADSREnvelopeModule extends Module {
     }
 
     public void setAttackTime(
-        final float milliseconds
+        final double milliseconds
     ) {
         _attackTime = milliseconds;
         var samples = _attackTime * Koala.SAMPLE_RATE / 1000.0f;
@@ -199,7 +199,7 @@ public class DADSREnvelopeModule extends Module {
     }
 
     public void setDecayTime(
-        final float milliseconds
+        final double milliseconds
     ) {
         _decayTime = milliseconds;
         var samples = _decayTime * Koala.SAMPLE_RATE / 1000.0f;
@@ -207,7 +207,7 @@ public class DADSREnvelopeModule extends Module {
     }
 
     public void setDelayTime(
-        final float milliseconds
+        final double milliseconds
     ) {
         _delayTime = milliseconds;
         _delaySamples = (int) (_delayTime * Koala.SAMPLE_RATE / 1000.0f);
@@ -220,7 +220,7 @@ public class DADSREnvelopeModule extends Module {
     }
 
     public void setReleaseTime(
-        final float milliseconds
+        final double milliseconds
     ) {
         _releaseTime = milliseconds;
         var samples = _releaseTime * Koala.SAMPLE_RATE / 1000.0f;
@@ -228,7 +228,7 @@ public class DADSREnvelopeModule extends Module {
     }
 
     public void setSustainLevel(
-        final float level
+        final double level
     ) {
         _sustainLevel = Math.min(Math.max(level, Koala.MIN_CVPORT_VALUE), Koala.MAX_CVPORT_VALUE);
     }

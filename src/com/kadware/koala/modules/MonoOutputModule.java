@@ -20,8 +20,8 @@ public class MonoOutputModule extends Module {
     private static final boolean SIGNED = true;
     private static final boolean BIG_ENDIAN = true;
     private static final AudioFormat AUDIO_FORMAT =
-        new AudioFormat(Koala.SAMPLE_RATE, Koala.SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
-    private static final float SAMPLE_MAGNITUDE = (1 << (Koala.SAMPLE_SIZE_IN_BITS - 1)) - 1;
+        new AudioFormat((float) Koala.SAMPLE_RATE, Koala.SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
+    private static final double SAMPLE_MAGNITUDE = (1 << (Koala.SAMPLE_SIZE_IN_BITS - 1)) - 1;
 
     private SourceDataLine _sourceDataLine = null;
 
@@ -74,7 +74,7 @@ public class MonoOutputModule extends Module {
      * scaled according to our sample bit size.
      */
     private int scale(
-        final float input
+        final double input
     ) {
         //  adjust the input value which varies from MIN_PORT_VALUE to MAX_PORT_VALUE,
         //  such that it fits nicely within the SAMPLE_SIZE_IN_BITS range.

@@ -27,7 +27,7 @@ public class VCAmplifierModule extends Module {
     private final ContinuousInputPort _controlIn2;
     private final ContinuousOutputPort _signalOut;
 
-    private float _baseValue = 5.0f;
+    private double _baseValue = 5.0f;
 
     VCAmplifierModule() {
         _signalIn = new ContinuousInputPort();
@@ -45,9 +45,9 @@ public class VCAmplifierModule extends Module {
         //  sum of control value is expected to vary from _minimum to _maximum.
         //  re-scale and re-bias this such that we get a multiplier from 0.0 to 1.0,
         //  then apply it to the signal input to produce the signal output.
-        float controlValue = _baseValue + _controlIn1.getValue() + _controlIn2.getValue();
-        float multiplier = (controlValue - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE;
-        float signalOutValue = multiplier * _signalIn.getValue();
+        double controlValue = _baseValue + _controlIn1.getValue() + _controlIn2.getValue();
+        double multiplier = (controlValue - Koala.MIN_CVPORT_VALUE) / Koala.CVPORT_VALUE_RANGE;
+        double signalOutValue = multiplier * _signalIn.getValue();
         _signalOut.setCurrentValue(signalOutValue);
     }
 
@@ -67,7 +67,7 @@ public class VCAmplifierModule extends Module {
     public void reset() {}
 
     public void setBaseValue(
-        final float value
+        final double value
     ) {
         _baseValue = value;
     }

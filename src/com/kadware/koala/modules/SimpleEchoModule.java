@@ -20,9 +20,9 @@ public class SimpleEchoModule extends Module {
     public final ContinuousOutputPort _output;
 
     private int _cacheIndex;
-    private float _delayInMillis;
+    private double _delayInMillis;
     private int _delayInSamples;
-    private float[] _cache;
+    private double[] _cache;
 
     SimpleEchoModule() {
         _input = new ContinuousInputPort();
@@ -63,7 +63,7 @@ public class SimpleEchoModule extends Module {
     }
 
     public void setDelayInMillis(
-        final float milliseconds
+        final double milliseconds
     ) {
         _delayInMillis = milliseconds;
         _delayInSamples = (int) (_delayInMillis * Koala.SAMPLE_RATE / 1000.0f);
@@ -72,7 +72,7 @@ public class SimpleEchoModule extends Module {
             _cacheIndex = 0;
         } else {
             if (_cache == null) {
-                _cache = new float[_delayInSamples];
+                _cache = new double[_delayInSamples];
                 _cacheIndex = 0;
             } else {
                 _cache = Arrays.copyOf(_cache, _delayInSamples);

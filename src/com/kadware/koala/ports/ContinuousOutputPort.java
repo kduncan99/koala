@@ -7,20 +7,20 @@ package com.kadware.koala.ports;
 
 public final class ContinuousOutputPort extends ContinuousPort implements IOutputPort {
 
-    private float _currentValue = 0.0f;
+    private double _currentValue = 0.0f;
 
     public ContinuousOutputPort(
-        final float minimumValue,
-        final float maximumValue,
-        final float multiplier
+        final double minimumValue,
+        final double maximumValue,
+        final double multiplier
     ) {
         super(minimumValue, maximumValue, multiplier);
     }
 
     public ContinuousOutputPort() {}
 
-    public float getCurrentValue() {
-        float value = _currentValue * _multiplier;
+    public double getCurrentValue() {
+        double value = _currentValue * _multiplier;
         if (value < _minimumValue) {
             return _minimumValue;
         } else if (value > _maximumValue) {
@@ -42,7 +42,7 @@ public final class ContinuousOutputPort extends ContinuousPort implements IOutpu
     }
 
     public void setCurrentValue(
-        final float value
+        final double value
     ) {
         _currentValue = value;
         if ((value > _minimumValue) || (value < _maximumValue)) {

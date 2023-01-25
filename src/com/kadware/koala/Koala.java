@@ -19,11 +19,11 @@ import java.util.TimerTask;
 
 public class Koala extends Application {
 
-    public static final float SAMPLE_RATE = 44100.0f;
+    public static final double SAMPLE_RATE = 44100.0f;
     public static final int SAMPLE_SIZE_IN_BITS = 16;
-    public static final float MAX_CVPORT_VALUE = 5.0f;
-    public static final float MIN_CVPORT_VALUE = -MAX_CVPORT_VALUE;
-    public static final float CVPORT_VALUE_RANGE = 2 * MAX_CVPORT_VALUE;
+    public static final double MAX_CVPORT_VALUE = 5.0f;
+    public static final double MIN_CVPORT_VALUE = -MAX_CVPORT_VALUE;
+    public static final double CVPORT_VALUE_RANGE = 2 * MAX_CVPORT_VALUE;
 
     //  Note frequencies for C4 up through B4 - divide or multiply for other octaves
 //    private static final float NF_C = 261.63f;
@@ -39,7 +39,7 @@ public class Koala extends Application {
 //    private static final float NF_AS = 466.16f;
 //    private static final float NF_B = 493.88f;
 
-    private static final long PAINT_PERIOD_MS = 60;
+    private static final long PAINT_PERIOD_MS = hzToMsec(100);
 
     private Rack _rack;
     private Timer _timer;
@@ -70,7 +70,7 @@ public class Koala extends Application {
         var scroller = new ScrollPane(root);
         var scene = new Scene(scroller);
 
-        _rack = Rack.createEmptyRack(2, 11);
+        _rack = Rack.createEmptyRack(1, 11);
         root.getChildren().add(_rack);
 
         stage.setTitle("Koala - v1.0");//   TODO later pull version from somewhere useful
@@ -128,6 +128,12 @@ public class Koala extends Application {
         final double highLimit
     ) {
         return Math.min(Math.max(lowLimit, value), highLimit);
+    }
+
+    private static long hzToMsec(
+        final long hz
+    ) {
+        return 1000/hz;
     }
 
 //    public static void main(

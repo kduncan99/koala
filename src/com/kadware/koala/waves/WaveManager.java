@@ -8,14 +8,14 @@ package com.kadware.koala.waves;
 public class WaveManager {
 
     public static IWave createWave(
-        final IWave.WaveType waveType
+        final WaveType waveType
     ) {
         switch (waveType) {
-            case Ramp:      return new RampWave();
-            case Sawtooth:  return new SawtoothWave();
-            case Sine:      return new SineWave();
-            case Square:    return new SquareWave();
-            case Triangle:  return new TriangleWave();
+            case RAMP:      return new RampWave();
+            case SAWTOOTH:  return new SawtoothWave();
+            case SINE:      return new SineWave();
+            case SQUARE:    return new SquareWave();
+            case TRIANGLE:  return new TriangleWave();
         }
 
         throw new RuntimeException("Bad Juju");

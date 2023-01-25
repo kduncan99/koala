@@ -19,9 +19,9 @@ public class SquareWave implements IWave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public float getValue(
-        final float position,
-        final float pulseWidth
+    public double getValue(
+        final double position,
+        final double pulseWidth
     ) {
         return (position >= pulseWidth) ? Koala.MAX_CVPORT_VALUE : Koala.MIN_CVPORT_VALUE;
     }
@@ -33,6 +33,6 @@ public class SquareWave implements IWave {
 
     @Override
     public WaveType getWaveType() {
-        return WaveType.Square;
+        return WaveType.SQUARE;
     }
 }

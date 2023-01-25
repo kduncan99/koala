@@ -35,9 +35,9 @@ public class VCFilterModule extends Module {
     private final ContinuousOutputPort _bandpassOutputPort;
     private final ContinuousOutputPort _highpassOutputPort;
 
-    private float _baseFrequency = 0.0f;        //  limit value from 0.0 to 20000.0
-    private float _baseResonance = 0.0f;        //  limit value from 0.0 to 0.1
-    private float[] _stateValues = { 0.0f, 0.0f, 0.0f, 0.0f };
+    private double _baseFrequency = 0.0;        //  limit value from 0.0 to 20000.0
+    private double _baseResonance = 0.0;        //  limit value from 0.0 to 0.1
+    private double[] _stateValues = { 0.0, 0.0, 0.0, 0.0 };
     private Type _type = Type.Two_Pole;
 
     public VCFilterModule() {
@@ -72,10 +72,10 @@ public class VCFilterModule extends Module {
         //      double the frequency, while a decrease of 1.0 corresponds to halving.
         //  Calculate resonance as the sum of the base value with the mod value.
         //      Don't let it be < 0.0, nor >= 1.0.
-        float inputSignal = _signalInputPort.getValue();
-        float frequencyMod = _frequencyModInputPort1.getValue() + _frequencyModInputPort2.getValue();
-        float frequency = (float)(_baseFrequency * Math.pow(2.0, frequencyMod));
-        float resonance = _baseResonance + _resonanceModInputPort.getValue();
+        double inputSignal = _signalInputPort.getValue();
+        double frequencyMod = _frequencyModInputPort1.getValue() + _frequencyModInputPort2.getValue();
+        double frequency = (float)(_baseFrequency * Math.pow(2.0, frequencyMod));
+        double resonance = _baseResonance + _resonanceModInputPort.getValue();
         if (resonance < 0.0f) {
             resonance = 0.0f;
         } else if (resonance >= 1.0f) {
@@ -111,11 +111,11 @@ public class VCFilterModule extends Module {
     @Override
     public void close() {}
 
-    public float getBaseFrequency() {
+    public double getBaseFrequency() {
         return _baseFrequency;
     }
 
-    public float getBaseResonance() {
+    public double getBaseResonance() {
         return _baseResonance;
     }
 
@@ -128,13 +128,13 @@ public class VCFilterModule extends Module {
     public void reset() {}
 
     public void setBaseFrequency(
-        final float frequency
+        final double frequency
     ) {
         _baseFrequency = frequency;
     }
 
     public void setBaseResonance(
-        final float resonance
+        final double resonance
     ) {
         _baseResonance = resonance;
     }

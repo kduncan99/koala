@@ -19,12 +19,12 @@ public class SawtoothWave implements IWave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public float getValue(
-        final float position,
-        final float pulseWidth
+    public double getValue(
+        final double position,
+        final double pulseWidth
     ) {
-        float effectivePosition = position;
-        float effectivePulseWidth = pulseWidth;
+        double effectivePosition = position;
+        double effectivePulseWidth = pulseWidth;
 
         if (position < 0.0) {
             effectivePosition = 0.0f;
@@ -42,6 +42,6 @@ public class SawtoothWave implements IWave {
 
     @Override
     public WaveType getWaveType() {
-        return WaveType.Sawtooth;
+        return WaveType.SAWTOOTH;
     }
 }

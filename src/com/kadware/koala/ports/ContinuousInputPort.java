@@ -12,9 +12,9 @@ public final class ContinuousInputPort extends ContinuousPort implements IInputP
     private ContinuousOutputPort _source = null;
 
     public ContinuousInputPort(
-        final float minimumValue,
-        final float maximumValue,
-        final float multiplier
+        final double minimumValue,
+        final double maximumValue,
+        final double multiplier
     ) {
         super(minimumValue, maximumValue, multiplier);
     }
@@ -46,11 +46,11 @@ public final class ContinuousInputPort extends ContinuousPort implements IInputP
         return _source;
     }
 
-    public float getValue() {
+    public double getValue() {
         if (_source == null) {
             return (_maximumValue + _minimumValue) / 2.0f;
         } else {
-            float value = _source.getCurrentValue() * _multiplier;
+            double value = _source.getCurrentValue() * _multiplier;
             if (value > _maximumValue) {
                 _overload = true;
                 return _maximumValue;

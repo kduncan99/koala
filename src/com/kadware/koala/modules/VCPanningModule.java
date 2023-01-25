@@ -23,7 +23,7 @@ public class VCPanningModule extends Module {
     private final ContinuousOutputPort _leftOut;
     private final ContinuousOutputPort _rightOut;
 
-    private float _baseValue = 0.0f;    //  ranges from -5.0 (hard left) to 5.0 (hard right)
+    private double _baseValue = 0.0f;    //  ranges from -5.0 (hard left) to 5.0 (hard right)
 
     VCPanningModule() {
         _signalIn = new ContinuousInputPort();
@@ -41,12 +41,12 @@ public class VCPanningModule extends Module {
 
     @Override
     public void advance() {
-        float signal = _signalIn.getValue();
+        double signal = _signalIn.getValue();
 
-        float control = _baseValue + _controlIn1.getValue() + _controlIn2.getValue();
+        double control = _baseValue + _controlIn1.getValue() + _controlIn2.getValue();
         control = Math.max(Math.min(control, Koala.MAX_CVPORT_VALUE), Koala.MIN_CVPORT_VALUE);
-        float leftScalar = rescale(control);
-        float rightScalar = rescale(control);
+        double leftScalar = rescale(control);
+        double rightScalar = rescale(control);
 
         _leftOut.setCurrentValue(leftScalar * signal);
         _rightOut.setCurrentValue(rightScalar * signal);
@@ -59,7 +59,7 @@ public class VCPanningModule extends Module {
      * Getter
      * @return base value ranging from -5.0 to 5.0
      */
-    public float getBaseValue() {
+    public double getBaseValue() {
         return _baseValue;
     }
 
@@ -72,8 +72,8 @@ public class VCPanningModule extends Module {
      * Rescales the input value with the standard koala range,
      * to the domain of log10() which produces a range of 0.0 to 1.0 (i.e., 1.0 to 10.0).
      */
-    private float rescale(
-        final float value
+    private double rescale(
+        final double value
     ) {
         return ((value - Koala.MIN_CVPORT_VALUE) * 9 / Koala.CVPORT_VALUE_RANGE) + 1.0f;
     }
@@ -87,7 +87,7 @@ public class VCPanningModule extends Module {
      * We rescale this internally to left and right scalar values.
      */
     public void setBaseValue(
-        final float value
+        final double value
     ) {
         if (value > Koala.MAX_CVPORT_VALUE) {
             _baseValue = Koala.MAX_CVPORT_VALUE;

@@ -14,10 +14,10 @@ public class DiscreteGlideModule extends Module {
     public static final int SIGNAL_INPUT_PORT = 0;
     public static final int SIGNAL_OUTPUT_PORT = 1;
 
-    private float _glideTime = 0.0f;        //  in milliseconds
+    private double _glideTime = 0.0f;        //  in milliseconds
     private boolean _gliding = false;
-    private float _incrementValue = 0.0f;
-    private float _laggingValue = 0.0f;     //  float, because we might increment in very small amounts
+    private double _incrementValue = 0.0f;
+    private double _laggingValue = 0.0f;     //  floating point, because we might increment in very small amounts
     private int _targetValue = 0;
 
     DiscreteGlideModule() {
@@ -38,14 +38,14 @@ public class DiscreteGlideModule extends Module {
                 _incrementValue = 0.0f;
                 _gliding = false;
             } else {
-                float seconds = _glideTime / 1000.0f;
+                double seconds = _glideTime / 1000.0f;
                 _incrementValue = (_targetValue - _laggingValue) / (Koala.SAMPLE_RATE * seconds);
                 _gliding = true;
             }
         }
 
         if (_gliding) {
-            float diff = Math.abs(_laggingValue - _targetValue);
+            double diff = Math.abs(_laggingValue - _targetValue);
             if (diff < Math.abs(_incrementValue)) {
                 _laggingValue = _targetValue;
                 _gliding = false;
@@ -61,7 +61,7 @@ public class DiscreteGlideModule extends Module {
     @Override
     public void close() {}
 
-    public float getGlideTime() {
+    public double getGlideTime() {
         return _glideTime;
     }
 
@@ -83,7 +83,7 @@ public class DiscreteGlideModule extends Module {
     }
 
     public void setGlideTime(
-        final float milliseconds
+        final double milliseconds
     ) {
         _glideTime = milliseconds;
     }

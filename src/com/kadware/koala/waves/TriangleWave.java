@@ -19,11 +19,11 @@ public class TriangleWave implements IWave {
      * @return value from MIN_VALUE to MAX_VALUE
      */
     @Override
-    public float getValue(
-        final float position,
-        final float pulseWidth
+    public double getValue(
+        final double position,
+        final double pulseWidth
     ) {
-        float effectivePosition = position;
+        double effectivePosition = position;
 
         if (position < 0.0f) {
             effectivePosition = 0.0f;
@@ -47,6 +47,6 @@ public class TriangleWave implements IWave {
 
     @Override
     public WaveType getWaveType() {
-        return WaveType.Triangle;
+        return WaveType.TRIANGLE;
     }
 }

@@ -130,12 +130,12 @@ public class VCMixerModule extends Module {
         _panModule3.advance();
         _panModule4.advance();
 
-        float left = _pan1LeftOut.getCurrentValue()
+        double left = _pan1LeftOut.getCurrentValue()
             + _pan2LeftOut.getCurrentValue()
             + _pan3LeftOut.getCurrentValue()
             + _pan4LeftOut.getCurrentValue();
 
-        float right = _pan1RightOut.getCurrentValue()
+        double right = _pan1RightOut.getCurrentValue()
             + _pan2RightOut.getCurrentValue()
             + _pan3RightOut.getCurrentValue()
             + _pan4RightOut.getCurrentValue();

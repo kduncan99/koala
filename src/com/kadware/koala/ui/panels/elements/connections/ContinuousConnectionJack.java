@@ -9,8 +9,8 @@ import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ports.ContinuousPort;
-import com.kadware.koala.ui.panels.elements.AnalogLED;
-import com.kadware.koala.ui.panels.elements.DigitalLED;
+import com.kadware.koala.ui.components.AnalogLED;
+import com.kadware.koala.ui.components.DigitalLED;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 

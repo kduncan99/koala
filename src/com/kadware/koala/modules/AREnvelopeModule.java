@@ -15,13 +15,13 @@ public class AREnvelopeModule extends Module {
     public static final int TRIGGER_INPUT_PORT = 1;
     public static final int SIGNAL_OUTPUT_PORT = 2;
 
-    private float _attackTime = 0.0f;           //  in milliseconds
-    private float _decrementPerSample = 0.0f;   //  in release mode
-    private float _incrementPerSample = 0.0f;   //  in attack mode
+    private double _attackTime = 0.0f;           //  in milliseconds
+    private double _decrementPerSample = 0.0f;   //  in release mode
+    private double _incrementPerSample = 0.0f;   //  in attack mode
     private boolean _manualGateOpen = false;
-    private float _releaseTime = 0.0f;          //  in milliseconds
+    private double _releaseTime = 0.0f;          //  in milliseconds
     private boolean _triggered = false;
-    private float _value = Koala.MIN_CVPORT_VALUE;
+    private double _value = Koala.MIN_CVPORT_VALUE;
 
     AREnvelopeModule() {
         _inputPorts.put(GATE_INPUT_PORT, new LogicInputPort());
@@ -66,7 +66,7 @@ public class AREnvelopeModule extends Module {
     @Override
     public void close() {}
 
-    public float getAttackTime() {
+    public double getAttackTime() {
         return _attackTime;
     }
 
@@ -79,7 +79,7 @@ public class AREnvelopeModule extends Module {
         return ModuleType.AREnvelopeGenerator;
     }
 
-    public float getReleaseTime() {
+    public double getReleaseTime() {
         return _releaseTime;
     }
 
@@ -90,7 +90,7 @@ public class AREnvelopeModule extends Module {
     }
 
     public void setAttackTime(
-        final float value
+        final double value
     ) {
         _attackTime = value;
         if (_attackTime <= 0.0) {
@@ -115,7 +115,7 @@ public class AREnvelopeModule extends Module {
     }
 
     public void setReleaseTime(
-        final float value
+        final double value
     ) {
         _releaseTime = value;
         if (_releaseTime <= 0.0) {

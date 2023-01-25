@@ -3,7 +3,7 @@
  * Copyright (c) 2023 by Kurt Duncan - All Rights Reserved
  */
 
-package com.kadware.koala.ui.panels.elements;
+package com.kadware.koala.ui.components;
 
 import com.kadware.koala.Koala;
 import javafx.scene.layout.Pane;

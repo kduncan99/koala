@@ -15,15 +15,15 @@ import com.kadware.koala.Koala;
  */
 public abstract class ContinuousPort extends Port {
 
-    float _maximumValue;
-    float _minimumValue;
-    float _multiplier;
+    double _maximumValue;
+    double _minimumValue;
+    double _multiplier;
     boolean _overload = false;
 
     protected ContinuousPort(
-        final float minimumValue,
-        final float maximumValue,
-        final float multiplier
+        final double minimumValue,
+        final double maximumValue,
+        final double multiplier
     ) {
         _maximumValue = maximumValue;
         _minimumValue = minimumValue;
@@ -40,15 +40,15 @@ public abstract class ContinuousPort extends Port {
         _overload = false;
     }
 
-    public final float getMaximumValue() {
+    public final double getMaximumValue() {
         return _minimumValue;
     }
 
-    public final float getMinimumValue() {
+    public final double getMinimumValue() {
         return _minimumValue;
     }
 
-    public final float getMultiplier() {
+    public final double getMultiplier() {
         return _multiplier;
     }
 
@@ -62,7 +62,7 @@ public abstract class ContinuousPort extends Port {
     }
 
     public final void setMultiplier(
-        final float value
+        final double value
     ) {
         _multiplier = value;
     }

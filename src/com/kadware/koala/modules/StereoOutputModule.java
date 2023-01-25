@@ -23,7 +23,7 @@ public class StereoOutputModule extends Module {
     private static final boolean SIGNED = true;
     private static final boolean BIG_ENDIAN = true;
     private static final AudioFormat AUDIO_FORMAT =
-        new AudioFormat(Koala.SAMPLE_RATE, Koala.SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
+        new AudioFormat((float) Koala.SAMPLE_RATE, Koala.SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
     private static final double SAMPLE_MAGNITUDE = (1 << (Koala.SAMPLE_SIZE_IN_BITS - 1)) - 1;
 
     private SourceDataLine _sourceDataLine = null;
@@ -114,7 +114,7 @@ public class StereoOutputModule extends Module {
     }
 
     public void enableTestTone(
-        final float frequency
+        final double frequency
     ) {
         _testToneModule.setBaseFrequency(frequency);
         _testToneEnabled = true;
@@ -128,7 +128,7 @@ public class StereoOutputModule extends Module {
         _testToneEnabled = !_testToneEnabled;
     }
 
-    public float getTestToneFrequency() { return _testToneModule.getBaseFrequency(); }
+    public double getTestToneFrequency() { return _testToneModule.getBaseFrequency(); }
     public boolean isDimEnabled() { return _dimEnabled; }
     public boolean isTestToneEnabled() { return _testToneEnabled; }
 
@@ -137,7 +137,7 @@ public class StereoOutputModule extends Module {
      * scaled according to our sample bit size.
      */
     private int scale(
-        final float input
+        final double input
     ) {
         //  adjust the input value which varies from MIN_PORT_VALUE to MAX_PORT_VALUE,
         //  such that it fits nicely within the SAMPLE_SIZE_IN_BITS range.

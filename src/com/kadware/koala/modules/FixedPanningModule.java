@@ -23,9 +23,9 @@ public class FixedPanningModule extends Module {
     private final ContinuousOutputPort _leftOut;
     private final ContinuousOutputPort _rightOut;
 
-    private float _baseValue;    //  ranges from 1.0 (hard left) to 10.0 (hard right)
-    private float _leftScalar;
-    private float _rightScalar;
+    private double _baseValue;    //  ranges from 1.0 (hard left) to 10.0 (hard right)
+    private double _leftScalar;
+    private double _rightScalar;
 
     FixedPanningModule() {
         _signalIn = new ContinuousInputPort();
@@ -41,7 +41,7 @@ public class FixedPanningModule extends Module {
 
     @Override
     public void advance() {
-        float signal = _signalIn.getValue();
+        double signal = _signalIn.getValue();
         _leftOut.setCurrentValue(_leftScalar * signal);
         _rightOut.setCurrentValue(_rightScalar * signal);
     }
@@ -53,7 +53,7 @@ public class FixedPanningModule extends Module {
      * Getter
      * @return base value ranging from -5.0 to 5.0
      */
-    public float getBaseValue() {
+    public double getBaseValue() {
         return _baseValue;
     }
 
@@ -66,8 +66,8 @@ public class FixedPanningModule extends Module {
      * Rescales the input value with the standard koala range,
      * to the domain of log10() which produces a range of 0.0 to 1.0 (i.e., 1.0 to 10.0).
      */
-    private float rescale(
-        final float value
+    private double rescale(
+        final double value
     ) {
         return ((value - Koala.MIN_CVPORT_VALUE) * 9 / Koala.CVPORT_VALUE_RANGE) + 1.0f;
     }
@@ -81,7 +81,7 @@ public class FixedPanningModule extends Module {
      * We rescale this internally to left and right scalar values.
      */
     public void setBaseValue(
-        final float value
+        final double value
     ) {
         if (value > Koala.MAX_CVPORT_VALUE) {
             _baseValue = Koala.MAX_CVPORT_VALUE;
@@ -89,9 +89,9 @@ public class FixedPanningModule extends Module {
             _baseValue = Math.max(value, Koala.MIN_CVPORT_VALUE);
         }
 
-        float rightTemp = rescale(_baseValue);
-        float leftTemp = 11.0f - rightTemp;
-        _leftScalar = (float) Math.log10(leftTemp);
-        _rightScalar = (float) Math.log10(rightTemp);
+        double rightTemp = rescale(_baseValue);
+        double leftTemp = 11.0f - rightTemp;
+        _leftScalar = Math.log10(leftTemp);
+        _rightScalar = Math.log10(rightTemp);
     }
 }
