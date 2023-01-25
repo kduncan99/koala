@@ -22,15 +22,13 @@ public class TextDisplay extends Label {
 
     private static final Font FONT = new Font("Courier New", 12);
 
-    private final Color _fgColor;
-
     public TextDisplay(
         final PixelDimensions dimensions,
         final Color color
     ) {
-        _fgColor = color.brighter();
+        var fgColor = color.brighter();
         setPrefSize(dimensions.getWidth(), dimensions.getHeight());
-        setTextFill(_fgColor);
+        setTextFill(fgColor);
         var bgColor = color.darker().darker();
         setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
         var bs = new BorderStroke(Color.BLACK,

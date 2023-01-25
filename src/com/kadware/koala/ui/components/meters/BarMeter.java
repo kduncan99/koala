@@ -39,7 +39,6 @@ public class BarMeter extends Meter {
         switch (getOrientation()) {
             case HORIZONTAL -> {
                 var x = getOrientation().getGraphCenterPointX(getGraphPane(), getRange(), getScalar(), value);
-//                System.out.printf("%f -> %f\n", value, x);//TODO remove
                 _rectangle.setWidth(x);
             }
             case VERTICAL -> {
