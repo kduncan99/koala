@@ -6,15 +6,19 @@
 package com.kadware.koala.ui.panels;
 
 import com.kadware.koala.CellDimensions;
+import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.SimpleLFOModule;
 import com.kadware.koala.ports.ContinuousOutputPort;
+import com.kadware.koala.ui.components.buttons.MomentaryButton;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
 import com.kadware.koala.ui.panels.elements.controls.*;
 import com.kadware.koala.waves.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.io.File;
@@ -55,7 +59,7 @@ public class SimpleLFOPanel extends ModulePanel {
         }
     }
 
-    private ControlValueIndicator _cvMeter;
+    private ControlValueMeter _cvMeter;
     private FrequencyDisplay _frequencyDisplay;
     private LinearKnobControl _frequencyControl;
     private LinearKnobControl _pulseWidthControl;
@@ -88,7 +92,7 @@ public class SimpleLFOPanel extends ModulePanel {
          *    -----------
          */
         var section = getControlsSection();
-        _cvMeter = new ControlValueIndicator("Output", Color.GREEN);
+        _cvMeter = new ControlValueMeter("Output", Color.GREEN);
         section.setControlEntity(0, 0, _cvMeter);
 
         _frequencyDisplay = new FrequencyDisplay(new CellDimensions(2, 1), "Frequency", Color.GREEN);
@@ -106,10 +110,10 @@ public class SimpleLFOPanel extends ModulePanel {
 //        _rangeControl = new LinearKnobControl("Range", Color.GRAY, new Range(0.0, 10.0));
 //        section.setControlEntity(1, 3, _rangeControl);
 
-//        var waveButton = new SelectorButton(new PixelDimensions(30, 30), WaveId.getImages());
-//        var waveButton = new ImageButton(new PixelDimensions(30, 30), Color.GRAY, null);
-//        _waveSelector = new ButtonControl("Wave", waveButton);
-//        section.setControlEntity(0, 4, _waveSelector);
+        var buttonDim = new PixelDimensions(30, 30);
+        var button = new MomentaryButton(buttonDim, "Foo", Color.PURPLE);
+        _waveSelector = new ButtonControl("Wave", button);
+        section.setControlEntity(0, 4, _waveSelector);
 
 //        _frequencyRangeSelector = new SelectorButtonControl("FqRng");
 //        section.setControlEntity(1, 4, _frequencyRangeSelector);

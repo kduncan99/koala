@@ -7,7 +7,7 @@ package com.kadware.koala.ui.panels.elements.controls;
 
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.PixelDimensions;
-import com.kadware.koala.ui.components.Button;
+import com.kadware.koala.ui.components.buttons.Button;
 import com.kadware.koala.ui.panels.Panel;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
@@ -43,7 +43,7 @@ public class ButtonControl extends ControlPane {
         pane.setBackground(PANE_BACKGROUND);
 
         var xDelta = PIXEL_DIMENSIONS.getWidth() - button.getPrefWidth();
-        var yDelta = PIXEL_DIMENSIONS.getHeight() - button.getPrefHeight();
+        var yDelta = PIXEL_DIMENSIONS.getWidth() - button.getPrefHeight();
         var xOffset = xDelta / 2.0;
         var yOffset = yDelta / 2.0;
         pane.getChildren().add(button);

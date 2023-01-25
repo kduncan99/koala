@@ -14,11 +14,11 @@ import javafx.scene.paint.Color;
  * A graphic indication of continuous values, ranging between the given ranges.
  * It is designed to be fit into a one-by-one cell.
  */
-public class ControlValueIndicator extends MeterIndicator implements IIndicator {
+public class ControlValueMeter extends MeterIndicator implements IIndicator {
 
     private static final CellDimensions CELL_DIMENSIONS = new CellDimensions(2, 1);
 
-    public ControlValueIndicator(
+    public ControlValueMeter(
         final String legend,
         final Color color
     ) {
