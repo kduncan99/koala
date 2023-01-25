@@ -35,4 +35,15 @@ public class Range {
     public double getLowValue() { return _lowValue; }
     public double getHighValue() { return _highValue; }
     public double getDelta() { return _delta; }
+
+    public boolean isInRange(
+        final double value
+    ) {
+        return (value >= _lowValue) && (value <= _highValue);
+    }
+
+    @Override
+    public String toString() {
+        return "[" + _lowValue + ":" + _highValue + "::" + _delta + "]";
+    }
 }

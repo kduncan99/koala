@@ -5,10 +5,7 @@
 
 package com.kadware.koala.ui.panels.elements.controls;
 
-import com.kadware.koala.CellDimensions;
-import com.kadware.koala.Koala;
-import com.kadware.koala.PixelDimensions;
-import com.kadware.koala.Range;
+import com.kadware.koala.*;
 import com.kadware.koala.ui.components.meters.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -45,7 +42,7 @@ public class ControlValueIndicator extends MeterIndicator implements IIndicator 
         var meterW = (int)pane.getPrefWidth();
         var meterH = (int)pane.getPrefHeight();
         var meterDim = new PixelDimensions(meterW, meterH);
-        var meter = new BarMeter(meterDim, range, orientation, scalar, color, gradient);
+        var meter = new SplitBarMeter(meterDim, range, orientation, scalar, color, 0.0, gradient);
 
         pane.getChildren().add(meter);
         return pane;

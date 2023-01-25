@@ -40,7 +40,7 @@ public class FrequencyDisplay extends ControlPane implements IIndicator {
         var w = pd.getWidth();
         var h = pd.getHeight() - 2 * verticalInsets;
         var adjustedPD = new PixelDimensions(w, h);
-        var display = new NumericDisplay(adjustedPD, color, "%8.3fHz");
+        var display = new NumericDisplay(adjustedPD, color, "%8.2fHz");
         display.setLayoutX(x);
         display.setLayoutY(y);
         display.setPrefSize(w, h);

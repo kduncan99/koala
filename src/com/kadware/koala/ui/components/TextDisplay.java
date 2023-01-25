@@ -20,7 +20,7 @@ import javafx.scene.text.Font;
  */
 public class TextDisplay extends Label {
 
-    private static final Font FONT = new Font("Courier New", 12);
+    private static final Font FONT = new Font("Courier New", 14);
 
     public TextDisplay(
         final PixelDimensions dimensions,
