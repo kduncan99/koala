@@ -29,9 +29,15 @@ public class ButtonControl extends ControlPane {
                                                                                   Insets.EMPTY);
     private static final Background PANE_BACKGROUND = new Background(PANE_BACKGROUND_FILL);
 
+    private static final int BUTTON_INSET = 5;
+    private static final int BUTTON_EDGE_PIXELS =
+        Math.min(PIXEL_DIMENSIONS.getWidth(), PIXEL_DIMENSIONS.getHeight()) - BUTTON_INSET;
+    protected static final PixelDimensions BUTTON_DIMENSIONS =
+        new PixelDimensions(BUTTON_EDGE_PIXELS, BUTTON_EDGE_PIXELS);
+
     public ButtonControl(
-        final String legend,
-        final Button button
+        final Button button,
+        final String legend
     ) {
         super(CELL_DIMENSIONS, createPane(button), legend);
     }
@@ -42,13 +48,11 @@ public class ButtonControl extends ControlPane {
         var pane = new Pane();
         pane.setBackground(PANE_BACKGROUND);
 
-        var xDelta = PIXEL_DIMENSIONS.getWidth() - button.getPrefWidth();
-        var yDelta = PIXEL_DIMENSIONS.getWidth() - button.getPrefHeight();
-        var xOffset = xDelta / 2.0;
-        var yOffset = yDelta / 2.0;
+        button.setLayoutX(BUTTON_INSET);
+        button.setLayoutY(BUTTON_INSET);
+        button.setPrefWidth(BUTTON_DIMENSIONS.getWidth());
+        button.setPrefHeight(BUTTON_DIMENSIONS.getHeight());
         pane.getChildren().add(button);
-        button.setLayoutX(xOffset);
-        button.setLayoutY(yOffset);
 
         return pane;
     }

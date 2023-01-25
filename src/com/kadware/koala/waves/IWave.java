@@ -14,11 +14,11 @@ public interface IWave {
      * @param pulseWidth Presumed width of the pulse, if this has any meaning, from none (0.0) to full (1.0)
      * @return value from MIN_VALUE to MAX_VALUE
      */
-    public double getValue(
+    double getValue(
         final double position,      //  from 0.0 to 1.0
         final double pulseWidth     //  from 0.0 to 1.0
     );
 
-    public String getWaveClass();
-    public WaveType getWaveType();
+    String getWaveClass();
+    WaveType getWaveType();
 }

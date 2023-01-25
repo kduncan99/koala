@@ -6,47 +6,63 @@
 package com.kadware.koala.ui.components.buttons;
 
 import com.kadware.koala.PixelDimensions;
-import com.kadware.koala.ui.components.buttons.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
-import java.util.stream.IntStream;
+public class SelectorButton extends MomentaryButton {
 
-//public class SelectorButton extends Button {
-//
-//    private final Pane _imagePane;
-//    private final ImageView[] _imageViews;
-//    private int _currentSelection;
-//
-//    public SelectorButton(
-//        final PixelDimensions dimensions,
-//        final Image[] images
-//    ) {
-//        super(dimensions, Color.GRAY);
-//        if (images.length < 1)
-//            throw new RuntimeException("No images for SelectorButton");
-//
-//        _imagePane = new Pane();
-//        _imagePane.setPrefSize(dimensions.getWidth(), dimensions.getHeight());
-////        getChildren().add(_imagePane);
-//
-//        _imageViews = new ImageView[images.length];
-//        IntStream.range(0, images.length).forEach(i -> _imageViews[i] = new ImageView(images[i]));
-//
-//        _currentSelection = 0;
-//        _imagePane.getChildren().add(_imageViews[0]);
-//    }
-//
-//    protected void mouseClicked(
-//        final MouseEvent event
-//    ) {
-////        _imagePane.getChildren().removeAll();
-////        _currentSelection++;
-////        if (_currentSelection == _imageViews.length)
-////            _currentSelection = 0;
-////        _imagePane.getChildren().add(_imageViews[_currentSelection]);
-//    }
-//}
+    private final Pane[] _imagePanes;
+    private int _currentSelection = 0;
+
+    public SelectorButton(
+        final PixelDimensions dimensions,
+        final Pane[] imagePanes
+    ) {
+        super(dimensions, createParentPane(dimensions, imagePanes));
+        _imagePanes = imagePanes;
+        _currentSelection = 0;
+        _imagePanes[_currentSelection].setVisible(true);
+    }
+
+    private static Pane createParentPane(
+        final PixelDimensions dimensions,
+        final Pane[] imagePanes
+    ) {
+        if (imagePanes.length < 1)
+            throw new RuntimeException("No images for SelectorButton");
+
+        var parent = new Pane();
+        var inset = LEGEND_INSET;
+        parent.setPrefWidth(dimensions.getWidth() - 2 * inset);
+        parent.setPrefHeight(dimensions.getHeight() - 2 * inset);
+
+        for (var pane : imagePanes) {
+            var xLayout = (parent.getPrefWidth() - pane.getPrefWidth()) / 2;
+            var yLayout = (parent.getPrefHeight() - pane.getPrefHeight()) / 2;
+            pane.setLayoutX(xLayout);
+            pane.setLayoutY(yLayout);
+            pane.setPrefWidth(parent.getPrefWidth());
+            pane.setPrefHeight(parent.getPrefHeight());
+            pane.setVisible(false);
+            parent.getChildren().add(pane);
+        }
+
+        return parent;
+    }
+
+    private void incrementSelection() {
+        _imagePanes[_currentSelection].setVisible(false);
+        _currentSelection++;
+        if (_currentSelection == _imagePanes.length)
+            _currentSelection = 0;
+        _imagePanes[_currentSelection].setVisible(true);
+    }
+
+    @Override
+    protected void mouseClicked(
+        final MouseEvent event
+    ) {
+        incrementSelection();
+        super.mouseClicked(event);
+    }
+}

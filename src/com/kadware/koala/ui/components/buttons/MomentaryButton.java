@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 public class MomentaryButton extends Button {
 
     private static final Font LEGEND_FONT = new Font(12);
+    protected static final int LEGEND_INSET = 2;
 
     private final Pane _legend;
     private final int _xLayout;
@@ -51,7 +52,7 @@ public class MomentaryButton extends Button {
         final Color color
     ) {
         var pane = new Pane();
-        var inset = 2;
+        var inset = LEGEND_INSET;
         pane.setPrefWidth(dimensions.getWidth() - 2 * inset);
         pane.setPrefHeight(dimensions.getHeight() - 2 * inset);
 

@@ -30,42 +30,13 @@ public class SimpleLFOPanel extends ModulePanel {
 
     private static final String RESOURCE_PATH = "resources/";
 
-    private enum WaveId {
-        SINE("SineWave.jpg", WaveManager.createWave(WaveType.SINE)),
-        TRIANGLE("TriangleWave.jpg", WaveManager.createWave(WaveType.TRIANGLE)),
-        RAMP("RampWave.jpg", WaveManager.createWave(WaveType.RAMP)),
-        SAWTOOTH("SawtoothWave.jpg", WaveManager.createWave(WaveType.SAWTOOTH)),
-        SQUARE("SquareWave.jpg", WaveManager.createWave(WaveType.SQUARE));
-
-        public final String _fileName;
-        public final IWave _wave;
-        public final Image _image;
-
-        WaveId(
-            final String fileName,
-            final IWave wave
-        ) {
-            _fileName = fileName;
-            _wave = wave;
-            try {
-                _image = new Image(new FileInputStream(new File(RESOURCE_PATH + fileName)));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-
-        public static Image[] getImages() {
-            return Arrays.stream(values()).map(waveId -> waveId._image).toArray(Image[]::new);
-        }
-    }
-
     private ControlValueMeter _cvMeter;
     private FrequencyDisplay _frequencyDisplay;
     private LinearKnobControl _frequencyControl;
     private LinearKnobControl _pulseWidthControl;
     private LinearKnobControl _biasControl;
     private LinearKnobControl _rangeControl;
-    private ButtonControl _waveSelector;
+    private WaveSelector _waveSelector;
     private ButtonControl _frequencyRangeSelector;
 
     public SimpleLFOPanel() {
@@ -110,9 +81,9 @@ public class SimpleLFOPanel extends ModulePanel {
 //        _rangeControl = new LinearKnobControl("Range", Color.GRAY, new Range(0.0, 10.0));
 //        section.setControlEntity(1, 3, _rangeControl);
 
-        var buttonDim = new PixelDimensions(30, 30);
-        var button = new MomentaryButton(buttonDim, "Foo", Color.PURPLE);
-        _waveSelector = new ButtonControl("Wave", button);
+//        var buttonDim = new PixelDimensions(30, 30);
+//        var button = new MomentaryButton(buttonDim, "Foo", Color.PURPLE);
+        _waveSelector = new WaveSelector();
         section.setControlEntity(0, 4, _waveSelector);
 
 //        _frequencyRangeSelector = new SelectorButtonControl("FqRng");
