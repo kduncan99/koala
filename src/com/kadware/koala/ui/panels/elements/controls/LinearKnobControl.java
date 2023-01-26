@@ -8,7 +8,7 @@ package com.kadware.koala.ui.panels.elements.controls;
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.DoubleRange;
-import com.kadware.koala.ui.components.Knob;
+import com.kadware.koala.ui.components.knobs.Knob;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -31,8 +31,9 @@ public class LinearKnobControl extends ControlPane {
         final DoubleRange range
     ) {
         var pane = new Pane();
-        var knob = new Knob(KNOB_DIMENSIONS, color);//TODO need ranging information somewhere/somehow
-        pane.getChildren().add(knob);
+        //TODO
+//        var knob = new Knob(KNOB_DIMENSIONS, color);//TODO need ranging information somewhere/somehow
+//        pane.getChildren().add(knob);
         return pane;
     }
 }

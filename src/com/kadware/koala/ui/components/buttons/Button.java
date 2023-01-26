@@ -19,8 +19,11 @@ public abstract class Button extends Component {
     private final Line _bottomLine;
 
     public Button(
+        final int identifier,
         final PixelDimensions dimensions
     ) {
+        super(identifier);
+
         var w = dimensions.getWidth();
         var h = dimensions.getHeight();
         setPrefSize(w, h);

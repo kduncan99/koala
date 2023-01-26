@@ -7,17 +7,20 @@ package com.kadware.koala.messages;
 
 import com.kadware.koala.waves.IWave;
 
+/**
+ * Used to communicate something about a wave from one entity to another
+ */
 public class WaveMessage extends Message {
 
-    private final IWave _newWave;
+    private final IWave _wave;
 
     public WaveMessage(
         final Object sender,
         final IWave newWave
     ) {
         super(sender);
-        _newWave = newWave;
+        _wave = newWave;
     }
 
-    public IWave getNewWaveValue() { return _newWave; }
+    public IWave getNewWaveValue() { return _wave; }
 }

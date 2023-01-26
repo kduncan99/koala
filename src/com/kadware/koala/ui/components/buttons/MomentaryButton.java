@@ -23,10 +23,11 @@ public class MomentaryButton extends Button {
     private final int _yLayout;
 
     public MomentaryButton(
+        final int identifier,
         final PixelDimensions dimensions,
         final Pane legend
     ) {
-        super(dimensions);
+        super(identifier, dimensions);
 
         var xDelta = dimensions.getWidth() - legend.getPrefWidth();
         var yDelta = dimensions.getHeight() - legend.getPrefHeight();
@@ -39,11 +40,12 @@ public class MomentaryButton extends Button {
     }
 
     public MomentaryButton(
+        final int identifier,
         final PixelDimensions dimensions,
         final String legend,
         final Color color
     ) {
-        this(dimensions, getLegendPane(dimensions, legend, color));
+        this(identifier, dimensions, getLegendPane(dimensions, legend, color));
     }
 
     private static Pane getLegendPane(

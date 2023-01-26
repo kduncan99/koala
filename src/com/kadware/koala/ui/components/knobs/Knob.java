@@ -1,23 +1,36 @@
-package com.kadware.koala.ui.components;
+/*
+ * Koala - Virtual Modular Synthesizer
+ * Copyright (c) 2023 by Kurt Duncan - All Rights Reserved
+ */
+
+package com.kadware.koala.ui.components.knobs;
 
 import com.kadware.koala.Koala;
 import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.ui.components.Component;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-//TODO move this out to somewhere very generic
-public class Knob extends Pane {
+/**
+ * Represents a physical knob of some type.
+ * A Knob is always subclassed for more specific attributes and functionality.
+ * The base class has a rotational position based on the angle of counter-clockwise rotation.
+ */
+public class Knob extends Component {
 
     private final Canvas _canvas;
     private final Color _bgColor;
     private final Color _fgColor;
     private double _position;
 
+    //  TODO needs completely redone.
     public Knob(
+        final int identifier,
         final PixelDimensions dimensions,
         final Color color
     ) {
+        super(identifier);
+
         _bgColor = color.darker().darker();
         _fgColor = color.brighter();
 

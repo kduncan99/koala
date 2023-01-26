@@ -8,7 +8,7 @@ package com.kadware.koala.ui.panels.elements.controls;
 import com.kadware.koala.Koala;
 import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.messages.Message;
-import com.kadware.koala.messages.SelectorButtonMessage;
+import com.kadware.koala.ui.components.messages.SelectorButtonMessage;
 import com.kadware.koala.messages.WaveMessage;
 import com.kadware.koala.ui.components.buttons.Button;
 import com.kadware.koala.ui.components.buttons.SelectorButton;
@@ -28,6 +28,8 @@ public class WaveSelector extends ButtonControl {
 
     private static final PixelDimensions GRAPHIC_DIMENSIONS =
         new PixelDimensions(BUTTON_DIMENSIONS.getWidth() - 8, BUTTON_DIMENSIONS.getHeight() - 8);
+
+    private static final int ID_SELECTOR_BUTTON = 0;
 
     private static class WaveGraphic {
 
@@ -62,7 +64,7 @@ public class WaveSelector extends ButtonControl {
 
     private static Button createButton() {
         var panes = Arrays.stream(_waveGraphics).map(waveGraphic -> waveGraphic._wavePane).toArray(Pane[]::new);
-        return new SelectorButton(BUTTON_DIMENSIONS, panes);
+        return new SelectorButton(ID_SELECTOR_BUTTON, BUTTON_DIMENSIONS, panes);
     }
 
     @Override

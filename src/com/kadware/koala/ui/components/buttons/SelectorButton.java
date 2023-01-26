@@ -8,7 +8,7 @@ package com.kadware.koala.ui.components.buttons;
 import com.kadware.koala.IntegerRange;
 import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.RolloverCounter;
-import com.kadware.koala.messages.SelectorButtonMessage;
+import com.kadware.koala.ui.components.messages.SelectorButtonMessage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -18,10 +18,11 @@ public class SelectorButton extends MomentaryButton {
     private final RolloverCounter _selector;
 
     public SelectorButton(
+        final int identifier,
         final PixelDimensions dimensions,
         final Pane[] imagePanes
     ) {
-        super(dimensions, createParentPane(dimensions, imagePanes));
+        super(identifier, dimensions, createParentPane(dimensions, imagePanes));
         _selector = new RolloverCounter(new IntegerRange(0, imagePanes.length));
         _imagePanes = imagePanes;
         _imagePanes[_selector.getValue()].setVisible(true);
@@ -61,7 +62,7 @@ public class SelectorButton extends MomentaryButton {
         _selector.increment();
         _imagePanes[_selector.getValue()].setVisible(true);
         super.mouseClicked(event);
-        notifyListeners(new SelectorButtonMessage(this, _selector.getValue()));
+        notifyListeners(new SelectorButtonMessage(this, getIdentifier(), _selector.getValue()));
     }
 
     public int getSelectorValue() { return _selector.getValue(); }

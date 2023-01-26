@@ -12,9 +12,18 @@ import javafx.scene.layout.Pane;
 
 public class Component extends Pane {
 
-    public static final Sender _sender = new Sender();
+    private final Sender _sender = new Sender();
+    private final int _identifier;
 
-    public void notifyListeners(
+    protected Component(
+        final int identifier
+    ) {
+        _identifier = identifier;
+    }
+
+    public int getIdentifier() { return _identifier; }
+
+    protected void notifyListeners(
         final Message message
     ) {
         message.setSender(this);
