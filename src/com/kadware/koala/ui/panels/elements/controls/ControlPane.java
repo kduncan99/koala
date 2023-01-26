@@ -7,12 +7,17 @@ package com.kadware.koala.ui.panels.elements.controls;
 
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.messages.IListener;
+import com.kadware.koala.messages.Message;
 import com.kadware.koala.ui.panels.Panel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Base class for everything in the ControlsSection.
@@ -48,6 +53,7 @@ public abstract class ControlPane extends VBox {
     public static final Font LEGEND_FONT = new Font(10);
 
     private final CellDimensions _cellDimensions;
+    private final Collection<IListener> _listeners = new LinkedList<>();
 
     public ControlPane(
         final CellDimensions cellDimensions,
@@ -81,6 +87,24 @@ public abstract class ControlPane extends VBox {
     //  To be invoked only on the Application thread.
     //  Subclasses override this *if* needed
     public void setValue(final double value){}
+
+    public void notifyListeners(
+        final Message message
+    ) {
+        _listeners.forEach(l -> l.notify(message));
+    }
+
+    public void registerListener(
+        final IListener listener
+    ) {
+        _listeners.add(listener);
+    }
+
+    public void unregisterListener(
+        final IListener listener
+    ) {
+        _listeners.remove(listener);
+    }
 
     public static int getPixelHeight(
         final CellDimensions cellDimensions

@@ -7,7 +7,9 @@ package com.kadware.koala.ui.panels;
 
 import com.kadware.koala.modules.Module;
 
-public abstract class ModulePanel extends Panel {
+import java.io.Closeable;
+
+public abstract class ModulePanel extends Panel implements Closeable {
 
     protected final Module _module;
 
@@ -23,6 +25,7 @@ public abstract class ModulePanel extends Panel {
         populateConnections();
     }
 
+    public abstract void close();
     public abstract void populateControls();
     public abstract void populateConnections();
 }

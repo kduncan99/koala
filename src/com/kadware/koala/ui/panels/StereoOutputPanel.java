@@ -17,6 +17,11 @@ public class StereoOutputPanel extends ModulePanel {
     }
 
     @Override
+    public void close() {
+        //  TODO
+    }
+
+    @Override
     public void populateControls() {
         //TODO
         //  master volume (to be added to module)

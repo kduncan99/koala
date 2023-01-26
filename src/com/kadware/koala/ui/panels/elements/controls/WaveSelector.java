@@ -7,6 +7,9 @@ package com.kadware.koala.ui.panels.elements.controls;
 
 import com.kadware.koala.Koala;
 import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.messages.Message;
+import com.kadware.koala.messages.SelectorButtonMessage;
+import com.kadware.koala.messages.WaveMessage;
 import com.kadware.koala.ui.components.buttons.Button;
 import com.kadware.koala.ui.components.buttons.SelectorButton;
 import com.kadware.koala.waves.IWave;
@@ -60,5 +63,14 @@ public class WaveSelector extends ButtonControl {
     private static Button createButton() {
         var panes = Arrays.stream(_waveGraphics).map(waveGraphic -> waveGraphic._wavePane).toArray(Pane[]::new);
         return new SelectorButton(BUTTON_DIMENSIONS, panes);
+    }
+
+    @Override
+    public void notify(
+        final Message message
+    ) {
+        //  The underlying button component has something for us... pass it along to our listeners
+        if (message instanceof SelectorButtonMessage sbm)
+            notifyListeners(new WaveMessage(this, _waveGraphics[sbm.getNewSelectorValue()]._wave));
     }
 }

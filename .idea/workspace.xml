@@ -5,17 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/IListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/SelectorButtonMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Sender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/WaveMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/Component.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/messages/Listener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/IListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/messages/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/messages/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Koala.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Koala.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/buttons/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/buttons/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/buttons/SelectorButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/buttons/SelectorButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ModulePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/ModulePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/SimpleLFOPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/SimpleLFOPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/StereoOutputPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/StereoOutputPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ButtonControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ButtonControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlValueMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlValueMeter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/FrequencyDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/FrequencyDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/IControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/ValueUpdatedMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/IIndicator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/WaveSelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/WaveSelector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +35,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Kotlin Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -57,6 +65,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -129,7 +138,7 @@
       <workItem from="1672356450814" duration="11555000" />
       <workItem from="1672605023891" duration="206632000" />
       <workItem from="1674582080515" duration="28000" />
-      <workItem from="1674582256888" duration="40127000" />
+      <workItem from="1674582256888" duration="44518000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

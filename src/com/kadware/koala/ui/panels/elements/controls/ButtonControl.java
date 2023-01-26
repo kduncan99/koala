@@ -7,6 +7,8 @@ package com.kadware.koala.ui.panels.elements.controls;
 
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.messages.IListener;
+import com.kadware.koala.messages.Message;
 import com.kadware.koala.ui.components.buttons.Button;
 import com.kadware.koala.ui.panels.Panel;
 import javafx.geometry.Insets;
@@ -19,7 +21,7 @@ import javafx.scene.layout.Pane;
  * A button control is a button of some sort, above a legend.
  * Note that we are talking about a Koala button, not a JavaFX button.
  */
-public class ButtonControl extends ControlPane {
+public class ButtonControl extends ControlPane implements IListener {
 
     private static final CellDimensions CELL_DIMENSIONS = new CellDimensions(1, 1);
     private static final PixelDimensions PIXEL_DIMENSIONS = toPixelDimensions(CELL_DIMENSIONS);
@@ -40,6 +42,7 @@ public class ButtonControl extends ControlPane {
         final String legend
     ) {
         super(CELL_DIMENSIONS, createPane(button), legend);
+        button.registerListener(this);
     }
 
     private static Pane createPane(
@@ -55,5 +58,13 @@ public class ButtonControl extends ControlPane {
         pane.getChildren().add(button);
 
         return pane;
+    }
+
+    @Override
+    public void notify(
+        final Message message
+    ) {
+        //  The underlying button component has something for us... pass it along to our listeners
+        notifyListeners(message.setSender(this));
     }
 }

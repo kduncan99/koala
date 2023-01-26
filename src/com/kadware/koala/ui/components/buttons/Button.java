@@ -6,12 +6,12 @@
 package com.kadware.koala.ui.components.buttons;
 
 import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.ui.components.Component;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-public abstract class Button extends Pane {
+public abstract class Button extends Component {
 
     private final Line _topLine;
     private final Line _leftLine;

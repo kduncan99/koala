@@ -6,6 +6,9 @@
 package com.kadware.koala.ui.panels;
 
 import com.kadware.koala.CellDimensions;
+import com.kadware.koala.messages.IListener;
+import com.kadware.koala.messages.Message;
+import com.kadware.koala.messages.WaveMessage;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.SimpleLFOModule;
@@ -15,7 +18,7 @@ import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
 import com.kadware.koala.ui.panels.elements.controls.*;
 import javafx.scene.paint.Color;
 
-public class SimpleLFOPanel extends ModulePanel {
+public class SimpleLFOPanel extends ModulePanel implements IListener {
 
     private ControlValueMeter _cvMeter;
     private FrequencyDisplay _frequencyDisplay;
@@ -71,6 +74,7 @@ public class SimpleLFOPanel extends ModulePanel {
 //        var buttonDim = new PixelDimensions(30, 30);
 //        var button = new MomentaryButton(buttonDim, "Foo", Color.PURPLE);
         _waveSelector = new WaveSelector();
+        _waveSelector.registerListener(this);
         section.setControlEntity(0, 4, _waveSelector);
 
 //        _frequencyRangeSelector = new SelectorButtonControl("FqRng");
@@ -99,5 +103,18 @@ public class SimpleLFOPanel extends ModulePanel {
         _frequencyDisplay.setValue(((SimpleLFOModule)_module).getFrequency());
 
         //  TODO other indicators which might need updated
+    }
+
+    @Override
+    public void close() {
+        _waveSelector.unregisterListener(this);
+    }
+
+    @Override
+    public void notify(Message message) {
+        //  something on the panel has been updated
+        if (message instanceof WaveMessage wm) {
+            getModule().setWave(wm.getNewWaveValue());
+        }
     }
 }
