@@ -5,7 +5,8 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.Range;
+import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.DoubleRange;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
@@ -25,15 +26,15 @@ public abstract class BaseOrientation {
     );
 
     public abstract double getGraphCenterPointX(
-        final GraphPane graphPane,
-        final Range range,
+        final PixelDimensions dimensions,
+        final DoubleRange range,
         final Scalar scalar,
         final double value
     );
 
     public abstract double getGraphCenterPointY(
-        final GraphPane graphPane,
-        final Range range,
+        final PixelDimensions dimensions,
+        final DoubleRange range,
         final Scalar scalar,
         final double value
     );

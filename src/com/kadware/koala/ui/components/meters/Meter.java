@@ -5,52 +5,40 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.PixelDimensions;
-import com.kadware.koala.Range;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 /**
  * A graphic indication of continuous values, ranging between the given ranges.
  */
 public abstract class Meter extends GridPane {
 
+    private final MeterParams _params;
     private final GradientPane _gradientPane;
     private final GraphPane _graphPane;
-    private final Orientation _orientation;
-    private final Scalar _scalar;
-    private final Color _color;
-    private final Range _range;
 
     public Meter(
-        final PixelDimensions dimensions,
-        final Range range,
-        final Orientation orientation,
-        final Scalar scalar,
-        final Color color,
-        final GradientPane gradientPane
+        final MeterParams meterParams,
+        final GradientPane gradientPane,
+        final GraphPane graphPane
     ) {
-        setPrefWidth(dimensions.getWidth());
-        setPrefHeight(dimensions.getHeight());
+        _params = meterParams;
 
-        _orientation = orientation;
-        _scalar = scalar;
-        _color = color;
-        _range = range;
-
+        setPrefWidth(_params.getDimensions().getWidth());
+        setPrefHeight(_params.getDimensions().getHeight());
         _gradientPane = gradientPane;
-        _graphPane = new GraphPane(color);
-        _orientation.applyOrientation(this, _graphPane, _gradientPane);
-        _orientation.drawGradient(_gradientPane, scalar);
+        _graphPane = graphPane;
+
+        _params.getOrientation().applyOrientation(this, _graphPane, _gradientPane);
+        _params.getOrientation().drawGradient(_gradientPane, _params.getScalar());
     }
 
-    protected Color getColor() { return _color; }
+    protected MeterParams getParams() { return _params; }
     protected GradientPane getGradientPane() { return _gradientPane; }
     protected GraphPane getGraphPane() { return _graphPane; }
-    protected Orientation getOrientation() { return _orientation; }
-    protected Range getRange() { return _range; }
-    protected Scalar getScalar() { return _scalar; }
 
-    //  This should be called only on the Application thread
-    public abstract void setValue(final double value);
+    public void setValue(
+        final double value
+    ) {
+        _graphPane.setValue(value);
+    }
 }

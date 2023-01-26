@@ -6,7 +6,8 @@
 package com.kadware.koala.ui.components.meters;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.Range;
+import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.DoubleRange;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -81,23 +82,23 @@ public class VerticalOrientation extends BaseOrientation {
 
     @Override
     public double getGraphCenterPointX(
-        final GraphPane graphPane,
-        final Range range,
+        final PixelDimensions dimensions,
+        final DoubleRange range,
         final Scalar scalar,
         final double value
     ) {
-        var w = graphPane.getPrefWidth();
+        var w = dimensions.getWidth();
         return w / 2.0;
     }
 
     @Override
     public double getGraphCenterPointY(
-        final GraphPane graphPane,
-        final Range range,
+        final PixelDimensions dimensions,
+        final DoubleRange range,
         final Scalar scalar,
         final double value
     ) {
-        var h = graphPane.getPrefHeight();
+        var h = dimensions.getHeight();
         var scaled = 1.0 - scalar.getScaledValue(value);
         return Koala.getBounded(0, scaled * h, h);
     }

@@ -5,16 +5,17 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.Range;
+import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.DoubleRange;
 import javafx.scene.layout.GridPane;
 
-public enum Orientation {
+public enum OrientationType {
     HORIZONTAL(new HorizontalOrientation()),
     VERTICAL(new VerticalOrientation());
 
     private final BaseOrientation _orientationInstance;
 
-    Orientation(
+    OrientationType(
         final BaseOrientation orientationInstance
     ) {
         _orientationInstance = orientationInstance;
@@ -37,20 +38,20 @@ public enum Orientation {
     }
 
     public double getGraphCenterPointX(
-        final GraphPane graphPane,
-        final Range range,
+        final PixelDimensions dimensions,
+        final DoubleRange range,
         final Scalar scalar,
         final double value
     ) {
-        return _orientationInstance.getGraphCenterPointX(graphPane, range, scalar, value);
+        return _orientationInstance.getGraphCenterPointX(dimensions, range, scalar, value);
     }
 
     public double getGraphCenterPointY(
-        final GraphPane graphPane,
-        final Range range,
+        final PixelDimensions dimensions,
+        final DoubleRange range,
         final Scalar scalar,
         final double value
     ) {
-        return _orientationInstance.getGraphCenterPointY(graphPane, range, scalar, value);
+        return _orientationInstance.getGraphCenterPointY(dimensions, range, scalar, value);
     }
 }

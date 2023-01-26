@@ -10,15 +10,18 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class GraphPane extends Pane {
+public abstract class GraphPane extends Pane {
+
+    private final GraphParams _params;
 
     public GraphPane(
-        final Color color
+        final GraphParams params
     ) {
-        var bgColor = color.darker().darker();
+        _params = params;
+
+        var bgColor = _params.getColor().darker().darker();
         setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
@@ -30,4 +33,8 @@ public class GraphPane extends Pane {
         super.setPrefSize(width, height);
         setClip(new Rectangle(width, height));
     }
+
+    public GraphParams getParams() { return _params; }
+
+    public abstract void setValue(double value);
 }

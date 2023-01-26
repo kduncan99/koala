@@ -6,7 +6,7 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.Koala;
-import com.kadware.koala.Range;
+import com.kadware.koala.DoubleRange;
 import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ports.TriggerInputPort;
 import com.kadware.koala.waves.IWave;
@@ -19,10 +19,10 @@ public class SimpleLFOModule extends Module {
     public static final int OUTPUT_PORT = 1;
 
     public static final double DEFAULT_FREQUENCY = 1.0f;
-    public static final Range FREQUENCY_RANGE = new Range(0.001, 100.0);
+    public static final DoubleRange FREQUENCY_RANGE = new DoubleRange(0.001, 100.0);
 
     public static final double DEFAULT_PULSE_WIDTH = 0.5f;
-    public static final Range PULSE_WIDTH_RANGE = new Range(0.05, 0.95);
+    public static final DoubleRange PULSE_WIDTH_RANGE = new DoubleRange(0.05, 0.95);
 
     public final TriggerInputPort _trigger;
     public final ContinuousOutputPort _output;

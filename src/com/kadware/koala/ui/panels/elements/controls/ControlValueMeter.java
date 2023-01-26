@@ -32,17 +32,18 @@ public class ControlValueMeter extends MeterIndicator implements IIndicator {
         pane.setPrefWidth(CELL_DIMENSIONS.getWidth() * ControlPane.HORIZONTAL_PIXELS_PER_CELL);
         pane.setPrefHeight(ControlPane.VERTICAL_PIXELS_PER_CONTROL);
 
-        var range = new Range(Koala.MIN_CVPORT_VALUE, Koala.MAX_CVPORT_VALUE);
-        var orientation = Orientation.HORIZONTAL;
+        var range = new DoubleRange(Koala.MIN_CVPORT_VALUE, Koala.MAX_CVPORT_VALUE);
+        var orientation = OrientationType.HORIZONTAL;
         var scalar = new LinearScalar();
         var ticks = new double[]{-5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
         var labels = new double[]{-5.0, 0.0, 5.0};
-        var gradient = new GradientPane(color, range, ticks, labels, "%3.1f");
-
         var meterW = (int)pane.getPrefWidth();
         var meterH = (int)pane.getPrefHeight();
         var meterDim = new PixelDimensions(meterW, meterH);
-        var meter = new SplitBarMeter(meterDim, range, orientation, scalar, color, 0.0, gradient);
+        var gradientParams = new GradientParams(color, range, ticks, labels, "%3.1f");
+        var meterParams = new MeterParams(meterDim, range, orientation, scalar, color, gradientParams);
+
+        var meter = new MultiMeter(meterParams, 0.0);
 
         pane.getChildren().add(meter);
         return pane;

@@ -7,7 +7,7 @@ package com.kadware.koala.ui.panels.elements.controls;
 
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.PixelDimensions;
-import com.kadware.koala.Range;
+import com.kadware.koala.DoubleRange;
 import com.kadware.koala.ui.components.Knob;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,14 +21,14 @@ public class LinearKnobControl extends ControlPane {
     public LinearKnobControl(
         final String legend,
         final Color color,
-        final Range range
+        final DoubleRange range
     ) {
         super(CELL_DIMENSIONS, createPane(color, range), legend);
     }
 
     private static Pane createPane(
         final Color color,
-        final Range range
+        final DoubleRange range
     ) {
         var pane = new Pane();
         var knob = new Knob(KNOB_DIMENSIONS, color);//TODO need ranging information somewhere/somehow

@@ -6,25 +6,14 @@
 package com.kadware.koala.ui.panels;
 
 import com.kadware.koala.CellDimensions;
-import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.modules.Module;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.SimpleLFOModule;
 import com.kadware.koala.ports.ContinuousOutputPort;
-import com.kadware.koala.ui.components.buttons.MomentaryButton;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
 import com.kadware.koala.ui.panels.elements.controls.*;
-import com.kadware.koala.waves.*;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Arrays;
 
 public class SimpleLFOPanel extends ModulePanel {
 
