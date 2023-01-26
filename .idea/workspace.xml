@@ -5,39 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/DoubleRange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/IntegerRange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/RolloverCounter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/BarGraphPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/DotGraphPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/GradientParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/GraphParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/LineGraphPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MeterParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiColorGraphPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiColorGraphParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiGraphPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiMeter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/SplitBarGraphPane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/SplitBarGraphParams.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/Range.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/Range.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/modules/SimpleLFOModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/modules/SimpleLFOModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/BarMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/BarMeter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/BaseOrientation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/BaseOrientation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/DotMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/DotMeter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/GradientPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/GradientPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/GraphPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/GraphPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/HorizontalOrientation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/HorizontalOrientation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/LineMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/LineMeter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/Meter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/Meter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiColorBarMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiColorBarMeter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/Orientation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/OrientationType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/SplitBarMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/SplitBarMeter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/VerticalOrientation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/VerticalOrientation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/messages/Listener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/IListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/messages/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/messages/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/buttons/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/buttons/Button.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/SimpleLFOPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/SimpleLFOPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlValueMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlValueMeter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/LinearKnobControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/LinearKnobControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/FrequencyDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/FrequencyDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/IControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/messages/ValueUpdatedMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/IIndicator.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,11 +83,11 @@
       <recent name="com.kadware.koala.ui.panels" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.kadware.koala.messages" />
       <recent name="com.kadware.koala" />
       <recent name="com.kadware.koala.waves" />
       <recent name="com.kadware.koala.ui.components.meters" />
       <recent name="com.kadware.koala.ui.panels.elements.controls" />
-      <recent name="com.kadware.koala.ui.components.buttons" />
     </key>
   </component>
   <component name="RunManager">
@@ -151,7 +129,7 @@
       <workItem from="1672356450814" duration="11555000" />
       <workItem from="1672605023891" duration="206632000" />
       <workItem from="1674582080515" duration="28000" />
-      <workItem from="1674582256888" duration="38905000" />
+      <workItem from="1674582256888" duration="40127000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

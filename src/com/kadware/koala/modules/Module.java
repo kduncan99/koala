@@ -6,13 +6,12 @@
 package com.kadware.koala.modules;
 
 import com.kadware.koala.exceptions.BadPortIndexException;
-import com.kadware.koala.messages.Sender;
 import com.kadware.koala.ports.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Module extends Sender {
+public abstract class Module {
 
     public enum ModuleType {
         AREnvelopeGenerator,    //  Simple envelope generator

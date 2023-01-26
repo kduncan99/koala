@@ -12,7 +12,7 @@ import com.kadware.koala.ui.panels.Panel;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class FrequencyDisplay extends ControlPane implements IIndicator {
+public class FrequencyDisplay extends ControlPane {
 
     public FrequencyDisplay(
         final CellDimensions cellDimensions,

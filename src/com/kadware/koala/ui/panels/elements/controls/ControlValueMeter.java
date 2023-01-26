@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  * A graphic indication of continuous values, ranging between the given ranges.
  * It is designed to be fit into a one-by-one cell.
  */
-public class ControlValueMeter extends MeterIndicator implements IIndicator {
+public class ControlValueMeter extends MeterIndicator {
 
     private static final CellDimensions CELL_DIMENSIONS = new CellDimensions(2, 1);
 

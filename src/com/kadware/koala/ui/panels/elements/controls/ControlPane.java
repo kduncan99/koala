@@ -78,6 +78,10 @@ public abstract class ControlPane extends VBox {
 
     public CellDimensions getCellDimensions() { return _cellDimensions; }
 
+    //  To be invoked only on the Application thread.
+    //  Subclasses override this *if* needed
+    public void setValue(final double value){}
+
     public static int getPixelHeight(
         final CellDimensions cellDimensions
     ) {

@@ -17,8 +17,6 @@ import javafx.scene.paint.Color;
 
 public class SimpleLFOPanel extends ModulePanel {
 
-    private static final String RESOURCE_PATH = "resources/";
-
     private ControlValueMeter _cvMeter;
     private FrequencyDisplay _frequencyDisplay;
     private LinearKnobControl _frequencyControl;
