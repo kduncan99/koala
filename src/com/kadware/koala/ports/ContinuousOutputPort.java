@@ -1,33 +1,26 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.ports;
 
+import com.kadware.koala.DoubleRange;
+
 public final class ContinuousOutputPort extends ContinuousPort implements IOutputPort {
 
-    private double _currentValue = 0.0f;
+    private double _currentValue = 0.0;
 
     public ContinuousOutputPort(
-        final double minimumValue,
-        final double maximumValue,
-        final double multiplier
+        final DoubleRange range
     ) {
-        super(minimumValue, maximumValue, multiplier);
+        super(range);
     }
 
     public ContinuousOutputPort() {}
 
     public double getCurrentValue() {
-        double value = _currentValue * _multiplier;
-        if (value < _minimumValue) {
-            return _minimumValue;
-        } else if (value > _maximumValue) {
-            return _maximumValue;
-        } else {
-            return value;
-        }
+        return _currentValue;
     }
 
     @Override
@@ -44,9 +37,11 @@ public final class ContinuousOutputPort extends ContinuousPort implements IOutpu
     public void setCurrentValue(
         final double value
     ) {
-        _currentValue = value;
-        if ((value > _minimumValue) || (value < _maximumValue)) {
-            _overload = true;
+        if ((value > getRange().getHighValue()) || (value < getRange().getLowValue())) {
+            setOverload();
+            _currentValue = getRange().clipValue(value);
+        } else {
+            _currentValue = value;
         }
     }
 }

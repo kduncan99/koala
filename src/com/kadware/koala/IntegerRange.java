@@ -23,6 +23,9 @@ public class IntegerRange extends Range<Integer> {
         return Math.max(Math.min(value, getHighValue()), getLowValue());
     }
 
+    /**
+     *  Converts an input value, scaled according to this range, to a value between 0.0 and 1.0
+     */
     public int normalizeValue(
         final int value
     ) {

@@ -23,7 +23,7 @@ public abstract class Port {
 
     /**
      * Resets the port.
-     * Functionality is specific to the particular sub class (most probably don't do anything)
+     * Functionality is specific to the particular subclass (most probably don't do anything)
      */
     public abstract void reset();
 }

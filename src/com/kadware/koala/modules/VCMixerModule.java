@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -73,21 +73,21 @@ public class VCMixerModule extends Module {
         _pan4LeftOut = (ContinuousOutputPort) _panModule4.getOutputPort(FixedPanningModule.LEFT_OUTPUT_PORT);
         _pan4RightOut = (ContinuousOutputPort) _panModule4.getOutputPort(FixedPanningModule.RIGHT_OUTPUT_PORT);
 
-        ContinuousInputPort signalIn1 = (ContinuousInputPort) _ampModule1.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort levelIn1 = (ContinuousInputPort) _ampModule1.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        ContinuousInputPort panIn1 = (ContinuousInputPort) _panModule1.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
+        var signalIn1 = (ContinuousInputPort) _ampModule1.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
+        var levelIn1 = (ContinuousInputPort) _ampModule1.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT);
+        var panIn1 = (ContinuousInputPort) _panModule1.getInputPort(VCPanningModule.CONTROL_INPUT_PORT);
 
-        ContinuousInputPort signalIn2 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort levelIn2 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        ContinuousInputPort panIn2 = (ContinuousInputPort) _panModule2.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
+        var signalIn2 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
+        var levelIn2 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT);
+        var panIn2 = (ContinuousInputPort) _panModule2.getInputPort(VCPanningModule.CONTROL_INPUT_PORT);
 
-        ContinuousInputPort signalIn3 = (ContinuousInputPort) _ampModule3.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort levelIn3 = (ContinuousInputPort) _ampModule3.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        ContinuousInputPort panIn3 = (ContinuousInputPort) _panModule3.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
+        var signalIn3 = (ContinuousInputPort) _ampModule3.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
+        var levelIn3 = (ContinuousInputPort) _ampModule3.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT);
+        var panIn3 = (ContinuousInputPort) _panModule3.getInputPort(VCPanningModule.CONTROL_INPUT_PORT);
 
-        ContinuousInputPort signalIn4 = (ContinuousInputPort) _ampModule4.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
-        ContinuousInputPort levelIn4 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT_1);
-        ContinuousInputPort panIn4 = (ContinuousInputPort) _panModule2.getInputPort(VCPanningModule.CONTROL_INPUT_PORT_1);
+        var signalIn4 = (ContinuousInputPort) _ampModule4.getInputPort(VCAmplifierModule.SIGNAL_INPUT_PORT);
+        var levelIn4 = (ContinuousInputPort) _ampModule2.getInputPort(VCAmplifierModule.CONTROL_INPUT_PORT);
+        var panIn4 = (ContinuousInputPort) _panModule2.getInputPort(VCPanningModule.CONTROL_INPUT_PORT);
 
         Port.connectPorts(_ampModule1.getOutputPort(VCAmplifierModule.SIGNAL_OUTPUT_PORT),
                           _panModule1.getInputPort(VCPanningModule.SIGNAL_INPUT_PORT));

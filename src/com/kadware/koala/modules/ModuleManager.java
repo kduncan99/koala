@@ -70,7 +70,7 @@ public class ModuleManager {
             case DiscreteGlide -> new DiscreteGlideModule();
             case DiscreteSequencer -> new DiscreteSequencerModule();
             case DualNoise -> new DualNoiseModule();
-            case FixedAmplifier -> new FixedAmplifierModule();
+            case FixedAttenuator -> new FixedAttenuatorModule();
             case FixedMixer -> new FixedMixerModule();
             case FixedPanner -> new FixedPanningModule();
             case Inverter -> new InverterModule();

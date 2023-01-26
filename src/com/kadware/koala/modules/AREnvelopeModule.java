@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020, 2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -9,6 +9,9 @@ import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ports.LogicInputPort;
 
+/**
+ * Simple AR module, with output values ranging between 0.0 and 1.0
+ */
 public class AREnvelopeModule extends Module {
 
     public static final int GATE_INPUT_PORT = 0;
@@ -21,7 +24,7 @@ public class AREnvelopeModule extends Module {
     private boolean _manualGateOpen = false;
     private double _releaseTime = 0.0f;          //  in milliseconds
     private boolean _triggered = false;
-    private double _value = Koala.MIN_CVPORT_VALUE;
+    private double _value = Koala.POSITIVE_RANGE.getLowValue();
 
     AREnvelopeModule() {
         _inputPorts.put(GATE_INPUT_PORT, new LogicInputPort());
@@ -40,23 +43,15 @@ public class AREnvelopeModule extends Module {
         _triggered = triggerInput.getValue();
         boolean effectiveGate = _triggered || _manualGateOpen || gateInput.getValue();
         if (effectiveGate) {
-            if (_value < Koala.MAX_CVPORT_VALUE) {
-                _value += _incrementPerSample;
-                if (_value >= Koala.MAX_CVPORT_VALUE) {
-                    _value = Koala.MAX_CVPORT_VALUE;
-                    _triggered = false;
-                }
-
+            if (_value < Koala.POSITIVE_RANGE.getHighValue()) {
+                _value = Koala.POSITIVE_RANGE.clipValue(_value + _incrementPerSample);
+                _triggered = false;
                 ContinuousOutputPort outputPort = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
                 outputPort.setCurrentValue(_value);
             }
         } else {
-            if (_value > Koala.MIN_CVPORT_VALUE) {
-                _value -= _decrementPerSample;
-                if (_value < Koala.MIN_CVPORT_VALUE) {
-                    _value = Koala.MIN_CVPORT_VALUE;
-                }
-
+            if (_value > Koala.POSITIVE_RANGE.getLowValue()) {
+                _value = Koala.POSITIVE_RANGE.clipValue(_value -_decrementPerSample);
                 ContinuousOutputPort outputPort = (ContinuousOutputPort) _outputPorts.get(SIGNAL_OUTPUT_PORT);
                 outputPort.setCurrentValue(_value);
             }
@@ -85,7 +80,7 @@ public class AREnvelopeModule extends Module {
 
     @Override
     public void reset() {
-        _value = Koala.MIN_CVPORT_VALUE;
+        _value = Koala.POSITIVE_RANGE.getLowValue();
         _manualGateOpen = false;
     }
 
@@ -94,9 +89,9 @@ public class AREnvelopeModule extends Module {
     ) {
         _attackTime = value;
         if (_attackTime <= 0.0) {
-            _incrementPerSample = Koala.CVPORT_VALUE_RANGE;
+            _incrementPerSample = Koala.POSITIVE_RANGE.getDelta();
         } else {
-            _incrementPerSample = Koala.CVPORT_VALUE_RANGE / (_attackTime / 1000 * Koala.SAMPLE_RATE);
+            _incrementPerSample = Koala.POSITIVE_RANGE.getDelta() / (_attackTime / 1000 * Koala.SAMPLE_RATE);
         }
     }
 
@@ -104,7 +99,7 @@ public class AREnvelopeModule extends Module {
         final boolean value
     ) {
         if (!_manualGateOpen && value) {
-            _value = Koala.MIN_CVPORT_VALUE;
+            _value = Koala.POSITIVE_RANGE.getLowValue();
         }
         _manualGateOpen = value;
     }
@@ -119,9 +114,9 @@ public class AREnvelopeModule extends Module {
     ) {
         _releaseTime = value;
         if (_releaseTime <= 0.0) {
-            _decrementPerSample = Koala.CVPORT_VALUE_RANGE;
+            _decrementPerSample = Koala.POSITIVE_RANGE.getDelta();
         } else {
-            _decrementPerSample = Koala.CVPORT_VALUE_RANGE / (_releaseTime / 1000 * Koala.SAMPLE_RATE);
+            _decrementPerSample = Koala.POSITIVE_RANGE.getDelta() / (_releaseTime / 1000 * Koala.SAMPLE_RATE);
         }
     }
 }

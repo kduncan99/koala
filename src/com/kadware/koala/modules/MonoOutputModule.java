@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -33,7 +33,7 @@ public class MonoOutputModule extends Module {
     @Override
     public void advance() {
         ContinuousInputPort inp = (ContinuousInputPort) _inputPorts.get(SIGNAL_INPUT_PORT);
-        int scaled = scale(inp.getValue());
+        int scaled = (int)(inp.getValue() * SAMPLE_MAGNITUDE);
         byte hibyte = (byte) (scaled >> 8);
         byte lobyte = (byte) scaled;
         byte[] buffer = {hibyte, lobyte, hibyte, lobyte};
@@ -67,17 +67,5 @@ public class MonoOutputModule extends Module {
         } catch (LineUnavailableException ex) {
             System.out.println(ex.getMessage());
         }
-    }
-
-    /**
-     * Converts an input value scaled according to our port min/max, to a signed integer value
-     * scaled according to our sample bit size.
-     */
-    private int scale(
-        final double input
-    ) {
-        //  adjust the input value which varies from MIN_PORT_VALUE to MAX_PORT_VALUE,
-        //  such that it fits nicely within the SAMPLE_SIZE_IN_BITS range.
-        return (int) (input * SAMPLE_MAGNITUDE / Koala.CVPORT_VALUE_RANGE);
     }
 }

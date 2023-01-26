@@ -1,14 +1,14 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
 
+import com.kadware.koala.DoubleRange;
 import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
-import com.kadware.koala.ports.DiscreteInputPort;
 import com.kadware.koala.waves.IWave;
 import com.kadware.koala.waves.WaveManager;
 import com.kadware.koala.waves.WaveType;
@@ -16,51 +16,54 @@ import com.kadware.koala.waves.WaveType;
 public class VCOscillatorModule extends Module {
 
     public static final int FREQUENCY_INPUT_PORT = 0;
-    public static final int FREQUENCY_MOD_INPUT_PORT_1 = 1;
-    public static final int FREQUENCY_MOD_INPUT_PORT_2 = 2;
-    public static final int PULSE_WIDTH_MOD_INPUT_PORT = 3;
-    public static final int OUTPUT_PORT = 0;
+    public static final int PULSE_WIDTH_INPUT_PORT = 1;
+    public static final int OUTPUT_PORT = 2;
+    //  TODO sync input and sync output logic ports
 
-    private double _baseFrequency;
-    private double _basePulseWidth;
+    private static final WaveType DEFAULT_WAVE_TYPE = WaveType.SQUARE;
+    private static final double DEFAULT_FREQUENCY = 440.0;
+    private static final double DEFAULT_PULSE_WIDTH = 0.5;
+    private static final DoubleRange FREQUENCY_RANGE = new DoubleRange(0.0, 20000.0);
+    private static final DoubleRange PULSE_WIDTH_RANGE = new DoubleRange(0.0, 1.0);
+
+    private final ContinuousInputPort _frequencyInput;
+    private final ContinuousInputPort _pulseWidthInput;
+    private final ContinuousOutputPort _output;
+
+    private double _baseFrequency;  //  0.0 < n < 20000
+    private double _basePulseWidth; //  0.0 < n < 1.0
     private IWave _wave;
-    private double _waveProgress;
+    private double _waveProgress;   //  0.0 <= n < 1.0
 
     VCOscillatorModule() {
-        _inputPorts.put(FREQUENCY_INPUT_PORT, new DiscreteInputPort());//Frequency x 1000
-        _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_1, new ContinuousInputPort());
-        _inputPorts.put(FREQUENCY_MOD_INPUT_PORT_2, new ContinuousInputPort());
-        _inputPorts.put(PULSE_WIDTH_MOD_INPUT_PORT, new ContinuousInputPort());
-        //  TODO sync input and sync output logic ports
-        _outputPorts.put(OUTPUT_PORT, new ContinuousOutputPort());
-        _wave = WaveManager.createWave(WaveType.SQUARE);
-        _baseFrequency = 440.0f;
-        _basePulseWidth = 0.5f;
+        _frequencyInput = new ContinuousInputPort();
+        _pulseWidthInput = new ContinuousInputPort();
+        _output = new ContinuousOutputPort();
+
+        _inputPorts.put(FREQUENCY_INPUT_PORT, _frequencyInput);
+        _inputPorts.put(PULSE_WIDTH_INPUT_PORT, _pulseWidthInput);
+        _outputPorts.put(OUTPUT_PORT, _output);
+
+        _wave = WaveManager.createWave(DEFAULT_WAVE_TYPE);
+        _baseFrequency = DEFAULT_FREQUENCY;
+        _basePulseWidth = DEFAULT_PULSE_WIDTH;
         reset();
     }
 
     @Override
     public void advance() {
-        DiscreteInputPort fcIn = (DiscreteInputPort) _inputPorts.get(FREQUENCY_INPUT_PORT);
-        double frequency = _baseFrequency + (fcIn.getValue() / 1000.0);
+        var frequencyMod = _frequencyInput.getValue();
+        var pulseWidthMod = _pulseWidthInput.getValue();
 
-        ContinuousInputPort fmIn1 = (ContinuousInputPort) _inputPorts.get(FREQUENCY_MOD_INPUT_PORT_1);
-        ContinuousInputPort fmIn2 = (ContinuousInputPort) _inputPorts.get(FREQUENCY_MOD_INPUT_PORT_2);
-        double modulation = fmIn1.getValue() + fmIn2.getValue();
+        double frequency = FREQUENCY_RANGE.clipValue(_baseFrequency * Math.pow(2.0, frequencyMod * 5.0));
+        double pulseWidth = PULSE_WIDTH_RANGE.clipValue(_basePulseWidth + pulseWidthMod);
 
-        double effectiveFrequency = frequency * Math.pow(2, modulation);
-        double segmentsPerCycle = effectiveFrequency / Koala.SAMPLE_RATE;
+        double segmentsPerCycle = frequency / Koala.SAMPLE_RATE;
         _waveProgress += segmentsPerCycle;
         if (_waveProgress >= 1.0f) {
             _waveProgress -= 1.0f;
         }
-
-        ContinuousInputPort pwIn = (ContinuousInputPort) _inputPorts.get(PULSE_WIDTH_MOD_INPUT_PORT);
-        double effectivePulseWidth = _basePulseWidth + (pwIn.getValue() / 10.0f);
-        double value = _wave.getValue(_waveProgress, effectivePulseWidth);
-
-        ContinuousOutputPort out = (ContinuousOutputPort) _outputPorts.get(OUTPUT_PORT);
-        out.setCurrentValue(value);
+        _output.setCurrentValue(_wave.getValue(_waveProgress, pulseWidth));
     }
 
     @Override
@@ -91,13 +94,13 @@ public class VCOscillatorModule extends Module {
     public void setBaseFrequency(
         final double value
     ) {
-        _baseFrequency = value;
+        _baseFrequency = FREQUENCY_RANGE.clipValue(value);
     }
 
     public void setPulseWidth(
         final double value
     ) {
-        _basePulseWidth = value;
+        _basePulseWidth = PULSE_WIDTH_RANGE.clipValue(value);
     }
 
     public void setWave(

@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -139,9 +139,7 @@ public class StereoOutputModule extends Module {
     private int scale(
         final double input
     ) {
-        //  adjust the input value which varies from MIN_PORT_VALUE to MAX_PORT_VALUE,
-        //  such that it fits nicely within the SAMPLE_SIZE_IN_BITS range.
-        var result = input * SAMPLE_MAGNITUDE / Koala.CVPORT_VALUE_RANGE;
+        var result = input * SAMPLE_MAGNITUDE;
         if (_dimEnabled) {
             result *= 0.8;
         }

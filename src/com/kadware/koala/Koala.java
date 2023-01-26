@@ -13,20 +13,22 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Koala extends Application {
 
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
+
     public static final double SAMPLE_RATE = 44100.0f;
     public static final int SAMPLE_SIZE_IN_BITS = 16;
-    public static final double MAX_CVPORT_VALUE = 5.0f;
-    public static final double MIN_CVPORT_VALUE = -MAX_CVPORT_VALUE;
-    public static final double CVPORT_VALUE_RANGE = 2 * MAX_CVPORT_VALUE;
+
+    public static final DoubleRange BIPOLAR_RANGE = new DoubleRange(-1.0, 1.0);
+    public static final DoubleRange POSITIVE_RANGE = new DoubleRange(0.0, 1.0);
 
     //  Note frequencies for C4 up through B4 - divide or multiply for other octaves
 //    private static final float NF_C = 261.63f;
@@ -42,7 +44,7 @@ public class Koala extends Application {
 //    private static final float NF_AS = 466.16f;
 //    private static final float NF_B = 493.88f;
 
-    private static final long PAINT_PERIOD_MS = hzToMsec(100);
+    private static final long PAINT_PERIOD_MS = frequencyToMilliseconds(100);
 
     private Rack _rack;
     private Timer _timer;
@@ -109,7 +111,7 @@ public class Koala extends Application {
         gc.beginPath();
         for (int x = 0; x < canvas.getWidth(); ++x) {
             double position = x / canvas.getWidth();
-            var raw = wave.getValue(position, 0.5) / MAX_CVPORT_VALUE;
+            var raw = wave.getValue(position, 0.5);
             var y = (int)((1.0 - ((raw + 1.0) / 2.0)) * canvas.getHeight());
 
             if (x == 0)
@@ -153,9 +155,39 @@ public class Koala extends Application {
         return Math.min(Math.max(lowLimit, value), highLimit);
     }
 
-    private static long hzToMsec(
-        final long hz
+    public static double getNextRandomCV() {
+        return RANDOM.nextDouble() * 2.0 - 1.0;
+    }
+
+    /**
+     * Converts a dbScalar to a flat scalar value which can be used for multiplying against a sample
+     * to effect an increase or decrease in volume level.  The relevant equation is:
+     *      scalar = 10 ^ (db / 20)
+     * where we are expecting db to be positive for amplification, or negative for attenuation...
+     * and db is derived from the dbScalar input linearly such that:
+     *      dbScalar == -1.0 -> db == -96
+     *      dbScalar ==  0.0 -> db == 0
+     *      dbScalar == +1.0 -> db == 96
+     * This is a voltage, NOT a power equation.
+     * Generally, if db==3 we expect the scalar to be around 1.4, while if db==-3, we expect it to be around 0.7.
+     * @param dbScalar value ranging from -1.0 (infinite attenuation) to 0.0 (no attenuation).
+     * @return a multiplicative scalar which, when applied to some sample, will produce the desired attenuation.
+     */
+    public static double dbScalarToMultiplier(
+        final double dbScalar
     ) {
-        return 1000/hz;
+        var db = dbScalar * 96.0;
+        return Math.pow(10, db);
+    }
+
+    /**
+     * Converts a frequency specified in hertz, to the time elapsed per cycle expressed in milliseconds
+     * @param frequency input value
+     * @return result
+     */
+    public static long frequencyToMilliseconds(
+        final long frequency
+    ) {
+        return (long)(1000.0 / (double)frequency);
     }
 }

@@ -20,7 +20,7 @@ public abstract class Module {
         DiscreteGlide,          //  Portamento for discrete signals
         DiscreteSequencer,      //  Step sequencer with discrete output values
         DualNoise,              //  Dual (STEREO) noise source
-        FixedAmplifier,         //  Basic amplifier (actually an attenuator)
+        FixedAttenuator,         //  Basic amplifier (actually an attenuator)
         FixedPanner,            //  Basic stereo pan control
         FixedMixer,             //  Simple 4x2x1 mixer
         Inverter,               //  Inverts the input

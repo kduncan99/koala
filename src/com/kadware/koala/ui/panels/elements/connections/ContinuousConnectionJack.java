@@ -33,7 +33,7 @@ public class ContinuousConnectionJack extends ConnectionJack {
 
         public PortIndicators() {
             _overload = new DigitalLED(INDICATOR_RADIUS, OVERLOAD_COLOR);
-            _signal = new AnalogLED(INDICATOR_RADIUS, SIGNAL_COLOR, Koala.MIN_CVPORT_VALUE, Koala.MAX_CVPORT_VALUE);
+            _signal = new AnalogLED(INDICATOR_RADIUS, SIGNAL_COLOR, Koala.BIPOLAR_RANGE);
             getChildren().addAll(_overload, _signal);
         }
     }

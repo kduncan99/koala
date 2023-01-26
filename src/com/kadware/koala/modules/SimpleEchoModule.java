@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2022 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2022,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -66,7 +66,7 @@ public class SimpleEchoModule extends Module {
         final double milliseconds
     ) {
         _delayInMillis = milliseconds;
-        _delayInSamples = (int) (_delayInMillis * Koala.SAMPLE_RATE / 1000.0f);
+        _delayInSamples = (int) (_delayInMillis * Koala.SAMPLE_RATE / 1000.0);
         if (_delayInSamples == 0) {
             _cache = null;
             _cacheIndex = 0;

@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.waves;
@@ -23,26 +23,14 @@ public class TriangleWave implements IWave {
         final double position,
         final double pulseWidth
     ) {
-        double effectivePosition = position;
-
-        if (position < 0.0f) {
-            effectivePosition = 0.0f;
-        } else if (position > 1.0f) {
-            effectivePosition = 1.0f;
-        }
-
-        if (effectivePosition == 0.5f) {
-            return 0.0f;
-        } else if (effectivePosition < 0.5f) {
-            return (effectivePosition * 2.0f * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
+        var pos = Koala.POSITIVE_RANGE.clipValue(position);
+        if (pos == 0.5) {
+            return 0.0;
+        } else if (pos < 0.5) {
+            return (pos * 2.0 * Koala.BIPOLAR_RANGE.getDelta()) + Koala.BIPOLAR_RANGE.getLowValue();
         } else {
-            return ((1.0f - effectivePosition) * 2.0f * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
+            return ((1.0 - pos) * 2.0 * Koala.BIPOLAR_RANGE.getDelta()) + Koala.BIPOLAR_RANGE.getLowValue();
         }
-    }
-
-    @Override
-    public String getWaveClass() {
-        return "Triangle";
     }
 
     @Override

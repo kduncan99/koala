@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -11,7 +11,7 @@ import com.kadware.koala.ports.Port;
 
 /**
  * Implements a 4x2x1 mixer where the levels and pan amounts can be set, but not modulated.
- * This is a meta-module, containing several amplifier and panning sub-modules.
+ * This is a meta-module, containing several amplifier and panning submodules.
  */
 public class FixedMixerModule extends Module {
 
@@ -27,10 +27,10 @@ public class FixedMixerModule extends Module {
     private final ContinuousOutputPort _leftOut;
     private final ContinuousOutputPort _rightOut;
 
-    private final FixedAmplifierModule _ampMod1;
-    private final FixedAmplifierModule _ampMod2;
-    private final FixedAmplifierModule _ampMod3;
-    private final FixedAmplifierModule _ampMod4;
+    private final FixedAttenuatorModule _ampMod1;
+    private final FixedAttenuatorModule _ampMod2;
+    private final FixedAttenuatorModule _ampMod3;
+    private final FixedAttenuatorModule _ampMod4;
 
     private final FixedPanningModule _panMod1;
     private final FixedPanningModule _panMod2;
@@ -47,10 +47,10 @@ public class FixedMixerModule extends Module {
     private final ContinuousOutputPort _pan4RightOut;
 
     FixedMixerModule() {
-        _ampMod1 = new FixedAmplifierModule();
-        _ampMod2 = new FixedAmplifierModule();
-        _ampMod3 = new FixedAmplifierModule();
-        _ampMod4 = new FixedAmplifierModule();
+        _ampMod1 = new FixedAttenuatorModule();
+        _ampMod2 = new FixedAttenuatorModule();
+        _ampMod3 = new FixedAttenuatorModule();
+        _ampMod4 = new FixedAttenuatorModule();
 
         _panMod1 = new FixedPanningModule();
         _panMod2 = new FixedPanningModule();
@@ -104,15 +104,17 @@ public class FixedMixerModule extends Module {
         _panMod3.advance();
         _panMod4.advance();
 
-        double left = _pan1LeftOut.getCurrentValue()
-            + _pan2LeftOut.getCurrentValue()
-            + _pan3LeftOut.getCurrentValue()
-            + _pan4LeftOut.getCurrentValue();
+        double left = _pan1LeftOut.getCurrentValue();
+        left += _pan2LeftOut.getCurrentValue();
+        left += _pan3LeftOut.getCurrentValue();
+        left += _pan4LeftOut.getCurrentValue();
+        left /= 4.0;
 
-        double right = _pan1RightOut.getCurrentValue()
-            + _pan2RightOut.getCurrentValue()
-            + _pan3RightOut.getCurrentValue()
-            + _pan4RightOut.getCurrentValue();
+        double right = _pan1RightOut.getCurrentValue();
+        right += _pan2RightOut.getCurrentValue();
+        right += _pan3RightOut.getCurrentValue();
+        right += _pan4RightOut.getCurrentValue();
+        right /= 4.0;
 
         _monoOut.setCurrentValue(left + right);
         _leftOut.setCurrentValue(left);

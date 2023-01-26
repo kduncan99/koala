@@ -1,10 +1,11 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.ports;
 
+import com.kadware.koala.DoubleRange;
 import com.kadware.koala.exceptions.CannotConnectPortException;
 
 public final class ContinuousInputPort extends ContinuousPort implements IInputPort {
@@ -12,11 +13,9 @@ public final class ContinuousInputPort extends ContinuousPort implements IInputP
     private ContinuousOutputPort _source = null;
 
     public ContinuousInputPort(
-        final double minimumValue,
-        final double maximumValue,
-        final double multiplier
+        final DoubleRange range
     ) {
-        super(minimumValue, maximumValue, multiplier);
+        super(range);
     }
 
     public ContinuousInputPort() {}
@@ -47,20 +46,12 @@ public final class ContinuousInputPort extends ContinuousPort implements IInputP
     }
 
     public double getValue() {
-        if (_source == null) {
-            return (_maximumValue + _minimumValue) / 2.0f;
-        } else {
-            double value = _source.getCurrentValue() * _multiplier;
-            if (value > _maximumValue) {
-                _overload = true;
-                return _maximumValue;
-            } else if (value < _minimumValue) {
-                _overload = true;
-                return _minimumValue;
-            } else {
-                return value;
-            }
+        var value = (_source == null) ? 0.0 : _source.getCurrentValue();
+        if (value > getRange().getHighValue() || value < getRange().getLowValue()) {
+            setOverload();
+            value = getRange().clipValue(value);
         }
+        return value;
     }
 
     @Override

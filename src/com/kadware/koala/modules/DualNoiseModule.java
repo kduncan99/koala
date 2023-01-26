@@ -1,38 +1,34 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
 
-import com.kadware.koala.Koala;
 import com.kadware.koala.ports.ContinuousOutputPort;
 
-import java.util.Random;
-
-//  TODO This should be implemented as a meta-module, containing two simple noise modules
 public class DualNoiseModule extends Module {
 
     public static final int LEFT_SIGNAL_OUTPUT_PORT = 0;
     public static final int RIGHT_SIGNAL_OUTPUT_PORT = 1;
 
-    private final Random _random = new Random(System.currentTimeMillis());
-    private final ContinuousOutputPort _leftOutput;
-    private final ContinuousOutputPort _rightOutput;
+    private final NoiseModule _leftNoise;
+    private final NoiseModule _rightNoise;
 
     DualNoiseModule() {
-        _leftOutput = new ContinuousOutputPort();
-        _rightOutput = new ContinuousOutputPort();
+        _leftNoise = new NoiseModule();
+        _rightNoise = new NoiseModule();
+
+        var _leftOutput = (ContinuousOutputPort) _leftNoise.getOutputPort(NoiseModule.SIGNAL_OUTPUT_PORT);
+        var _rightOutput = (ContinuousOutputPort) _rightNoise.getOutputPort(NoiseModule.SIGNAL_OUTPUT_PORT);
         _outputPorts.put(LEFT_SIGNAL_OUTPUT_PORT, _leftOutput);
         _outputPorts.put(RIGHT_SIGNAL_OUTPUT_PORT, _rightOutput);
     }
 
     @Override
     public void advance() {
-        var leftValue = (_random.nextDouble() * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
-        var rightValue = (_random.nextDouble() * Koala.CVPORT_VALUE_RANGE) + Koala.MIN_CVPORT_VALUE;
-        _leftOutput.setCurrentValue(leftValue);
-        _rightOutput.setCurrentValue(rightValue);
+        _leftNoise.advance();
+        _rightNoise.advance();
     }
 
     @Override
@@ -44,5 +40,8 @@ public class DualNoiseModule extends Module {
     }
 
     @Override
-    public void reset() {}
+    public void reset() {
+        _leftNoise.reset();
+        _rightNoise.reset();
+    }
 }

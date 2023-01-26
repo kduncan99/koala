@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020,2022 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020-2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -32,9 +32,10 @@ public class DADSREnvelopeModule extends Module {
     public final LogicInputPort _gate;
     public final ContinuousOutputPort _output;
 
-    private double _delayTime;       //  in msec
     private double _attackTime;      //  in msec
     private double _decayTime;       //  in msec
+    private double _delayTime;       //  in msec
+    private boolean _isInverted;
     private double _sustainLevel;    //  standard range
     private double _releaseTime;     //  in msec
 
@@ -48,6 +49,7 @@ public class DADSREnvelopeModule extends Module {
     private double _releaseDecrement;
     private State _state;
     private boolean _triggered;
+    private double _interimValue;
 
     DADSREnvelopeModule() {
         _trigger = new TriggerInputPort();
@@ -58,10 +60,12 @@ public class DADSREnvelopeModule extends Module {
         _inputPorts.put(GATE_INPUT_PORT, _gate);
         _outputPorts.put(SIGNAL_OUTPUT_PORT, _output);
 
+        _isInverted = false;
+
         setDelayTime(0.0f);
         setAttackTime(0.0f);
         setDecayTime(0.0f);
-        setSustainLevel(Koala.MAX_CVPORT_VALUE);
+        setSustainLevel(Koala.POSITIVE_RANGE.getHighValue());
         setReleaseTime(0.0f);
 
         reset();
@@ -79,13 +83,12 @@ public class DADSREnvelopeModule extends Module {
         }
 
         switch (_state) {
-            case Dormant:
+            case Dormant -> {
                 if (gateRaised) {
                     establishState(State.Delay);
                 }
-                break;
-
-            case Delay:
+            }
+            case Delay -> {
                 if (!_gated && !_triggered) {
                     establishState(State.Dormant);  //  we can go dormant since we haven't yet gone to attack
                 } else if (_stateCounter == 0) {
@@ -93,42 +96,41 @@ public class DADSREnvelopeModule extends Module {
                 } else {
                     --_stateCounter;
                 }
-                break;
-
-            case Attack:
+            }
+            case Attack -> {
                 if (!_gated && !_triggered) {
                     establishState(State.Release);
-                } else if (_output.getCurrentValue() >= Koala.MAX_CVPORT_VALUE) {
+                } else if (_output.getCurrentValue() >= Koala.POSITIVE_RANGE.getHighValue()) {
                     establishState(State.Decay);
                 } else {
-                    _output.setCurrentValue(_output.getCurrentValue() + _attackIncrement);
+                    _interimValue = Koala.POSITIVE_RANGE.clipValue(_interimValue + _attackIncrement);
+                    setOutputValue();
                 }
-                break;
-
-            case Decay:
+            }
+            case Decay -> {
                 if (!_gated && !_triggered) {
                     establishState(State.Release);
                 } else if (_stateCounter == 0) {
                     establishState(State.Sustain);
                 } else {
-                    _output.setCurrentValue(_output.getCurrentValue() - _decayDecrement);
+                    _interimValue = Koala.POSITIVE_RANGE.clipValue(_interimValue - _decayDecrement);
+                    setOutputValue();
                 }
-                break;
-
-            case Sustain:
+            }
+            case Sustain -> {
                 //  just stay here until the gate is released
                 if (!_gated) {
                     establishState(State.Release);
                 }
-                break;
-
-            case Release:
+            }
+            case Release -> {
                 if (_stateCounter == 0) {
                     establishState(State.Dormant);
                 } else {
-                    _output.setCurrentValue(_output.getCurrentValue() - _releaseDecrement);
+                    _interimValue = Koala.POSITIVE_RANGE.clipValue(_interimValue - _releaseDecrement);
+                    setOutputValue();
                 }
-                break;
+            }
         }
     }
 
@@ -140,7 +142,8 @@ public class DADSREnvelopeModule extends Module {
     ) {
         switch (state) {
             case Dormant:
-                _output.setCurrentValue(Koala.MIN_CVPORT_VALUE);
+                _interimValue = Koala.POSITIVE_RANGE.getLowValue();
+                setOutputValue();
                 _gated = false;
                 _triggered = false;
                 break;
@@ -180,6 +183,10 @@ public class DADSREnvelopeModule extends Module {
         return _triggered;
     }
 
+    public boolean isInverted() {
+        return _isInverted;
+    }
+
     @Override
     public void reset() {
         super.reset();
@@ -195,7 +202,7 @@ public class DADSREnvelopeModule extends Module {
     ) {
         _attackTime = milliseconds;
         var samples = _attackTime * Koala.SAMPLE_RATE / 1000.0f;
-        _attackIncrement = (Koala.MAX_CVPORT_VALUE - Koala.MIN_CVPORT_VALUE) / samples;
+        _attackIncrement = Koala.POSITIVE_RANGE.getDelta() / samples;
     }
 
     public void setDecayTime(
@@ -203,7 +210,7 @@ public class DADSREnvelopeModule extends Module {
     ) {
         _decayTime = milliseconds;
         var samples = _decayTime * Koala.SAMPLE_RATE / 1000.0f;
-        _decayDecrement = (Koala.MAX_CVPORT_VALUE - _sustainLevel) / samples;
+        _decayDecrement = (Koala.POSITIVE_RANGE.getHighValue() - _sustainLevel) / samples;
     }
 
     public void setDelayTime(
@@ -211,6 +218,12 @@ public class DADSREnvelopeModule extends Module {
     ) {
         _delayTime = milliseconds;
         _delaySamples = (int) (_delayTime * Koala.SAMPLE_RATE / 1000.0f);
+    }
+
+    public void setIsInverted(
+        final boolean value
+    ) {
+        _isInverted = value;
     }
 
     public void setManualGate(
@@ -224,16 +237,23 @@ public class DADSREnvelopeModule extends Module {
     ) {
         _releaseTime = milliseconds;
         var samples = _releaseTime * Koala.SAMPLE_RATE / 1000.0f;
-        _releaseDecrement = (_sustainLevel - Koala.MIN_CVPORT_VALUE) / samples;
+        _releaseDecrement = (_sustainLevel - Koala.POSITIVE_RANGE.getLowValue()) / samples;
     }
 
     public void setSustainLevel(
         final double level
     ) {
-        _sustainLevel = Math.min(Math.max(level, Koala.MIN_CVPORT_VALUE), Koala.MAX_CVPORT_VALUE);
+        _sustainLevel = Koala.POSITIVE_RANGE.clipValue(level);
     }
 
     public void trigger() {
         _manualTrigger = true;
+    }
+
+    /**
+     * Sets the output value according to _interimValue and the state of _isInverted
+     */
+    private void setOutputValue() {
+        _output.setCurrentValue(_isInverted ? -_interimValue : _interimValue);
     }
 }

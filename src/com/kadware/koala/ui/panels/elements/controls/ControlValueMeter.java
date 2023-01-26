@@ -32,7 +32,7 @@ public class ControlValueMeter extends MeterIndicator {
         pane.setPrefWidth(CELL_DIMENSIONS.getWidth() * ControlPane.HORIZONTAL_PIXELS_PER_CELL);
         pane.setPrefHeight(ControlPane.VERTICAL_PIXELS_PER_CONTROL);
 
-        var range = new DoubleRange(Koala.MIN_CVPORT_VALUE, Koala.MAX_CVPORT_VALUE);
+        var range = Koala.BIPOLAR_RANGE;
         var orientation = OrientationType.HORIZONTAL;
         var scalar = new LinearScalar();
         var ticks = new double[]{-5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0};

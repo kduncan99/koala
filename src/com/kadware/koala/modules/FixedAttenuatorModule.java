@@ -10,38 +10,31 @@ import com.kadware.koala.ports.ContinuousInputPort;
 import com.kadware.koala.ports.ContinuousOutputPort;
 
 /**
- * Basic value-controlled amplifier / attenuator.
- * If the control input is set linear, then the value ranges from -1.0 == unity inversion to 1.0 == unity gain.
- * Otherwise, the value ranges from -1.0 == 96db attenuation, to 1.0 == 96db amplification.
+ * Implements an attenuator where the attenuation can be set, but not modulated.
+ * Not likely to be used much as a main module, but useful as a submodule.
  */
-public class VCAmplifierModule extends Module {
+public class FixedAttenuatorModule extends Module {
 
     public static final int SIGNAL_INPUT_PORT = 0;
-    public static final int CONTROL_INPUT_PORT = 1;
-    public static final int SIGNAL_OUTPUT_PORT = 3;
+    public static final int SIGNAL_OUTPUT_PORT = 1;
 
     private final ContinuousInputPort _signalIn;
-    private final ContinuousInputPort _controlIn;
     private final ContinuousOutputPort _signalOut;
 
-    private boolean _isControlInputLinear = true;
+    //  _baseValue is a linear scalar, such that 0 gives us infinite attenuation, 0.5 gives us half-volume,
+    //  and 1.0 gives us unity.
     private double _baseValue = Koala.POSITIVE_RANGE.getHighValue();
 
-    VCAmplifierModule() {
+    FixedAttenuatorModule() {
         _signalIn = new ContinuousInputPort();
-        _controlIn = new ContinuousInputPort();
         _signalOut = new ContinuousOutputPort();
         _inputPorts.put(SIGNAL_INPUT_PORT, _signalIn);
-        _inputPorts.put(CONTROL_INPUT_PORT, _controlIn);
         _outputPorts.put(SIGNAL_OUTPUT_PORT, _signalOut);
     }
 
     @Override
     public void advance() {
-        double ctlIn = _controlIn.getValue();
-        double multiplier = _isControlInputLinear ? ctlIn : Koala.dbScalarToMultiplier(ctlIn);
-        double signalOutValue = multiplier * _signalIn.getValue();
-        _signalOut.setCurrentValue(signalOutValue);
+        _signalOut.setCurrentValue(_baseValue * _signalIn.getValue());
     }
 
     @Override
@@ -53,13 +46,11 @@ public class VCAmplifierModule extends Module {
 
     @Override
     public ModuleType getModuleType() {
-        return ModuleType.VCAmplifier;
+        return ModuleType.FixedAttenuator;
     }
 
     @Override
     public void reset() {}
-
-    public boolean isControlInputLinear() { return _isControlInputLinear; }
 
     /**
      * Sets the raw base value
@@ -68,7 +59,7 @@ public class VCAmplifierModule extends Module {
     public void setBaseValue(
         final double value
     ) {
-        _baseValue = value;
+        _baseValue = Koala.POSITIVE_RANGE.clipValue(value);
     }
 
     /**
@@ -79,11 +70,5 @@ public class VCAmplifierModule extends Module {
         final double dbScalar
     ) {
         _baseValue = Koala.POSITIVE_RANGE.clipValue(Koala.dbScalarToMultiplier(dbScalar));
-    }
-
-    public void setIsControlInputLinear(
-        final boolean value
-    ) {
-        _isControlInputLinear = value;
     }
 }
