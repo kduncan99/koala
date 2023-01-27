@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Sender {
 
-    private static final Set<IListener> _listeners = new HashSet<>();
+    private final Set<IListener> _listeners = new HashSet<>();
 
     public void notifyListeners(
         final Message message

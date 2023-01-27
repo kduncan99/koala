@@ -32,7 +32,7 @@ public class StereoOutputModule extends Module {
 
     private boolean _dimEnabled;
     private boolean _testToneEnabled;
-    private final TestToneModule _testToneModule;
+    private final SimpleOscillatorModule _oscillatorModule;
     private final ContinuousOutputPort _testToneOut;
     private final byte[] _buffer = new byte[4];
 
@@ -44,8 +44,8 @@ public class StereoOutputModule extends Module {
 
         _dimEnabled = false;
 
-        _testToneModule = new TestToneModule();
-        _testToneOut = (ContinuousOutputPort) _testToneModule.getOutputPort(TestToneModule.SIGNAL_OUTPUT_PORT);
+        _oscillatorModule = new SimpleOscillatorModule();
+        _testToneOut = (ContinuousOutputPort) _oscillatorModule.getOutputPort(SimpleOscillatorModule.OUTPUT_PORT);
         _testToneEnabled = false;
 
         reset();
@@ -53,7 +53,7 @@ public class StereoOutputModule extends Module {
 
     @Override
     public void advance() {
-        _testToneModule.advance();
+        _oscillatorModule.advance();
 
         var leftCombined = _leftInput.getValue();
         var rightCombined = _rightInput.getValue();
@@ -86,7 +86,7 @@ public class StereoOutputModule extends Module {
 
     @Override
     public void reset() {
-        _testToneModule.reset();
+        _oscillatorModule.reset();
         if (_sourceDataLine != null) {
             close();
         }
@@ -116,7 +116,7 @@ public class StereoOutputModule extends Module {
     public void enableTestTone(
         final double frequency
     ) {
-        _testToneModule.setBaseFrequency(frequency);
+        _oscillatorModule.setBaseFrequency(frequency);
         _testToneEnabled = true;
     }
 
@@ -128,7 +128,7 @@ public class StereoOutputModule extends Module {
         _testToneEnabled = !_testToneEnabled;
     }
 
-    public double getTestToneFrequency() { return _testToneModule.getBaseFrequency(); }
+    public double getTestToneFrequency() { return _oscillatorModule.getBaseFrequency(); }
     public boolean isDimEnabled() { return _dimEnabled; }
     public boolean isTestToneEnabled() { return _testToneEnabled; }
 

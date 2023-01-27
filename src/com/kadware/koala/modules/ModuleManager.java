@@ -1,6 +1,6 @@
 /*
  * Koala - Virtual Modular Synthesizer
- * Copyright (c) 2020 by Kurt Duncan - All Rights Reserved
+ * Copyright (c) 2020,2023 by Kurt Duncan - All Rights Reserved
  */
 
 package com.kadware.koala.modules;
@@ -61,7 +61,7 @@ public class ModuleManager {
     }
 
     public static synchronized Module createModule(
-        final Module.ModuleType moduleType
+        final ModuleType moduleType
     ) {
         Module module = switch (moduleType) {
             case AREnvelopeGenerator -> new AREnvelopeModule();
@@ -78,8 +78,8 @@ public class ModuleManager {
             case Noise -> new NoiseModule();
             case SimpleEcho -> new SimpleEchoModule();
             case SimpleLFO -> new SimpleLFOModule();
+            case SimpleOscillator -> new SimpleOscillatorModule();
             case StereoOutput -> new StereoOutputModule();
-            case TestTone -> new TestToneModule();
             case VCAmplifier -> new VCAmplifierModule();
             case VCFilter -> new VCFilterModule();
             case VCMixer -> new VCMixerModule();

@@ -3,8 +3,9 @@
  * Copyright (c) 2023 by Kurt Duncan - All Rights Reserved
  */
 
-package com.kadware.koala.messages;
+package com.kadware.koala.ui.panels.messages;
 
+import com.kadware.koala.messages.Message;
 import com.kadware.koala.waves.IWave;
 
 /**

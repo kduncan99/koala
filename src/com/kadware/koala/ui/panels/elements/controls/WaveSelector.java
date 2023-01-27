@@ -9,7 +9,7 @@ import com.kadware.koala.Koala;
 import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.messages.Message;
 import com.kadware.koala.ui.components.messages.SelectorButtonMessage;
-import com.kadware.koala.messages.WaveMessage;
+import com.kadware.koala.ui.panels.messages.WaveMessage;
 import com.kadware.koala.ui.components.buttons.Button;
 import com.kadware.koala.ui.components.buttons.SelectorButton;
 import com.kadware.koala.waves.IWave;

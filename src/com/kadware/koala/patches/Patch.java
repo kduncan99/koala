@@ -6,6 +6,7 @@
 package com.kadware.koala.patches;
 
 import com.kadware.koala.modules.Module;
+import com.kadware.koala.modules.ModuleType;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -8,8 +8,8 @@ package com.kadware.koala.ui.panels;
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.messages.IListener;
 import com.kadware.koala.messages.Message;
-import com.kadware.koala.messages.WaveMessage;
-import com.kadware.koala.modules.Module;
+import com.kadware.koala.modules.ModuleType;
+import com.kadware.koala.ui.panels.messages.WaveMessage;
 import com.kadware.koala.modules.ModuleManager;
 import com.kadware.koala.modules.SimpleLFOModule;
 import com.kadware.koala.ports.ContinuousOutputPort;
@@ -30,7 +30,7 @@ public class SimpleLFOPanel extends ModulePanel implements IListener {
     private ButtonControl _frequencyRangeSelector;
 
     public SimpleLFOPanel() {
-        super(ModuleManager.createModule(Module.ModuleType.SimpleLFO), PanelWidth.SINGLE, "LFO");
+        super(ModuleManager.createModule(ModuleType.SimpleLFO), PanelWidth.SINGLE, "LFO");
     }
 
     @Override
