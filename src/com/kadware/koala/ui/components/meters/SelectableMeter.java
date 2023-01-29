@@ -11,10 +11,11 @@ import javafx.scene.paint.Color;
 
 /**
  * A graphic indication of continuous values, ranging between the given ranges.
+ * This meter has four different graphs, displaying any one at a time.
  */
-public class LineMeter extends Meter {
+public class SelectableMeter extends Meter {
 
-    public LineMeter(
+    public SelectableMeter(
         final PixelDimensions dimensions,
         final DoubleRange range,
         final OrientationType orientation,
@@ -26,6 +27,6 @@ public class LineMeter extends Meter {
         super(dimensions,
               orientation,
               GradientPane.createGradientPane(range, orientation, color, tickPoints, labelPoints, labelFormat),
-              new LineGraphPane(range, orientation, color));
+              new SelectableGraphPane(range, orientation, color));
     }
 }

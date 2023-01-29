@@ -5,7 +5,9 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.DoubleRange;
+import com.kadware.koala.Koala;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class DotGraphPane extends GraphPane {
@@ -13,13 +15,14 @@ public class DotGraphPane extends GraphPane {
     private final Circle _circle;
 
     public DotGraphPane(
-        final GraphParams params
+        final DoubleRange range,
+        final OrientationType orientation,
+        final Color color
     ) {
-        super(params);
+        super(range, orientation, color);
 
         _circle = new Circle();
-        _circle.setFill(params.getColor().brighter());
-
+        _circle.setFill(color.brighter());
         getChildren().add(_circle);
     }
 
@@ -30,21 +33,15 @@ public class DotGraphPane extends GraphPane {
     ) {
         super.setPrefSize(width, height);
         _circle.setRadius(Math.min(width, height) / 4);
+        _circle.setCenterX(width / 2);
+        _circle.setCenterY(height / 2);
     }
 
     @Override
     public void setValue(double value) {
-        var ot = getParams().getOrientationType();
-        var dim = new PixelDimensions((int)getPrefWidth(), (int)getPrefHeight());
-        var x = ot.getGraphCenterPointX(dim,
-                                        getParams().getRange(),
-                                        getParams().getScalar(),
-                                        value);
-        var y = ot.getGraphCenterPointY(dim,
-                                        getParams().getRange(),
-                                        getParams().getScalar(),
-                                        value);
-        _circle.setCenterX(x);
-        _circle.setCenterY(y);
+        switch (getOrientation()) {
+            case HORIZONTAL -> _circle.setCenterX(getXCoordinateFor(value));
+            case VERTICAL -> _circle.setCenterY(getYCoordinateFor(value));
+        }
     }
 }

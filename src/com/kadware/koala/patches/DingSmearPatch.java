@@ -5,7 +5,7 @@
 
 package com.kadware.koala.patches;
 
-import com.kadware.koala.modules.Module;
+import com.kadware.koala.audio.modules.Module;
 
 public class DingSmearPatch extends Patch {
 

@@ -5,24 +5,21 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import com.kadware.koala.DoubleRange;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public abstract class GraphPane extends Pane {
+public abstract class GraphPane extends RangedPane {
 
-    private final GraphParams _params;
+    private final OrientationType _orientation;
 
     public GraphPane(
-        final GraphParams params
+        final DoubleRange range,
+        final OrientationType orientation,
+        final Color color
     ) {
-        _params = params;
-
-        var bgColor = _params.getColor().darker().darker();
-        setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
+        super(range, color);
+        _orientation = orientation;
     }
 
     @Override
@@ -34,7 +31,7 @@ public abstract class GraphPane extends Pane {
         setClip(new Rectangle(width, height));
     }
 
-    public GraphParams getParams() { return _params; }
+    public OrientationType getOrientation() { return _orientation; }
 
     public abstract void setValue(double value);
 }

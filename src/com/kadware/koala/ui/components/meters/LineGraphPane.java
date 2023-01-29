@@ -5,47 +5,48 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.DoubleRange;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 
 public class LineGraphPane extends GraphPane {
 
     private final Line _line;
 
     public LineGraphPane(
-        final GraphParams params
+        final DoubleRange range,
+        final OrientationType orientation,
+        final Color color
     ) {
-        super(params);
+        super(range, orientation, color);
 
         _line = new Line();
-        _line.setStroke(params.getColor().brighter());
-        _line.setStartX(0);
-        _line.setEndX(params.getDimensions().getWidth());
-        _line.setStartY(0);
-        _line.setEndY(params.getDimensions().getHeight());
-
+        _line.setStroke(color.brighter());
         getChildren().add(_line);
     }
 
     @Override
+    public void setPrefSize(
+        final double width,
+        final double height
+    ) {
+        super.setPrefSize(width, height);
+        _line.setStartX(0);
+        _line.setStartY(0);
+        _line.setEndX(width);
+        _line.setEndY(height);
+    }
+
+    @Override
     public void setValue(double value) {
-        var ot = getParams().getOrientationType();
-        var dim = new PixelDimensions((int)getPrefWidth(), (int)getPrefHeight());
-        switch (ot) {
+        switch (getOrientation()) {
             case HORIZONTAL -> {
-                var x = ot.getGraphCenterPointX(dim,
-                                                getParams().getRange(),
-                                                getParams().getScalar(),
-                                                value);
+                var x = getXCoordinateFor(value);
                 _line.setStartX(x);
                 _line.setEndX(x);
             }
             case VERTICAL -> {
-                var y = ot.getGraphCenterPointY(dim,
-                                                getParams().getRange(),
-                                                getParams().getScalar(),
-                                                value);
+                var y = getYCoordinateFor(value);
                 _line.setStartY(y);
                 _line.setEndY(y);
             }

@@ -5,137 +5,130 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.Pair;
 import com.kadware.koala.DoubleRange;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.Arrays;
-
+/**
+ * This is a bar graph, but the bar is segregated into multiple differently-colored segments.
+ * It is useful for indicators which need to show green for safe values, yellow for caution,
+ * and red for danger (as an example).
+ */
 public class MultiColorGraphPane extends GraphPane {
 
-    private static class GraphRegion {
+    private static class Region {
+        public double _lowRangedValue;
+        public double _highRangedValue;
+        public int _lowCoordinate;      //  x- or y- coordinate matching _lowRangedValue
+        public int _highCoordinate;     //  x- or y- coordinate matching _highRangedValue
+        public int _fullWidth;
+        public int _fullHeight;
+        public Rectangle _rectangle;
+    }
 
-        public final Rectangle _rectangle;
-        public final DoubleRange _valueRange;
-        public final DoubleRange _graphRange;
+    private final Region[] _regions;
 
-        public GraphRegion(
-            final Rectangle rectangle,
-            final DoubleRange valueRange,
-            final DoubleRange graphRange
-        ) {
-            _rectangle = rectangle;
-            _valueRange = valueRange;
-            _graphRange = graphRange;
+    public MultiColorGraphPane(
+        final DoubleRange range,
+        final OrientationType orientation,
+        final Color color,                  //  used for gradient color, and graph background
+        final double[] splitPoints,         //  the split points between the colors. These are values relative to the range.
+        final Color[] colors                //  the colors to be used (length should be +1 than splitPoints length)
+    ) {
+        super(range, orientation, color);
+
+        if (colors.length != splitPoints.length + 1)
+            throw new RuntimeException("splitPoints/colors array length contradiction");
+
+        _regions = new Region[colors.length];
+        for (int rx = 0; rx < _regions.length; ++rx)
+            _regions[rx] = new Region();
+        _regions[0]._lowRangedValue = range.getLowValue();
+        _regions[_regions.length - 1]._highRangedValue = range.getHighValue();
+
+        var xLowRegion = 0;
+        var xHighRegion = 1;
+        for (var splitPoint : splitPoints) {
+            _regions[xLowRegion]._highRangedValue = splitPoint;
+            _regions[xHighRegion]._lowRangedValue = splitPoint;
+            xLowRegion++;
+            xHighRegion++;
+        }
+
+        for (var rx = 0; rx < _regions.length; ++rx) {
+            var rect = new Rectangle();
+            rect.setFill(colors[rx]);
+            _regions[rx]._rectangle = rect;
         }
     }
 
-    private final GraphRegion[] _regions;
-    private final Pair<Double, Color>[] _splitPoints;
-
-    public MultiColorGraphPane(
-        final MultiColorGraphParams params
+    @Override
+    public void setPrefSize(
+        final double width,
+        final double height
     ) {
-        super(params);
-
-        _splitPoints = params.getSplitPoints();
-
-        //  build regions from split points.
-        //  we ignore the value member of the first split point, as it *should* (and must) be range.lowValue
-        var gpWidth = params.getDimensions().getWidth();
-        var gpHeight = params.getDimensions().getHeight();
-
-        _regions = new GraphRegion[_splitPoints.length];
-        for (var spx = 0; spx < _splitPoints.length; ++spx) {
-            var sp = _splitPoints[spx];
-
-            var rect = new Rectangle();
-            rect.setFill(sp.getRightValue());
-
-            var lowValue = sp.getLeftValue();
-            var highValue =
-                (spx == _splitPoints.length - 1)
-                    ? params.getRange().getHighValue()
-                    : _splitPoints[spx + 1].getLeftValue();
-            var valueRange = new DoubleRange(lowValue, highValue);
-
-            var graphRange = (DoubleRange)null;
-            var ot = params.getOrientationType();
-            switch (ot) {
+        super.setPrefSize(width, height);
+        for (var r : _regions) {
+            switch (getOrientation()) {
                 case HORIZONTAL -> {
-                    var low = ot.getGraphCenterPointX(params.getDimensions(),
-                                                      params.getRange(),
-                                                      params.getScalar(),
-                                                      lowValue);
-                    var high = ot.getGraphCenterPointX(params.getDimensions(),
-                                                       params.getRange(),
-                                                       params.getScalar(),
-                                                       highValue);
-                    graphRange = new DoubleRange(low, high);
-                    rect.setHeight(gpHeight);
-                    rect.setLayoutX(low);
-                    rect.setLayoutY(0);
+                    r._lowCoordinate = (int)getXCoordinateFor(r._lowRangedValue);
+                    r._highCoordinate = (int)getXCoordinateFor(r._highRangedValue);
+                    r._fullWidth = r._highCoordinate - r._lowCoordinate + 1;
+                    r._fullHeight = (int)height;
+
+                    r._rectangle.setLayoutX(r._lowCoordinate);
+                    r._rectangle.setLayoutY(0);
+                    r._rectangle.setWidth(0);
+                    r._rectangle.setHeight(height);
                 }
                 case VERTICAL -> {
-                    var low = ot.getGraphCenterPointY(params.getDimensions(),
-                                                      params.getRange(),
-                                                      params.getScalar(),
-                                                      lowValue);
-                    var high = ot.getGraphCenterPointY(params.getDimensions(),
-                                                       params.getRange(),
-                                                       params.getScalar(),
-                                                       highValue);
-                    graphRange = new DoubleRange(low, high);
-                    rect.setWidth(gpWidth);
-                    rect.setLayoutX(0);
-                    rect.setLayoutY(gpHeight - low);
+                    r._lowCoordinate = (int)getYCoordinateFor(r._lowRangedValue);
+                    r._highCoordinate = (int)getYCoordinateFor(r._highRangedValue);
+                    r._fullWidth = (int)width;
+                    r._fullHeight = r._highCoordinate - r._lowCoordinate + 1;
+
+                    r._rectangle.setLayoutX(0);
+                    r._rectangle.setLayoutY(0);
+                    r._rectangle.setWidth(width);
+                    r._rectangle.setHeight(0);
                 }
             }
-
-            _regions[spx] = new GraphRegion(rect, valueRange, graphRange);
         }
-
-        Arrays.stream(_regions).forEach(r -> getChildren().add(r._rectangle));
     }
 
     @Override
     public void setValue(double value) {
-        var ot = getParams().getOrientationType();
-        switch (ot) {
+        switch (getOrientation()) {
             case HORIZONTAL -> {
+                var xPos = getXCoordinateFor(value);
                 for (var r : _regions) {
-                    if (value < r._valueRange.getLowValue()) {
-                        //  the value is lower than this region's range - make the rectangle empty
+                    if (value < r._lowRangedValue) {
+                        //  value does not reach this region - zero it out
                         r._rectangle.setWidth(0);
-                    } else if (value <= r._valueRange.getHighValue()) {
-                        //  the value is within this region's range - make a partial rectangle
-                        var x = ot.getGraphCenterPointX(getParams().getDimensions(),
-                                                        getParams().getRange(),
-                                                        getParams().getScalar(),
-                                                        value);
-                        r._rectangle.setWidth(x - r._graphRange.getLowValue() + 1);
+                    } else if (value <= r._highRangedValue) {
+                        //  value is somewhere inside this region
+                        r._rectangle.setWidth(xPos - r._rectangle.getLayoutX());
                     } else {
-                        //  the value is greater than this region's range - make the rectangle full size
-                        r._rectangle.setWidth(r._graphRange.getDelta());
+                        //  value is beyond this region - make it full
+                        r._rectangle.setWidth(r._fullWidth);
                     }
                 }
             }
             case VERTICAL -> {
+                //  don't forget - we're upside down
+                var yPos = getYCoordinateFor(value);
                 for (var r : _regions) {
-                    if (value < r._valueRange.getLowValue()) {
-                        //  the value is lower than this region's range - make the rectangle empty
+                    if (value < r._lowRangedValue) {
+                        //  value does not reach this region - zero it out
                         r._rectangle.setHeight(0);
-                    } else if (value <= r._valueRange.getHighValue()) {
-                        //  the value is within this region's range - make a partial rectangle
-                        var y = ot.getGraphCenterPointY(getParams().getDimensions(),
-                                                        getParams().getRange(),
-                                                        getParams().getScalar(),
-                                                        value);
-                        r._rectangle.setHeight(y - r._graphRange.getLowValue() + 1);
+                    } else if (value <= r._highRangedValue) {
+                        //  value is somewhere inside this region
+                        r._rectangle.setLayoutY(r._highCoordinate);
+                        r._rectangle.setHeight(yPos - r._highCoordinate);
                     } else {
-                        //  the value is greater than this region's range - make the rectangle full size
-                        r._rectangle.setHeight(r._graphRange.getDelta());
+                        //  value is beyond this region - make it full
+                        r._rectangle.setLayoutY(r._highCoordinate);
+                        r._rectangle.setHeight(r._fullHeight);
                     }
                 }
             }

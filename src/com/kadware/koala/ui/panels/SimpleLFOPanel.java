@@ -8,10 +8,10 @@ package com.kadware.koala.ui.panels;
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.messages.IListener;
 import com.kadware.koala.messages.Message;
-import com.kadware.koala.modules.ModuleType;
+import com.kadware.koala.audio.modules.ModuleType;
 import com.kadware.koala.ui.panels.messages.WaveMessage;
-import com.kadware.koala.modules.ModuleManager;
-import com.kadware.koala.modules.SimpleLFOModule;
+import com.kadware.koala.audio.modules.ModuleManager;
+import com.kadware.koala.audio.modules.SimpleLFOModule;
 import com.kadware.koala.ports.ContinuousOutputPort;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 
 public class SimpleLFOPanel extends ModulePanel implements IListener {
 
-    private ControlValueMeter _cvMeter;
+    private ControlValueIndicator _cvMeter;
     private FrequencyDisplay _frequencyDisplay;
     private LinearKnobControl _frequencyControl;
     private LinearKnobControl _pulseWidthControl;
@@ -53,7 +53,7 @@ public class SimpleLFOPanel extends ModulePanel implements IListener {
          *    -----------
          */
         var section = getControlsSection();
-        _cvMeter = new ControlValueMeter("Output", Color.GREEN);
+        _cvMeter = new ControlValueIndicator("Output", Color.GREEN);
         section.setControlEntity(0, 0, _cvMeter);
 
         _frequencyDisplay = new FrequencyDisplay(new CellDimensions(2, 1), "Frequency", Color.GREEN);

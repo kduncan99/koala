@@ -5,7 +5,8 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.Pair;
+import com.kadware.koala.DoubleRange;
+import com.kadware.koala.PixelDimensions;
 import javafx.scene.paint.Color;
 
 /**
@@ -14,16 +15,19 @@ import javafx.scene.paint.Color;
 public class MultiColorBarMeter extends Meter {
 
     public MultiColorBarMeter(
-        final MeterParams params,
-        final Pair<Double, Color>[] splitPoints
+        final PixelDimensions dimensions,
+        final DoubleRange range,
+        final OrientationType orientation,
+        final Color color,
+        final double[] tickPoints,
+        final double[] labelPoints,
+        final String labelFormat,
+        final double[] splitPoints,         //  the split points between the colors. These are values relative to the range.
+        final Color[] colors                //  the colors to be used (length should be +1 than splitPoints length)
     ) {
-        super(params,
-              new GradientPane(params.getGradientParams()),
-              new MultiColorGraphPane(new MultiColorGraphParams(params.getDimensions(),
-                                                            params.getRange(),
-                                                            params.getOrientation(),
-                                                            params.getScalar(),
-                                                            params.getColor(),
-                                                            splitPoints)));
+        super(dimensions,
+              orientation,
+              GradientPane.createGradientPane(range, orientation, color, tickPoints, labelPoints, labelFormat),
+              new MultiColorGraphPane(range, orientation, color, splitPoints, colors));
     }
 }

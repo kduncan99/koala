@@ -44,7 +44,7 @@ public abstract class ControlPane extends VBox {
     public static final int VERTICAL_PIXELS_PER_LABEL = 15;
     public static final int VERTICAL_PIXELS_PER_CELL = VERTICAL_PIXELS_PER_CONTROL + VERTICAL_PIXELS_PER_LABEL;
 
-    public static final Insets BACKGROUND_INSETS = new Insets(1);
+    public static final Insets BACKGROUND_INSETS = new Insets(1);//TODO for now. Later, do EMPTY
     public static final BackgroundFill BACKGROUND_FILL = new BackgroundFill(Panel.PANEL_CELL_BACKGROUND_COLOR,
                                                                             CornerRadii.EMPTY,
                                                                             BACKGROUND_INSETS);

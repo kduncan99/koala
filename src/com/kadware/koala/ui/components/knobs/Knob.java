@@ -31,7 +31,7 @@ public class Knob extends Component {
     ) {
         super(identifier);
 
-        _bgColor = color.darker().darker();
+        _bgColor = color.darker().darker().darker();
         _fgColor = color.brighter();
 
         //  Create a canvas and draw a circle, with a marker pointing down from past-center.

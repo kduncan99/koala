@@ -29,7 +29,7 @@ public class TextDisplay extends Label {
         var fgColor = color.brighter();
         setPrefSize(dimensions.getWidth(), dimensions.getHeight());
         setTextFill(fgColor);
-        var bgColor = color.darker().darker();
+        var bgColor = color.darker().darker().darker();
         setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
         var bs = new BorderStroke(Color.BLACK,
                                   BorderStrokeStyle.SOLID,

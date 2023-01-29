@@ -5,7 +5,7 @@
 
 package com.kadware.koala.ui.panels;
 
-import com.kadware.koala.modules.Module;
+import com.kadware.koala.audio.modules.Module;
 
 import java.io.Closeable;
 

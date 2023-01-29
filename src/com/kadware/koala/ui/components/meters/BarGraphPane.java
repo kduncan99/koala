@@ -5,7 +5,8 @@
 
 package com.kadware.koala.ui.components.meters;
 
-import com.kadware.koala.PixelDimensions;
+import com.kadware.koala.DoubleRange;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class BarGraphPane extends GraphPane {
@@ -13,37 +14,49 @@ public class BarGraphPane extends GraphPane {
     private final Rectangle _rectangle;
 
     public BarGraphPane(
-        final GraphParams params
+        final DoubleRange range,
+        final OrientationType orientation,
+        final Color color
     ) {
-        super(params);
+        super(range, orientation, color);
 
         _rectangle = new Rectangle();
-        _rectangle.setWidth(params.getDimensions().getWidth());
-        _rectangle.setHeight(params.getDimensions().getHeight());
-        _rectangle.setFill(params.getColor().brighter());
-
+        _rectangle.setFill(color.brighter());
         getChildren().add(_rectangle);
     }
 
     @Override
-    public void setValue(double value) {
-        var ot = getParams().getOrientationType();
-        var dim = new PixelDimensions((int)getPrefWidth(), (int)getPrefHeight());
-        switch (ot) {
+    public void setPrefSize(
+        final double width,
+        final double height
+    ) {
+        super.setPrefSize(width, height);
+        switch (getOrientation()) {
             case HORIZONTAL -> {
-                var x = ot.getGraphCenterPointX(dim,
-                                                getParams().getRange(),
-                                                getParams().getScalar(),
-                                                value);
-                _rectangle.setWidth(x);
+                _rectangle.setLayoutX(0.0);
+                _rectangle.setLayoutY(0.0);
+                _rectangle.setHeight(height);
+                _rectangle.setWidth(0.0);
             }
             case VERTICAL -> {
-                var y = ot.getGraphCenterPointY(dim,
-                                                getParams().getRange(),
-                                                getParams().getScalar(),
-                                                value);
+                _rectangle.setLayoutX(0.0);
+                _rectangle.setLayoutY(0.0);
+                _rectangle.setHeight(0.0);
+                _rectangle.setWidth(width);
+            }
+        }
+    }
+
+    @Override
+    public void setValue(double value) {
+        switch (getOrientation()) {
+            case HORIZONTAL -> {
+                _rectangle.setWidth(getXCoordinateFor(value));
+            }
+            case VERTICAL -> {
+                var y = getYCoordinateFor(value);
                 _rectangle.setLayoutY(y);
-                _rectangle.setHeight(y);
+                _rectangle.setHeight(getPrefHeight() - y);
             }
         }
     }

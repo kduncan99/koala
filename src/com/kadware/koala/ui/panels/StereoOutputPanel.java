@@ -7,19 +7,21 @@ package com.kadware.koala.ui.panels;
 
 import com.kadware.koala.messages.IListener;
 import com.kadware.koala.messages.Message;
-import com.kadware.koala.modules.ModuleManager;
-import com.kadware.koala.modules.ModuleType;
-import com.kadware.koala.modules.StereoOutputModule;
+import com.kadware.koala.audio.modules.ModuleManager;
+import com.kadware.koala.audio.modules.ModuleType;
+import com.kadware.koala.audio.modules.StereoOutputModule;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
+import com.kadware.koala.ui.panels.elements.controls.StereoDBFSIndicator;
 import com.kadware.koala.ui.panels.elements.controls.TestToneSelector;
 import com.kadware.koala.ui.panels.messages.TestToneMessage;
 
 public class StereoOutputPanel extends ModulePanel implements IListener {
 
     private TestToneSelector _testToneSelector;
+    private StereoDBFSIndicator _meter;
 
     public StereoOutputPanel() {
-        super(ModuleManager.createModule(ModuleType.StereoOutput), PanelWidth.SINGLE, "Output");
+        super(ModuleManager.createModule(ModuleType.StereoOutput), PanelWidth.SINGLE, "dbFS");
     }
 
     @Override
@@ -29,11 +31,11 @@ public class StereoOutputPanel extends ModulePanel implements IListener {
         _testToneSelector.registerListener(this);
         section.setControlEntity(0, 4, _testToneSelector);
 
+        _meter = new StereoDBFSIndicator("Audio");
+        section.setControlEntity(1, 0, _meter);
         //TODO
         //  master volume (to be added to module)
         //  blend control (to be added to module)
-        //  dual VU/PEAK meters
-        //  test-tone push-on-off button
         //  dim push-on-off button
     }
 

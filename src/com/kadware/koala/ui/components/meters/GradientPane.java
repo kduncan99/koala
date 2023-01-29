@@ -6,35 +6,45 @@
 package com.kadware.koala.ui.components.meters;
 
 import com.kadware.koala.DoubleRange;
-import com.kadware.koala.ui.panels.Panel;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import java.util.Arrays;
 
-public class GradientPane extends Pane {
+public abstract class GradientPane extends RangedPane {
 
-    private static final BackgroundFill GRADIENT_BG_FILL =
-        new BackgroundFill(Panel.PANEL_CELL_BACKGROUND_COLOR, CornerRadii.EMPTY, Insets.EMPTY);
-    private static final Background GRADIENT_BACKGROUND = new Background(GRADIENT_BG_FILL);
+    protected static final Font GRADIENT_FONT = new Font(8);
 
-    private final GradientParams _params;
+    private final String _labelFormat;
+    private final double[] _labelPoints;
+    private final double[] _tickPoints;
 
-    public GradientPane(
-        final GradientParams params
+    protected GradientPane(
+        final DoubleRange range,
+        final Color color,
+        final double[] tickPoints,
+        final double[] labelPoints,
+        final String labelFormat
     ) {
-        _params = params;
-        setBackground(GRADIENT_BACKGROUND);
+        super(range, color);
+
+        _labelFormat = labelFormat;
+        _labelPoints = Arrays.copyOf(labelPoints, labelPoints.length);
+        _tickPoints = Arrays.copyOf(tickPoints, tickPoints.length);
     }
 
-    public Color getColor() { return _params.getColor(); }
-    public String getFormatString() { return _params.getFormatString(); }
-    public double[] getLabelPositions() { return _params.getLabelPositions(); }
-    public DoubleRange getRange() { return _params.getRange(); }
-    public double[] getTickPositions() { return _params.getTickPositions(); }
+    public static GradientPane createGradientPane(
+        final DoubleRange range,
+        final OrientationType orientation,
+        final Color color,
+        final double[] tickPoints,
+        final double[] labelPoints,
+        final String labelFormat
+    ) {
+        return switch (orientation) {
+            case HORIZONTAL -> new HorizontalGradientPane(range, color, tickPoints, labelPoints, labelFormat);
+            case VERTICAL -> new VerticalGradientPane(range, color, tickPoints, labelPoints, labelFormat);
+        };
+    }
 
     @Override
     public void setPrefSize(
@@ -42,6 +52,12 @@ public class GradientPane extends Pane {
         final double height
     ) {
         super.setPrefSize(width, height);
-        setClip(new Rectangle(width, height));
+        drawGradient();
     }
+
+    public String getLabelFormat() { return _labelFormat; }
+    public double[] getLabelPoints() { return _labelPoints; }
+    public double[] getTickPoints() { return _tickPoints; }
+
+    public abstract void drawGradient();
 }

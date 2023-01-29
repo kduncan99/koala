@@ -33,7 +33,7 @@ public class DigitalLED extends Pane {
         _off.setRadius(radius);
         _off.setCenterX(radius);
         _off.setCenterY(radius);
-        _off.setFill(color.darker().darker());
+        _off.setFill(color.darker().darker().darker());
 
         getChildren().add(_off);
     }

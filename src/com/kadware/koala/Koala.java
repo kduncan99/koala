@@ -5,7 +5,7 @@
 
 package com.kadware.koala;
 
-import com.kadware.koala.modules.ModuleManager;
+import com.kadware.koala.audio.modules.ModuleManager;
 import com.kadware.koala.ui.Rack;
 import com.kadware.koala.waves.IWave;
 import javafx.application.Application;
@@ -28,6 +28,7 @@ public class Koala extends Application {
     public static final int SAMPLE_SIZE_IN_BITS = 16;
 
     public static final DoubleRange BIPOLAR_RANGE = new DoubleRange(-1.0, 1.0);
+    public static final DoubleRange DBFS_RANGE = new DoubleRange(-30.0, 0.0);
     public static final DoubleRange POSITIVE_RANGE = new DoubleRange(0.0, 1.0);
 
     //  Note frequencies for C4 up through B4 - divide or multiply for other octaves
@@ -177,7 +178,56 @@ public class Koala extends Application {
         final double dbScalar
     ) {
         var db = dbScalar * 96.0;
-        return Math.pow(10, db);
+        return Math.pow(10, db / 20.0);
+    }
+
+    /**
+     * Converts a scaled value between 0.0 and 1.0 to a dbfs value.
+     * Note that we use the magnitude of the input value, in order to accommodate AC audio waves.
+     * Input value      dbFS
+     *     1.0            0
+     *     0.5           -3
+     *     0.25          -6
+     *     0.125         -9
+     *     0.0625       -12
+     *     0.03125      -15
+     *     0.015625     -18
+     *     0.0078125    -21
+     *     0.00390625   -24
+     *     0.001953125  -27
+     *     0.0         -inf
+     */
+    private static final double LOG_E_OF_TWO = Math.log(2);
+    public static double waveAmplitudeToDBFS(
+        final double scalar
+    ) {
+        if (scalar == 0.0)
+            return 0 - Double.MAX_VALUE;
+        else
+            return Math.log(Math.abs(scalar)) / LOG_E_OF_TWO * 3.0;
+    }
+
+    /**
+     * Converts a dbFS value from -inf to 0, to a scalar value from 0.0 to 1.0.
+     * Note that, for +dbFS values, we return an output value > 1.0.
+     * dbFS        Output value
+     *   0              1.0
+     *  -3              0.9
+     *  -6              0.8
+     *  -9              0.7
+     * -12              0.6
+     * -15              0.5
+     * -18              0.4
+     * -21              0.3
+     * -24              0.2
+     * -27              0.1
+     * -30 and less     0.0
+     */
+    //TODO do we need this?
+    public static double dbfsToMeterScale(
+        final double dbfs
+    ) {
+        return Math.max(1.0 - (-dbfs / 30), 0.0);
     }
 
     /**
@@ -189,5 +239,14 @@ public class Koala extends Application {
         final long frequency
     ) {
         return (long)(1000.0 / (double)frequency);
+    }
+
+    /**
+     * Determines the number of samples which are required to contain the given number of milliseconds of signal
+     */
+    public static int millisecondsToSamples(
+        final int milliseconds
+    ) {
+        return (int)((milliseconds * SAMPLE_RATE) / 1000);
     }
 }
