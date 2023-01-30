@@ -8,7 +8,6 @@ package com.kadware.koala.ui.panels.elements.controls;
 import com.kadware.koala.CellDimensions;
 import com.kadware.koala.PixelDimensions;
 import com.kadware.koala.ui.components.meters.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class StereoDBFSIndicator extends MeterIndicator {
@@ -20,21 +19,23 @@ public class StereoDBFSIndicator extends MeterIndicator {
     public StereoDBFSIndicator(
         final String legend
     ) {
-        super(CELL_DIMENSIONS, createPane(), legend);
+        super(CELL_DIMENSIONS, createMeter(), legend);
     }
 
-    private static Pane createPane() {
-        var pane = new Pane();
+    private static Meter createMeter() {
         var width = CELL_DIMENSIONS.getWidth() * ControlPane.HORIZONTAL_PIXELS_PER_CELL;
         var height = (CELL_DIMENSIONS.getHeight() * ControlPane.VERTICAL_PIXELS_PER_CELL) - VERTICAL_PIXELS_PER_LABEL;
-        pane.setPrefWidth(width);
-        pane.setPrefHeight(height);
-
-        var meter = new StereoDBMeter(new PixelDimensions(width, height), ORIENTATION, COLOR);
-
-        pane.getChildren().add(meter);
-        return pane;
+        return new StereoDBMeter(new PixelDimensions(width, height), ORIENTATION, COLOR);
     }
 
-    //  TODO when we invoke the indicator's setValues() method, we need to convert the wave value to a dbfs value
+    @Override
+    public void setValue(double value) {}   //  not implemented, due to needing two channels of values
+
+    //  Only invoked on the ApplicationThread
+    public void setValues(
+        final double leftValue,
+        final double rightValue
+    ) {
+        ((StereoDBMeter) getMeter()).setValues(leftValue, rightValue);
+    }
 }

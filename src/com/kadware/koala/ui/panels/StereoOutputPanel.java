@@ -18,7 +18,7 @@ import com.kadware.koala.ui.panels.messages.TestToneMessage;
 public class StereoOutputPanel extends ModulePanel implements IListener {
 
     private TestToneSelector _testToneSelector;
-    private StereoDBFSIndicator _meter;
+    private StereoDBFSIndicator _dbfsIndicator;
 
     public StereoOutputPanel() {
         super(ModuleManager.createModule(ModuleType.StereoOutput), PanelWidth.SINGLE, "dbFS");
@@ -31,8 +31,8 @@ public class StereoOutputPanel extends ModulePanel implements IListener {
         _testToneSelector.registerListener(this);
         section.setControlEntity(0, 4, _testToneSelector);
 
-        _meter = new StereoDBFSIndicator("Audio");
-        section.setControlEntity(1, 0, _meter);
+        _dbfsIndicator = new StereoDBFSIndicator("Audio");
+        section.setControlEntity(1, 0, _dbfsIndicator);
         //TODO
         //  master volume (to be added to module)
         //  blend control (to be added to module)
@@ -54,7 +54,9 @@ public class StereoOutputPanel extends ModulePanel implements IListener {
 
     @Override
     public void repaint() {
-        //  TODO
+        var module = getModule();
+        _dbfsIndicator.setValues(module.getLeftDBFSComponent().getDBFSValue(),
+                                 module.getRightDBFSComponent().getDBFSValue());
     }
 
     @Override

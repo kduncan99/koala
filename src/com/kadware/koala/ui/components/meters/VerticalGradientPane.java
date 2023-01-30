@@ -46,7 +46,7 @@ public class VerticalGradientPane extends GradientPane {
         var text = new Text("H");
         text.setFont(GRADIENT_FONT);
         var textBounds = text.getLayoutBounds();
-        var textAscent = 0 - (textBounds.getMinY());//TODO this might be wrong
+        var textAscent = 0 - (textBounds.getMinY());
 
         var x = 0.0;
         for (var lp : getLabelPoints()) {

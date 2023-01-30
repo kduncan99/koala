@@ -7,7 +7,6 @@ package com.kadware.koala.ui.panels.elements.controls;
 
 import com.kadware.koala.*;
 import com.kadware.koala.ui.components.meters.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
@@ -22,29 +21,23 @@ public class ControlValueIndicator extends MeterIndicator {
         final String legend,
         final Color color
     ) {
-        super(CELL_DIMENSIONS, createPane(color), legend);
+        super(CELL_DIMENSIONS, createMeter(color), legend);
     }
 
-    private static Pane createPane(
+    private static Meter createMeter(
         final Color color
     ) {
-        var pane = new Pane();
-        pane.setPrefWidth(CELL_DIMENSIONS.getWidth() * ControlPane.HORIZONTAL_PIXELS_PER_CELL);
-        pane.setPrefHeight(CELL_DIMENSIONS.getHeight() * ControlPane.VERTICAL_PIXELS_PER_CONTROL);
+        var width = CELL_DIMENSIONS.getWidth() * ControlPane.HORIZONTAL_PIXELS_PER_CELL;
+        var height = CELL_DIMENSIONS.getHeight() * ControlPane.VERTICAL_PIXELS_PER_CONTROL;
 
         var range = Koala.BIPOLAR_RANGE;
         var orientation = OrientationType.HORIZONTAL;
         var tickPoints = new double[]{-5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
         var labelPoints = new double[]{-5.0, 0.0, 5.0};
         var labelFormat = "%4.1f";
-        var meterW = (int)pane.getPrefWidth();
-        var meterH = (int)pane.getPrefHeight();
-        var meterDim = new PixelDimensions(meterW, meterH);
+        var meterDim = new PixelDimensions(width, height);
 
-        var meter = new SelectableMeter(meterDim, range, orientation, color, tickPoints, labelPoints, labelFormat);
-
-        pane.getChildren().add(meter);
-        return pane;
+        return new SelectableMeter(meterDim, range, orientation, color, tickPoints, labelPoints, labelFormat);
     }
 
     //  only to be invoked on the Application thread
@@ -52,8 +45,6 @@ public class ControlValueIndicator extends MeterIndicator {
     public void setValue(
         final double value
     ) {
-        Pane pane = (Pane) getChildren().iterator().next();
-        Meter meter = (Meter) pane.getChildren().iterator().next();
-        meter.setValue(value);
+        getMeter().setValue(value);
     }
 }

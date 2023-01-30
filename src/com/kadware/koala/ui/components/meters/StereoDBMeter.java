@@ -25,4 +25,11 @@ public class StereoDBMeter extends Meter {
               GradientPane.createGradientPane(Koala.DBFS_RANGE, orientation, color, TICK_POINTS, LABEL_POINTS, LABEL_FORMAT),
               new StereoDBGraphPane(orientation, color));
     }
+
+    public void setValues(
+        final double left,
+        final double right
+    ) {
+        ((StereoDBGraphPane) getGraphPane()).setValues(left, right);
+    }
 }
