@@ -24,12 +24,10 @@ import java.util.Arrays;
  * A button control is a button of some sort, above a legend.
  * Note that we are talking about a Koala button, not a JavaFX button.
  */
-public class WaveSelector extends ButtonControl {
+public class WaveSelectorControl extends ButtonControl {
 
     private static final PixelDimensions GRAPHIC_DIMENSIONS =
         new PixelDimensions(BUTTON_DIMENSIONS.getWidth() - 8, BUTTON_DIMENSIONS.getHeight() - 8);
-
-    private static final int ID_SELECTOR_BUTTON = 0;
 
     private static class WaveGraphic {
 
@@ -58,13 +56,17 @@ public class WaveSelector extends ButtonControl {
         new WaveGraphic(WaveType.SQUARE),
     };
 
-    public WaveSelector() {
-        super(createButton(), "Wave");
+    public WaveSelectorControl(
+        final int identifier
+    ) {
+        super(createButton(identifier), "Wave");
     }
 
-    private static Button createButton() {
+    private static Button createButton(
+        final int identifier
+    ) {
         var panes = Arrays.stream(_waveGraphics).map(waveGraphic -> waveGraphic._wavePane).toArray(Pane[]::new);
-        return new SelectorButton(ID_SELECTOR_BUTTON, BUTTON_DIMENSIONS, panes);
+        return new SelectorButton(identifier, BUTTON_DIMENSIONS, panes);
     }
 
     @Override
@@ -73,6 +75,8 @@ public class WaveSelector extends ButtonControl {
     ) {
         //  The underlying button component has something for us... pass it along to our listeners
         if (message instanceof SelectorButtonMessage sbm)
-            notifyListeners(new WaveMessage(this, _waveGraphics[sbm.getNewSelectorValue()]._wave));
+            notifyListeners(new WaveMessage(this,
+                                            sbm.getIdentifier(),
+                                            _waveGraphics[sbm.getNewSelectorValue()]._wave));
     }
 }

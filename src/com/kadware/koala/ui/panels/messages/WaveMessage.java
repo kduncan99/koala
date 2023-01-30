@@ -5,21 +5,21 @@
 
 package com.kadware.koala.ui.panels.messages;
 
-import com.kadware.koala.messages.Message;
 import com.kadware.koala.waves.IWave;
 
 /**
  * Used to communicate something about a wave from one entity to another
  */
-public class WaveMessage extends Message {
+public class WaveMessage extends PanelMessage {
 
     private final IWave _wave;
 
     public WaveMessage(
         final Object sender,
+        final int identifier,
         final IWave newWave
     ) {
-        super(sender);
+        super(sender, identifier);
         _wave = newWave;
     }
 

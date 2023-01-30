@@ -5,21 +5,19 @@
 
 package com.kadware.koala.ui.panels.messages;
 
-import com.kadware.koala.messages.Message;
-import com.kadware.koala.waves.IWave;
-
 /**
  * Used to communicate something about a wave from one entity to another
  */
-public class TestToneMessage extends Message {
+public class TestToneMessage extends PanelMessage {
 
     private final double _frequency;
 
     public TestToneMessage(
         final Object sender,
+        final int identifier,
         final double frequency
     ) {
-        super(sender);
+        super(sender, identifier);
         _frequency = frequency;
     }
 

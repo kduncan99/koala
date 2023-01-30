@@ -6,6 +6,7 @@
 package com.kadware.koala.ui.components.knobs;
 
 import com.kadware.koala.PixelDimensions;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
@@ -21,5 +22,22 @@ public class Potentiometer extends Knob {
         final Color color
     ) {
         super(identifier, dimensions, color);
+    }
+
+    @Override
+    protected void drawDetail(
+        final GraphicsContext gc
+    ) {
+        //  TODO
+    }
+
+    @Override
+    protected void positionDecrement() {
+        //  TODO
+    }
+
+    @Override
+    protected void positionIncrement() {
+        //  TODO
     }
 }

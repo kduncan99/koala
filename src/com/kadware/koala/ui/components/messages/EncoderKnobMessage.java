@@ -10,16 +10,21 @@ package com.kadware.koala.ui.components.messages;
  */
 public class EncoderKnobMessage extends ComponentMessage {
 
-    private final int _newSelectorValue;
+    public enum Direction {
+        CLOCK_WISE,
+        COUNTER_CLOCK_WISE,
+    }
+
+    private final Direction _direction;
 
     public EncoderKnobMessage(
         final Object sender,
         final int identifier,
-        final int newSelectorValue
+        final Direction direction
     ) {
         super(sender, identifier);
-        _newSelectorValue = newSelectorValue;
+        _direction = direction;
     }
 
-    public int getNewSelectorValue() { return _newSelectorValue; }
+    public Direction getDirection() { return _direction; }
 }

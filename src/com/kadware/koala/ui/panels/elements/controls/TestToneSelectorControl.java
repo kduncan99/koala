@@ -19,7 +19,7 @@ import java.util.Arrays;
  * A button control is a button of some sort, above a legend.
  * Note that we are talking about a Koala button, not a JavaFX button.
  */
-public class TestToneSelector extends ButtonControl {
+public class TestToneSelectorControl extends ButtonControl {
 
     private static final String[] LABELS = { "Off", "100", "440", "1k", "10k" };
     private static final PixelDimensions GRAPHIC_DIMENSIONS =
@@ -52,7 +52,7 @@ public class TestToneSelector extends ButtonControl {
         }
     }
 
-    public TestToneSelector() {
+    public TestToneSelectorControl() {
         super(createButton(), "Tone");
     }
 
@@ -74,6 +74,8 @@ public class TestToneSelector extends ButtonControl {
     ) {
         //  The underlying button component has something for us... pass it along to our listeners
         if (message instanceof SelectorButtonMessage sbm)
-            notifyListeners(new TestToneMessage(this, _tones[sbm.getNewSelectorValue()]._frequency));
+            notifyListeners(new TestToneMessage(this,
+                                                ID_SELECTOR_BUTTON,
+                                                _tones[sbm.getNewSelectorValue()]._frequency));
     }
 }

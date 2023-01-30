@@ -12,12 +12,12 @@ import com.kadware.koala.audio.modules.ModuleType;
 import com.kadware.koala.audio.modules.StereoOutputModule;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 import com.kadware.koala.ui.panels.elements.controls.StereoDBFSIndicator;
-import com.kadware.koala.ui.panels.elements.controls.TestToneSelector;
+import com.kadware.koala.ui.panels.elements.controls.TestToneSelectorControl;
 import com.kadware.koala.ui.panels.messages.TestToneMessage;
 
 public class StereoOutputPanel extends ModulePanel implements IListener {
 
-    private TestToneSelector _testToneSelector;
+    private TestToneSelectorControl _testToneSelectorControl;
     private StereoDBFSIndicator _dbfsIndicator;
 
     public StereoOutputPanel() {
@@ -27,9 +27,9 @@ public class StereoOutputPanel extends ModulePanel implements IListener {
     @Override
     public void populateControls() {
         var section = getControlsSection();
-        _testToneSelector = new TestToneSelector();
-        _testToneSelector.registerListener(this);
-        section.setControlEntity(0, 4, _testToneSelector);
+        _testToneSelectorControl = new TestToneSelectorControl();
+        _testToneSelectorControl.registerListener(this);
+        section.setControlEntity(0, 4, _testToneSelectorControl);
 
         _dbfsIndicator = new StereoDBFSIndicator("Audio");
         section.setControlEntity(1, 0, _dbfsIndicator);
@@ -61,7 +61,7 @@ public class StereoOutputPanel extends ModulePanel implements IListener {
 
     @Override
     public void close() {
-        _testToneSelector.unregisterListener(this);
+        _testToneSelectorControl.unregisterListener(this);
     }
 
     @Override

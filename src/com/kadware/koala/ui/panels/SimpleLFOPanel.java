@@ -9,25 +9,27 @@ import com.kadware.koala.CellDimensions;
 import com.kadware.koala.messages.IListener;
 import com.kadware.koala.messages.Message;
 import com.kadware.koala.audio.modules.ModuleType;
-import com.kadware.koala.ui.panels.messages.WaveMessage;
 import com.kadware.koala.audio.modules.ModuleManager;
 import com.kadware.koala.audio.modules.SimpleLFOModule;
 import com.kadware.koala.ports.ContinuousOutputPort;
+import com.kadware.koala.ui.components.messages.EncoderKnobMessage;
 import com.kadware.koala.ui.panels.elements.connections.InputConnectionPane;
 import com.kadware.koala.ui.panels.elements.connections.OutputConnectionPane;
 import com.kadware.koala.ui.panels.elements.controls.*;
+import com.kadware.koala.ui.panels.messages.WaveMessage;
 import javafx.scene.paint.Color;
 
 public class SimpleLFOPanel extends ModulePanel implements IListener {
 
+    private static final int ID_WAVE_SELECTOR = 0;
+    private static final int ID_COARSE_FREQUENCY = 1;
+    private static final int ID_FINE_FREQUENCY = 2;
+
     private ControlValueIndicator _cvMeter;
     private FrequencyDisplay _frequencyDisplay;
-    private LinearKnobControl _frequencyControl;
-    private LinearKnobControl _pulseWidthControl;
-    private LinearKnobControl _biasControl;
-    private LinearKnobControl _rangeControl;
-    private WaveSelector _waveSelector;
-    private ButtonControl _frequencyRangeSelector;
+    private EncoderControl _frequencyCoarse;
+    private EncoderControl _frequencyFine;
+    private WaveSelectorControl _waveSelectorControl;
 
     public SimpleLFOPanel() {
         super(ModuleManager.createModule(ModuleType.SimpleLFO), PanelWidth.SINGLE, "LFO");
@@ -59,26 +61,17 @@ public class SimpleLFOPanel extends ModulePanel implements IListener {
         _frequencyDisplay = new FrequencyDisplay(new CellDimensions(2, 1), "Frequency", Color.GREEN);
         section.setControlEntity(0, 1, _frequencyDisplay);
 
-//        _frequencyControl = new LinearKnobControl("Freq", Color.GRAY, new Range(0.01, 100.0));
-//        section.setControlEntity(0, 2, _frequencyControl);
+        _frequencyCoarse = new EncoderControl(ID_COARSE_FREQUENCY, "Crse", Color.GRAY);
+        _frequencyCoarse.registerListener(this);
+        section.setControlEntity(0, 2, _frequencyCoarse);
 
-//        _pulseWidthControl = new LinearKnobControl("PWdth", Color.GRAY, new Range(0.01, 100.0));
-//        section.setControlEntity(1, 2, _pulseWidthControl);
+        _frequencyFine = new EncoderControl(ID_FINE_FREQUENCY, "Fine", Color.GRAY);
+        _frequencyFine.registerListener(this);
+        section.setControlEntity(1, 2, _frequencyFine);
 
-//        _biasControl = new LinearKnobControl("Bias", Color.GRAY, new Range(-5.0, 4.5));
-//        section.setControlEntity(0, 3, _biasControl);
-
-//        _rangeControl = new LinearKnobControl("Range", Color.GRAY, new Range(0.0, 10.0));
-//        section.setControlEntity(1, 3, _rangeControl);
-
-//        var buttonDim = new PixelDimensions(30, 30);
-//        var button = new MomentaryButton(buttonDim, "Foo", Color.PURPLE);
-        _waveSelector = new WaveSelector();
-        _waveSelector.registerListener(this);
-        section.setControlEntity(0, 4, _waveSelector);
-
-//        _frequencyRangeSelector = new SelectorButtonControl("FqRng");
-//        section.setControlEntity(1, 4, _frequencyRangeSelector);
+        _waveSelectorControl = new WaveSelectorControl(ID_WAVE_SELECTOR);
+        _waveSelectorControl.registerListener(this);
+        section.setControlEntity(0, 4, _waveSelectorControl);
     }
 
     @Override
@@ -107,14 +100,62 @@ public class SimpleLFOPanel extends ModulePanel implements IListener {
 
     @Override
     public void close() {
-        _waveSelector.unregisterListener(this);
+        _waveSelectorControl.unregisterListener(this);
     }
 
     @Override
-    public void notify(Message message) {
+    public void notify(
+        final Message message
+    ) {
         //  something on the panel has been updated
-        if (message instanceof WaveMessage wm) {
-            getModule().setWave(wm.getNewWaveValue());
+        switch (message.getIdentifier()) {
+            case ID_COARSE_FREQUENCY -> handleCoarseFrequencyMessage((EncoderKnobMessage) message);
+            case ID_FINE_FREQUENCY -> handleFineFrequencyMessage((EncoderKnobMessage) message);
+            case ID_WAVE_SELECTOR -> handleWaveSelectorMessage((WaveMessage) message);
         }
+    }
+
+    private void handleCoarseFrequencyMessage(
+        final EncoderKnobMessage message
+    ) {
+        if (message != null) {
+            var currentFreq = getModule().getFrequency();
+
+            double change;
+            if (currentFreq <= 1.0)
+                change = 0.1;
+            else if (currentFreq <= 10.0)
+                change = 1.0;
+            else
+                change = 10.0;
+
+            currentFreq += switch (message.getDirection()) {
+                case CLOCK_WISE -> change;
+                case COUNTER_CLOCK_WISE -> -change;
+            };
+
+            getModule().setFrequency(currentFreq);
+        }
+    }
+
+    private void handleFineFrequencyMessage(
+        final EncoderKnobMessage message
+    ) {
+        if (message != null) {
+            var currentFreq = getModule().getFrequency();
+            currentFreq += switch (message.getDirection()) {
+                case CLOCK_WISE -> 0.01;
+                case COUNTER_CLOCK_WISE -> -0.01;
+            };
+
+            getModule().setFrequency(currentFreq);
+        }
+    }
+
+    private void handleWaveSelectorMessage(
+        final WaveMessage message
+    ) {
+        if (message != null)
+            getModule().setWave(message.getNewWaveValue());
     }
 }
