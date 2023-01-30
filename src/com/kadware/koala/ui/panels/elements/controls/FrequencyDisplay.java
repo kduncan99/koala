@@ -19,7 +19,7 @@ public class FrequencyDisplay extends ControlPane {
         final String legend,
         final Color color
     ) {
-        super(cellDimensions, createPane(cellDimensions, color), legend);
+        super(0, cellDimensions, createPane(cellDimensions, color), legend);
     }
 
     private static Pane createPane(

@@ -53,13 +53,16 @@ public abstract class ControlPane extends VBox {
     public static final Font LEGEND_FONT = new Font(10);
 
     private final CellDimensions _cellDimensions;
+    private final int _identifier;
     private final Collection<IListener> _listeners = new LinkedList<>();
 
     public ControlPane(
+        final int identifier,
         final CellDimensions cellDimensions,
         final Pane entity,
         final String legend
     ) {
+        _identifier = identifier;
         _cellDimensions = cellDimensions;
         var pixelDimensions = toPixelDimensions(cellDimensions);
 
@@ -83,6 +86,7 @@ public abstract class ControlPane extends VBox {
     }
 
     public CellDimensions getCellDimensions() { return _cellDimensions; }
+    public int getIdentifier() { return _identifier; }
 
     //  To be invoked only on the Application thread.
     //  Subclasses override this *if* needed

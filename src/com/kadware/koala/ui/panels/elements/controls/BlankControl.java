@@ -12,6 +12,6 @@ public class BlankControl extends ControlPane {
     private static final CellDimensions CELL_DIMENSIONS = new com.kadware.koala.CellDimensions(1, 1);
 
     public BlankControl() {
-        super(CELL_DIMENSIONS, null, null);
+        super(-1, CELL_DIMENSIONS, null, null);
     }
 }

@@ -20,7 +20,7 @@ public abstract class MeterIndicator extends ControlPane {
         final Meter meter,        //  this is a pane which contains the meter
         final String legend
     ) {
-        super(cellDimensions, meter, legend);
+        super(0, cellDimensions, meter, legend);
         _meter = meter;
     }
 

@@ -23,7 +23,7 @@ public class SquareWave implements IWave {
     ) {
         var pos = Koala.POSITIVE_RANGE.clipValue(position);
         var pw = Koala.POSITIVE_RANGE.clipValue(pulseWidth);
-        return (pos >= pw) ? Koala.BIPOLAR_RANGE.getHighValue() : Koala.BIPOLAR_RANGE.getLowValue();
+        return (pos < pw) ? Koala.BIPOLAR_RANGE.getHighValue() : Koala.BIPOLAR_RANGE.getLowValue();
     }
 
     @Override

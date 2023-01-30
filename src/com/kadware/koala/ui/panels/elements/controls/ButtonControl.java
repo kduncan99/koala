@@ -41,7 +41,10 @@ public class ButtonControl extends ControlPane implements IListener {
         final Button button,
         final String legend
     ) {
-        super(CELL_DIMENSIONS, createPane(button), legend);
+        super(button.getIdentifier(),
+              CELL_DIMENSIONS,
+              createPane(button),
+              legend);
         button.registerListener(this);
     }
 

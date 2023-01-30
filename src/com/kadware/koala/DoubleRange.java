@@ -32,6 +32,17 @@ public class DoubleRange extends Range<Double> {
         return (value - getLowValue()) / _delta;
     }
 
+    /**
+     * Converts an input value linearly from 0.0 to 1.0 to a corresponding value within the range
+     * such that an input of 0.0 produces an output of lowValue, while an input of 1.0 produces
+     * highValue.
+     */
+    public double scaleValue(
+        final double value
+    ) {
+        return (value * _delta) + getLowValue();
+    }
+
     public double getDelta() { return _delta; }
 
     public boolean isInRange(

@@ -21,7 +21,7 @@ public abstract class Knob extends Component {
 
     private final Color _bgColor;   //  face of the knob
     private final Color _fgColor;   //  edge and any markings on the knob
-    private final double _radius;   //  radius of the knob
+    private final double _radius;   //  radius of the drawn knob
 
     private double _lastScreenY;
 
@@ -34,14 +34,15 @@ public abstract class Knob extends Component {
 
         _bgColor = color.darker().darker().darker();
         _fgColor = color.brighter();
-        _radius = Math.min(dimensions.getWidth(), dimensions.getHeight()) * 0.75;
+        _radius = Math.min(dimensions.getWidth(), dimensions.getHeight()) * 0.3;
 
         setPrefSize(dimensions.getWidth(), dimensions.getHeight());
 
         var canvas = new Canvas(dimensions.getWidth(), dimensions.getHeight());
         var gc = canvas.getGraphicsContext2D();
-        var xpos = (dimensions.getWidth() - _radius) / 2.0;
-        var ypos = (dimensions.getWidth() - _radius) / 2.0;
+
+        var xpos = (dimensions.getWidth() - 2 * _radius) / 2.0;
+        var ypos = (dimensions.getWidth() - 2 * _radius) / 2.0;
         gc.setStroke(_bgColor);
         gc.setFill(_fgColor);
         gc.fillOval(xpos, ypos, dimensions.getWidth() - 2 * xpos, dimensions.getHeight() - 2 * ypos);
@@ -56,6 +57,7 @@ public abstract class Knob extends Component {
 
     protected Color getBackgroundColor() { return _bgColor; }
     protected Color getColor() { return _fgColor; }
+    protected double getRadius() { return _radius; }
 
     public void mouseDragged(
         final MouseEvent event
