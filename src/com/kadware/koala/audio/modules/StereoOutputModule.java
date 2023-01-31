@@ -69,16 +69,22 @@ public class StereoOutputModule extends Module {
             leftCombined += _testToneOut.getCurrentValue();
             rightCombined += _testToneOut.getCurrentValue();
         }
-        int leftScaled = scale(leftCombined);
-        int rightScaled = scale(rightCombined);
 
-        _leftDBFSComponent.inject(leftScaled);
+        if (_dimEnabled) {
+            leftCombined /= 2;
+            rightCombined /= 2;
+        }
+
+        _leftDBFSComponent.inject(leftCombined);
         _rightDBFSComponent.inject(rightCombined);
 
-        _buffer[0] = (byte) (leftScaled >> 8);
-        _buffer[1] = (byte) leftScaled;
-        _buffer[2] = (byte) (rightScaled >> 8);
-        _buffer[3] = (byte) rightScaled;
+        //  convert scaled values to system values (i.e., -1.0 <= n <= 1.0 --> -32767 <= n <= 32767
+        int leftSystemScaled = (int)(leftCombined * SAMPLE_MAGNITUDE);
+        int rightSystemScaled = (int)(rightCombined * SAMPLE_MAGNITUDE);
+        _buffer[0] = (byte) (leftSystemScaled >> 8);
+        _buffer[1] = (byte) leftSystemScaled;
+        _buffer[2] = (byte) (rightSystemScaled >> 8);
+        _buffer[3] = (byte) rightSystemScaled;
         _sourceDataLine.write(_buffer, 0, 4);
     }
 
@@ -151,18 +157,4 @@ public class StereoOutputModule extends Module {
     public double getTestToneFrequency() { return _oscillatorModule.getBaseFrequency(); }
     public boolean isDimEnabled() { return _dimEnabled; }
     public boolean isTestToneEnabled() { return _testToneEnabled; }
-
-    /**
-     * Converts an input value scaled according to our port min/max, to a signed integer value
-     * scaled according to our sample bit size.
-     */
-    private int scale(
-        final double input
-    ) {
-        var result = input * SAMPLE_MAGNITUDE;
-        if (_dimEnabled) {
-            result *= 0.8;
-        }
-        return (int) result;
-    }
 }

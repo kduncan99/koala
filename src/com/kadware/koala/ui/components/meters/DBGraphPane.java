@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
  */
 public class DBGraphPane extends MultiColorGraphPane {
 
-    final static double[] SPLIT_POINTS = { -3.0, -0.5 };
+    final static double[] SPLIT_POINTS = { -3.0, -1.0 };
     final static Color[] COLORS = { Color.GREEN, Color.YELLOW, Color.RED };
 
     public DBGraphPane(

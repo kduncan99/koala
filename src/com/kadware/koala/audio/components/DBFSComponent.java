@@ -8,6 +8,11 @@ package com.kadware.koala.audio.components;
 import com.kadware.koala.Koala;
 import java.util.Arrays;
 
+/**
+ * Collects bipolar-scaled input values and averages them over time to produce a dbFS value.
+ * Such values will range from -30.0 to 0.0.
+ * (this range may be exceeded if the input values exceed the bipolar range).
+ */
 public class DBFSComponent extends Component {
 
     private static final int DEFAULT_BUFFER_SIZE_MILLIS = 300;
@@ -59,21 +64,20 @@ public class DBFSComponent extends Component {
     public void inject(
         final double sample
     ) {
+        var magnitude = Math.abs(sample);
         synchronized (this) {
-            _sampleBuffer[_nextSampleIndex] = sample;
+            var expiredValue = _sampleBuffer[_nextSampleIndex];
+            _sampleBuffer[_nextSampleIndex] = magnitude;
 
             //  check for clip
             //  defined as any sample exceeding 1.0, or two consecutive samples at 1.0.
-            if ((sample > 1.0) || (sample == 1.0 || _previousSample == 1.0)) {
+            if ((magnitude > 1.0) || (magnitude == 1.0 || _previousSample == 1.0)) {
                 _clipOutput = true;
             }
 
             //  (re)calculate running total
-            var oldestIndex = _nextSampleIndex - 1;
-            if (oldestIndex < 0)
-                oldestIndex = _sampleBuffer.length - 1;
-            _runningTotal -= _sampleBuffer[oldestIndex];
-            _runningTotal += sample;
+            _runningTotal -= expiredValue;
+            _runningTotal += magnitude;
             var average = _runningTotal / _sampleBuffer.length;
             _dbfsOutput = Koala.waveAmplitudeToDBFS(average);
 
@@ -89,7 +93,7 @@ public class DBFSComponent extends Component {
                 }
             }
 
-            _previousSample = sample;
+            _previousSample = magnitude;
             _nextSampleIndex++;
             if (_nextSampleIndex == _sampleBuffer.length)
                 _nextSampleIndex = 0;

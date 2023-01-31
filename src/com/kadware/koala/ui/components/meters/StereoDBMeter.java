@@ -7,6 +7,9 @@ package com.kadware.koala.ui.components.meters;
 
 import com.kadware.koala.Koala;
 import com.kadware.koala.PixelDimensions;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class StereoDBMeter extends Meter {

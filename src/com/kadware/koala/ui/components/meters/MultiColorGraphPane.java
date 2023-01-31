@@ -58,6 +58,7 @@ public class MultiColorGraphPane extends GraphPane {
         for (var rx = 0; rx < _regions.length; ++rx) {
             var rect = new Rectangle();
             rect.setFill(colors[rx]);
+            getChildren().add(rect);
             _regions[rx]._rectangle = rect;
         }
     }
@@ -73,7 +74,7 @@ public class MultiColorGraphPane extends GraphPane {
                 case HORIZONTAL -> {
                     r._lowCoordinate = (int)getXCoordinateFor(r._lowRangedValue);
                     r._highCoordinate = (int)getXCoordinateFor(r._highRangedValue);
-                    r._fullWidth = r._highCoordinate - r._lowCoordinate + 1;
+                    r._fullWidth = r._highCoordinate - r._lowCoordinate;
                     r._fullHeight = (int)height;
 
                     r._rectangle.setLayoutX(r._lowCoordinate);
@@ -85,7 +86,7 @@ public class MultiColorGraphPane extends GraphPane {
                     r._lowCoordinate = (int)getYCoordinateFor(r._lowRangedValue);
                     r._highCoordinate = (int)getYCoordinateFor(r._highRangedValue);
                     r._fullWidth = (int)width;
-                    r._fullHeight = r._highCoordinate - r._lowCoordinate + 1;
+                    r._fullHeight = r._lowCoordinate - r._highCoordinate;
 
                     r._rectangle.setLayoutX(0);
                     r._rectangle.setLayoutY(0);
@@ -123,8 +124,8 @@ public class MultiColorGraphPane extends GraphPane {
                         r._rectangle.setHeight(0);
                     } else if (value <= r._highRangedValue) {
                         //  value is somewhere inside this region
-                        r._rectangle.setLayoutY(r._highCoordinate);
-                        r._rectangle.setHeight(yPos - r._highCoordinate);
+                        r._rectangle.setLayoutY(yPos);
+                        r._rectangle.setHeight(r._lowCoordinate - yPos);
                     } else {
                         //  value is beyond this region - make it full
                         r._rectangle.setLayoutY(r._highCoordinate);
