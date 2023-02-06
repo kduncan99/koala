@@ -34,7 +34,7 @@ public class SimpleLFOPanel extends ModulePanel implements IListener {
     private FrequencyDisplay _frequencyDisplay;
     private EncoderControl _frequencyCoarse;
     private EncoderControl _frequencyFine;
-    private PotentiometerControl _pulseWidth;
+    private LabeledPotentiometerControl _pulseWidth;
     private WaveSelectorControl _waveSelectorControl;
 
     public SimpleLFOPanel() {
@@ -79,7 +79,7 @@ public class SimpleLFOPanel extends ModulePanel implements IListener {
         _waveSelectorControl.registerListener(this);
         section.setControlEntity(0, 3, _waveSelectorControl);
 
-        _pulseWidth = new PotentiometerControl(ID_PULSE_WIDTH, "PWdt", Color.GRAY, PULSE_WIDTH_RANGE);
+        _pulseWidth = new LabeledPotentiometerControl(ID_PULSE_WIDTH, "Width", Color.GRAY, PULSE_WIDTH_RANGE);
         _pulseWidth.registerListener(this);
         section.setControlEntity(1, 3, _pulseWidth);
     }
@@ -166,6 +166,7 @@ public class SimpleLFOPanel extends ModulePanel implements IListener {
         final PulseWidthMessage message
     ) {
         getModule().setPulseWidth(message.getValue());
+        _pulseWidth.setValue(message.getValue());
     }
 
     private void handleWaveSelectorMessage(

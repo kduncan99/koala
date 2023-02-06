@@ -70,4 +70,9 @@ public class ButtonControl extends ControlPane implements IListener {
         //  The underlying button component has something for us... pass it along to our listeners
         notifyListeners(message.setSender(this));
     }
+
+    @Override
+    public void setValue(double value) {
+        //  nothing to do
+    }
 }

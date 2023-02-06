@@ -52,4 +52,9 @@ public class EncoderControl extends ControlPane implements IListener {
         //  we do not need to translate the message.
         notifyListeners(message.setSender(this));
     }
+
+    @Override
+    public void setValue(double value) {
+        //  nothing to do
+    }
 }

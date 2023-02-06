@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 /**
  * More complex than most graph panes.
  * This displays values scaled for dbFS.
- * The gradient is marked out at useful db levels, and is scaled in the same manner as the graph.
  */
 public class DBGraphPane extends MultiColorGraphPane {
 

@@ -15,6 +15,23 @@ public class StereoDBGraphPane extends GraphPane {
     private final DBGraphPane _leftGraph;
     private final DBGraphPane _rightGraph;
 
+    //  TODO
+    //      Needs to look like this:
+    //      -------------
+    //      |clip |clip |
+    //      -------------
+    //      |left |right|
+    //      |graph|graph|
+    //      |     |     |
+    //      -------------
+    //      | Pk  | Hld |
+    //      -------------
+    //      The clip indicator on top is fed separately by setClip()
+    //          If you click it, it clears - perhaps a momentary button of some sort?
+    //      Pk is push on-off, enables fast mode in the left/right graphs
+    //          For this (and the next) we need a push on-off illuminated button
+    //      Hld enables peak-hold in the left/right graphs
+
     public StereoDBGraphPane(
         final OrientationType orientation,
         final Color color

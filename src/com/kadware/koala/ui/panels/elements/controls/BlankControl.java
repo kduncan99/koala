@@ -14,4 +14,9 @@ public class BlankControl extends ControlPane {
     public BlankControl() {
         super(-1, CELL_DIMENSIONS, null, null);
     }
+
+    @Override
+    public void setValue(double value) {
+        //  nothing to do
+    }
 }

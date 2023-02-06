@@ -89,8 +89,7 @@ public abstract class ControlPane extends VBox {
     public int getIdentifier() { return _identifier; }
 
     //  To be invoked only on the Application thread.
-    //  Subclasses override this *if* needed
-    public void setValue(final double value){}
+    public abstract void setValue(final double value);
 
     public void notifyListeners(
         final Message message

@@ -18,10 +18,10 @@ import javafx.scene.paint.Color;
 
 public class PotentiometerControl extends ControlPane implements IListener {
 
-    private static final CellDimensions CELL_DIMENSIONS = new CellDimensions(1, 1);
-    private static final PixelDimensions PIXEL_DIMENSIONS = toPixelDimensions(CELL_DIMENSIONS);
-    private static final int PIXEL_EDGE_SIZE = Math.min(PIXEL_DIMENSIONS.getWidth(), PIXEL_DIMENSIONS.getHeight());
-    private static final PixelDimensions KNOB_DIMENSIONS = new PixelDimensions(PIXEL_EDGE_SIZE, PIXEL_EDGE_SIZE);
+    protected static final CellDimensions CELL_DIMENSIONS = new CellDimensions(1, 1);
+    protected static final PixelDimensions PIXEL_DIMENSIONS = toPixelDimensions(CELL_DIMENSIONS);
+    protected static final int PIXEL_EDGE_SIZE = Math.min(PIXEL_DIMENSIONS.getWidth(), PIXEL_DIMENSIONS.getHeight());
+    protected static final PixelDimensions KNOB_DIMENSIONS = new PixelDimensions(PIXEL_EDGE_SIZE, PIXEL_EDGE_SIZE);
 
     private final Potentiometer _potentiometer;
     private final DoubleRange _range;
@@ -30,28 +30,16 @@ public class PotentiometerControl extends ControlPane implements IListener {
         final int identifier,
         final String legend,
         final Color color,
-        final DoubleRange range
+        final DoubleRange range,
+        final Pane pane
     ) {
-        super(identifier,
-              CELL_DIMENSIONS,
-              createPane(identifier, KNOB_DIMENSIONS, color),
-              legend);
+        super(identifier, CELL_DIMENSIONS, pane, legend);
         _range = range;
-        var pane = (Pane) getChildren().get(0);
         _potentiometer = (Potentiometer) pane.getChildren().get(0);
         _potentiometer.registerListener(this);
     }
 
-    private static Pane createPane(
-        final int identifier,
-        final PixelDimensions dimensions,
-        final Color color
-    ) {
-        var pane = new Pane();
-        var encoder = new Potentiometer(identifier, dimensions, color);
-        pane.getChildren().add(encoder);
-        return pane;
-    }
+    protected Potentiometer getPotentiometer() { return _potentiometer; }
 
     @Override
     public void notify(

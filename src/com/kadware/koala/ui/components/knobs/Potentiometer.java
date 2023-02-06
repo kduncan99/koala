@@ -40,8 +40,8 @@ public class Potentiometer extends Knob {
     protected void drawDetail(
         final GraphicsContext gc
     ) {
-        var w = gc.getCanvas().getWidth();
-        var h = gc.getCanvas().getHeight();
+        var w = getCanvas().getWidth();
+        var h = getCanvas().getHeight();
 
         gc.setStroke(getBackgroundColor());
         var x = w / 2;
@@ -67,7 +67,7 @@ public class Potentiometer extends Knob {
     ) {
         var effective = Koala.POSITIVE_RANGE.clipValue(position);
         var rotation = ROTATION_RANGE.scaleValue(effective);
-        setRotate(rotation);
+        getCanvas().setRotate(rotation);
         _position = position;
     }
 }

@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/knobs/LabeledPotentiometer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/LabeledPotentiometerControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/PlainPotentiometerControl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/audio/components/DBFSComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/audio/components/DBFSComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/audio/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/audio/modules/StereoOutputModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/knobs/Knob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/knobs/Knob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/knobs/Potentiometer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/knobs/Potentiometer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/DBGraphPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/DBGraphPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiColorGraphPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/MultiColorGraphPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/StereoDBMeter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/StereoDBMeter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/StereoDBGraphPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/components/meters/StereoDBGraphPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/SimpleLFOPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/SimpleLFOPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/BlankControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/BlankControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ButtonControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ButtonControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/ControlPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/EncoderControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/EncoderControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/PotentiometerControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/kadware/koala/ui/panels/elements/controls/PotentiometerControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,11 +89,11 @@
       <recent name="com.kadware.koala.ui.panels" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.kadware.koala.ui.panels.messages" />
       <recent name="com.kadware.koala.ui.panels.elements.controls" />
+      <recent name="com.kadware.koala.ui.components.knobs" />
+      <recent name="com.kadware.koala.ui.panels.messages" />
       <recent name="com.kadware.koala.ui.components.messages" />
       <recent name="com.kadware.koala.audio.components" />
-      <recent name="com.kadware.koala.modules" />
     </key>
   </component>
   <component name="RunManager">
@@ -127,7 +135,7 @@
       <workItem from="1672356450814" duration="11555000" />
       <workItem from="1672605023891" duration="206632000" />
       <workItem from="1674582080515" duration="28000" />
-      <workItem from="1674582256888" duration="134032000" />
+      <workItem from="1674582256888" duration="140856000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

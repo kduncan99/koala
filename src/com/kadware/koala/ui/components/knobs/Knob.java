@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 public abstract class Knob extends Component {
 
     private final Color _bgColor;   //  face of the knob
+    private final Canvas _canvas;
     private final Color _fgColor;   //  edge and any markings on the knob
     private final double _radius;   //  radius of the drawn knob
 
@@ -38,8 +39,8 @@ public abstract class Knob extends Component {
 
         setPrefSize(dimensions.getWidth(), dimensions.getHeight());
 
-        var canvas = new Canvas(dimensions.getWidth(), dimensions.getHeight());
-        var gc = canvas.getGraphicsContext2D();
+        _canvas = new Canvas(dimensions.getWidth(), dimensions.getHeight());
+        var gc = _canvas.getGraphicsContext2D();
 
         var xpos = (dimensions.getWidth() - 2 * _radius) / 2.0;
         var ypos = (dimensions.getWidth() - 2 * _radius) / 2.0;
@@ -49,13 +50,14 @@ public abstract class Knob extends Component {
         gc.strokeOval(xpos, ypos, dimensions.getWidth() - 2 * xpos, dimensions.getHeight() - 2 * ypos);
         drawDetail(gc);
 
-        getChildren().add(canvas);
+        getChildren().add(_canvas);
 
         setOnMouseDragged(this::mouseDragged);
         setOnMousePressed(this::mousePressed);
     }
 
     protected Color getBackgroundColor() { return _bgColor; }
+    protected Canvas getCanvas() { return _canvas; }
     protected Color getColor() { return _fgColor; }
     protected double getRadius() { return _radius; }
 
