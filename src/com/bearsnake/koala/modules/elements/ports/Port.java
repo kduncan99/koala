@@ -16,7 +16,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 /**
  * A Connection is implemented graphically as a cell in the ConnectionsSection object.
@@ -46,7 +45,6 @@ public abstract class Port extends Element {
     private final ContextMenu _contextMenu;
     protected final Jack _jack;
     protected final Label _label;
-    protected boolean _overloadIndicator;
 
     protected Port(
         final Jack jack,
@@ -183,11 +181,6 @@ public abstract class Port extends Element {
 
     public final Jack getJack() { return _jack; }
 
-    /**
-     * Indicates whether the overload indicator on this port is flagged
-     */
-    public final boolean getOverloadIndicator() { return _overloadIndicator; }
-
     private void mousePressed(
         final MouseEvent event
     ) {
@@ -198,18 +191,4 @@ public abstract class Port extends Element {
     }
 
     public abstract void repaint(); //  Can only be invoked on the Application thread
-
-    /**
-     * Sets or clears the overload indicator
-     */
-    public final void setOverloadIndicator(
-        final boolean value
-    ) {
-        _overloadIndicator = value;
-        if (value) {
-            _jack.setOverload();
-        } else {
-            _jack.clearOverload();
-        }
-    }
 }

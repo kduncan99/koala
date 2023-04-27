@@ -17,19 +17,11 @@
 //          Also, we can just tell the Rack to connect Module(m1).Port(p1) to Module(m2).Port(p2)
 //          The Rack object will need to be able to determine the coordinates of the two ports involved.
 //      StereoDBGraphPane see comments
-//      Change ports:
-//          Put port-type color spec in Port module as a static final
-//          OutputPort - no overload or activity indication
-//          InputPort
-//              OnOff ports have on/off indication
-//              Analog ports have activity and overload indications
 //      Update LFO module - see notes in that module
-//      Signal Modifier - everything
-//      Signal Delay module
-//      VCA module
-//      Stereo PAN module
-//      Envelope module (ADSR, no need for initial delay)
-//      Signal Mixer module
+//      Implement signal Modifier - everything (see notes)
+//      new Signal Delay module
+//      new Envelope module (ADSR, no need for initial delay)
+//      new Signal Mixer module
 //      HFO module (high-freq oscillator)
 
 package com.bearsnake.koala;
@@ -38,8 +30,12 @@ import com.bearsnake.koala.modules.Module;
 import com.bearsnake.koala.modules.NoiseGeneratorModule;
 import com.bearsnake.koala.modules.SimpleLFOModule;
 import com.bearsnake.koala.modules.StereoOutputModule;
+import com.bearsnake.koala.modules.VariableControlledAmplifierModule;
+import com.bearsnake.koala.modules.VariableControlledPanModule;
 import com.bearsnake.koala.modules.elements.ports.Port;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -56,8 +52,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.QuadCurve;
 import javafx.stage.Stage;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Koala extends Application {
 
@@ -122,21 +116,6 @@ public class Koala extends Application {
     public static final DoubleRange DBFS_RANGE = new DoubleRange(-30.0, 0.0);
     public static final DoubleRange POSITIVE_RANGE = new DoubleRange(0.0, 1.0);
 
-    //TODO move this to some appropriate other place
-    //  Note frequencies for C4 up through B4 - divide or multiply for other octaves
-//    private static final float NF_C = 261.63f;
-//    private static final float NF_CS = 277.18f;
-//    private static final float NF_D = 293.66f;
-//    private static final float NF_DS = 311.13f;
-//    private static final float NF_E = 329.63f;
-//    private static final float NF_F = 349.23f;
-//    private static final float NF_FS = 349.23f;
-//    private static final float NF_G = 392.00f;
-//    private static final float NF_GS = 415.30f;
-//    private static final float NF_A = 440f;
-//    private static final float NF_AS = 466.16f;
-//    private static final float NF_B = 493.88f;
-
     private static final long PAINT_PERIOD_MS = frequencyToMilliseconds(100);
 
     private boolean _inhibitPaint = false;
@@ -186,21 +165,40 @@ public class Koala extends Application {
         var lfo = new SimpleLFOModule();
         var noise1 = new NoiseGeneratorModule();
         var noise2 = new NoiseGeneratorModule();
-        var out = new StereoOutputModule();
+        var vcAmp = new VariableControlledAmplifierModule();
+        var vcPan = new VariableControlledPanModule();
+        var audio = new StereoOutputModule();
         s.placeModule(0, lfo);
         s.placeModule(1, noise1);
         s.placeModule(2, noise2);
-        s.placeModule(18, out);
+        s.placeModule(3, vcAmp);
+        s.placeModule(5, vcPan);
+        s.placeModule(18, audio);
 
-        var noise1Port = noise1.getOutputPort(NoiseGeneratorModule.SIGNAL_OUTPUT_PORT_ID);
-        var noise2Port = noise2.getOutputPort(NoiseGeneratorModule.SIGNAL_OUTPUT_PORT_ID);
-        var outLeftPort = out.getInputPort(StereoOutputModule.LEFT_INPUT_PORT_ID);
-        var outRightPort = out.getInputPort(StereoOutputModule.RIGHT_INPUT_PORT_ID);
-        Port.connect(noise1Port, outLeftPort);
-        Port.connect(noise2Port, outRightPort);
+        var lfoOut = lfo.getOutputPort(SimpleLFOModule.SIGNAL_OUTPUT_PORT_ID);
+
+        var noise1Out = noise1.getOutputPort(NoiseGeneratorModule.SIGNAL_OUTPUT_PORT_ID);
+        var noise2Out = noise2.getOutputPort(NoiseGeneratorModule.SIGNAL_OUTPUT_PORT_ID);
+
+        var vcAmpCtlIn = vcAmp.getInputPort(VariableControlledAmplifierModule.CONTROL_INPUT_PORT_ID);
+        var vcAmpSigIn = vcAmp.getInputPort(VariableControlledAmplifierModule.SIGNAL_INPUT_PORT_ID);
+        var vcAmpSigOut = vcAmp.getOutputPort(VariableControlledAmplifierModule.SIGNAL_OUTPUT_PORT_ID);
+
+        var vcPanCtlIn = vcPan.getInputPort(VariableControlledPanModule.CONTROL_INPUT_PORT_ID);
+        var vcPanSigIn = vcPan.getInputPort(VariableControlledPanModule.SIGNAL_INPUT_PORT_ID);
+        var vcPanLeftOut = vcPan.getOutputPort(VariableControlledPanModule.LEFT_OUTPUT_PORT_ID);
+        var vcPanRightOut = vcPan.getOutputPort(VariableControlledPanModule.RIGHT_OUTPUT_PORT_ID);
+
+        var audioLeftIn = audio.getInputPort(StereoOutputModule.LEFT_INPUT_PORT_ID);
+        var audioRightIn = audio.getInputPort(StereoOutputModule.RIGHT_INPUT_PORT_ID);
+
+        Port.connect(lfoOut, vcPanCtlIn);
+        Port.connect(noise1Out, vcPanSigIn);
+        Port.connect(vcPanLeftOut, audioLeftIn);
+        Port.connect(vcPanRightOut, audioRightIn);
 
         var qc1 = new QuadCurve();
-        qc1.setStartX(noise1Port.getLayoutX());
+        qc1.setStartX(noise1Out.getLayoutX());
          //  TODO end temporary
     }
 

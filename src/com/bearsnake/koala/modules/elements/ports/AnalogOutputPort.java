@@ -37,8 +37,5 @@ public class AnalogOutputPort extends OutputPort implements AnalogPort {
         final double signalValue
     ) {
         _signalValue = signalValue;
-        if (Math.abs(_signalValue) > 1.0) {
-            setOverloadIndicator(true);
-        }
     }
 }

@@ -16,6 +16,7 @@ public class SignalModifierModule extends Module {
     //      shifts the input signal (adds or subtracts 0.0 to 1.0)
     //      Needs a dual meter showing input vs output
     //      Needs input port and output port
+    //      Needs a taper control to do linear, log, or exp conversion
     public static final int SIGNAL_INPUT_PORT_ID = 0;
     public static final int SIGNAL_OUTPUT_PORT_ID = 1;
 

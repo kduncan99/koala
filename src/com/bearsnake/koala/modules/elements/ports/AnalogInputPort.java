@@ -8,7 +8,7 @@ package com.bearsnake.koala.modules.elements.ports;
 /**
  * An analog input connection which is intended to report a value from -1.0 to 1.0.
  * These ports are used both for audio and for control.
- * The normative value range *can* be exceeded, and this connection has an output clip indicator.
+ * The normative value range *can* be exceeded, and this connection has an output clip indicator
  * to indicate when the range has been exceeded.
  */
 public class AnalogInputPort extends InputPort implements AnalogPort {
@@ -40,8 +40,11 @@ public class AnalogInputPort extends InputPort implements AnalogPort {
             _signalValue += ((AnalogOutputPort) port).getSignalValue();
         }
 
-        if (Math.abs(_signalValue) > 1.0) {
-            setOverloadIndicator(true);
+        var magnitude = Math.abs(_signalValue);
+        if (magnitude > 1.0) {
+            ((InputJack) _jack).setOverload();
+        } else if (magnitude > 0.2) {
+            ((InputJack) _jack).setSignalDetected();
         }
     }
 }

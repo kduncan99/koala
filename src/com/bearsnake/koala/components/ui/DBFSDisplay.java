@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public class DBFSDisplay extends ActiveComponent {
 
-    private static final int DEFAULT_BUFFER_SIZE_MILLIS = 300;
+    private static final int DEFAULT_BUFFER_SIZE_MILLIS = 100;
     private static final int DEFAULT_BUFFER_SIZE_SAMPLES = Koala.millisecondsToSamples(DEFAULT_BUFFER_SIZE_MILLIS);
     private static final int PEAK_HOLD_TIME_MILLIS = 1000;
     private static final int PEAK_HOLD_COUNTDOWN_VALUE = (int)(Koala.SAMPLE_RATE * PEAK_HOLD_TIME_MILLIS / 1000.0);

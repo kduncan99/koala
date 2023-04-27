@@ -11,7 +11,6 @@ import javafx.scene.shape.Circle;
 
 public abstract class Jack extends HBox {
 
-    //  TODO Need to implement double-click -> clear overload
     protected final Circle _circle;
 
     protected Jack(
@@ -20,10 +19,7 @@ public abstract class Jack extends HBox {
     ) {
         _circle = new Circle(radius);
         _circle.setFill(Color.BLACK);
-        _circle.setStrokeWidth(3);
+        _circle.setStrokeWidth(4);
         _circle.setStroke(ringColor);
     }
-
-    public final void clearOverload() { _circle.setFill(Color.BLACK); }
-    public final void setOverload() { _circle.setFill(Color.RED); }
 }
