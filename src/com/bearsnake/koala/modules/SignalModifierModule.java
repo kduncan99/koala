@@ -10,6 +10,10 @@ import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
 
 public class SignalModifierModule extends Module {
 
+    public static class SignalModifierConfiguration extends Configuration {
+        //  TODO
+    }
+
     //  TODO performs the following:
     //      scales the input signal (multiplies by some value 0.0 to 1.0)
     //      inverts the input signal (multiplies by -1.0)
@@ -43,8 +47,22 @@ public class SignalModifierModule extends Module {
     public void close() {}
 
     @Override
+    public Configuration getConfiguration() {
+        return null;//  TODO
+    }
+
+    @Override
     public void repaint() {}
 
     @Override
     public void reset() {}
+
+    @Override
+    public void setConfiguration(
+        final Configuration configuration
+    ) {
+        if (configuration instanceof SignalModifierConfiguration cfg) {
+            //  TODO
+        }
+    }
 }

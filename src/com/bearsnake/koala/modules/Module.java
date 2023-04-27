@@ -27,6 +27,15 @@ import javafx.scene.paint.Color;
  */
 public abstract class Module extends VBox {
 
+    /**
+     * Contains the current configuration state of the module.
+     * This includes all knob and switch settings - that is, the setting for any {foo}Control element.
+     * If any particular subclass contains no such element, then that subclass can simply accept and return an empty
+     * Configuration object.
+     * The Configuration class does *not* include any interconnection state.
+     */
+    public static class Configuration {}
+
     public static final Color BACKGROUND_COLOR = Color.rgb(200, 200, 200);
     private static final BackgroundFill BACKGROUND_FILL = new BackgroundFill(BACKGROUND_COLOR, CornerRadii.EMPTY, Insets.EMPTY);
     private static final Background BACKGROUND = new Background(BACKGROUND_FILL);
@@ -94,6 +103,7 @@ public abstract class Module extends VBox {
         return (OutputPort)getPort(portId);
     }
 
+    public abstract Configuration getConfiguration();
     protected final ControlsSection getControlsSection() { return _controlsSection; }
     public final int getModuleWidth() { return _moduleWidthCells; }
     protected final PortsSection getPortsSection() { return _portsSection; }
@@ -178,4 +188,10 @@ public abstract class Module extends VBox {
      * General purpose reset
      */
     public abstract void reset();
+
+    /**
+     * Sets the configuration of the subclass
+     * @param configuration Configuration object, or module-specific subclass thereof.
+     */
+    public abstract void setConfiguration(final Configuration configuration);
 }

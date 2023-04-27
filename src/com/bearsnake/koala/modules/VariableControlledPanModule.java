@@ -58,8 +58,16 @@ public class VariableControlledPanModule extends Module {
     public void close() {}
 
     @Override
+    public Configuration getConfiguration() {
+        return new Configuration();
+    }
+
+    @Override
     public void repaint() {}
 
     @Override
     public void reset() {}
+
+    @Override
+    public void setConfiguration(final Configuration configuration) {}
 }

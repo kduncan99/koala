@@ -7,6 +7,7 @@ package com.bearsnake.koala.modules.elements.controls;
 
 import com.bearsnake.koala.components.ui.buttons.Button;
 import com.bearsnake.koala.components.ui.buttons.LabelSelectorButton;
+import com.bearsnake.koala.components.ui.buttons.SelectorButton;
 import com.bearsnake.koala.messages.Message;
 import com.bearsnake.koala.messages.components.SelectorButtonComponentMessage;
 import com.bearsnake.koala.messages.controls.TestToneSelectorControlMessage;
@@ -17,6 +18,17 @@ import javafx.scene.paint.Color;
  * Note that we are talking about a Koala button, not a JavaFX button.
  */
 public class TestToneSelectorButtonControl extends ButtonControl {
+
+    public class TestToneSelectorButtonState extends State {
+
+        public final double _frequency;
+
+        public TestToneSelectorButtonState(
+            final double frequency
+        ) {
+            _frequency = frequency;
+        }
+    }
 
     private static final String[] LABELS = { "off", "100", "440", "1k", "10k" };
     private static final Color[] COLORS = {
@@ -37,6 +49,16 @@ public class TestToneSelectorButtonControl extends ButtonControl {
         return new LabelSelectorButton(BUTTON_DIMENSIONS, LABELS, COLORS);
     }
 
+    private SelectorButton getSelectorButton() {
+        return (SelectorButton) getButton();
+    }
+
+    @Override
+    public State getState() {
+        var selector = getSelectorButton().getSelectorIndex();
+        return new TestToneSelectorButtonState(FREQUENCIES[selector]);
+    }
+
     @Override
     public void notify(
         final int identifier,
@@ -46,6 +68,20 @@ public class TestToneSelectorButtonControl extends ButtonControl {
         if (message instanceof SelectorButtonComponentMessage msg) {
             var enumIndex = msg.getNewSelectorValue();
             notifyListeners(new TestToneSelectorControlMessage(FREQUENCIES[enumIndex]));
+        }
+    }
+
+    @Override
+    public void setState(
+        final State state
+    ) {
+        if (state instanceof TestToneSelectorButtonState st) {
+            for (int fx = 0; fx < FREQUENCIES.length; ++fx) {
+                if (FREQUENCIES[fx] == st._frequency) {
+                    getSelectorButton().setSelectorIndex(fx);
+                    return;
+                }
+            }
         }
     }
 }

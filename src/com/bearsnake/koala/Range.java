@@ -20,4 +20,9 @@ public class Range<T> {
 
     public T getLowValue() { return _lowValue; }
     public T getHighValue() { return _highValue; }
+
+    @Override
+    public String toString() {
+        return String.format("{%s:%s}", String.valueOf(_lowValue), String.valueOf(_highValue));
+    }
 }

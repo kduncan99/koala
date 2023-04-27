@@ -20,12 +20,17 @@ import javafx.scene.paint.Color;
 
 public class SimpleLFOModule extends Module implements IListener {
 
-    //  TODO Forget the range selector
-    //  TODO Lose the meter
-    //  TODO Add freq. display
-    //  TODO Replace Freq knob with Fine and Coarse knobs
-    //  TODO Add wave selector
-    //  TODO Add sync input (reset wave cycle)
+    public static class SimpleLFOConfiguration extends Configuration {
+        //TODO
+    }
+
+    //  TODO possibile thoughts:
+    //      Forget the range selector
+    //      Lose the meter
+    //      Add freq. display
+    //      Replace Freq knob with Fine and Coarse knobs
+    //      Add wave selector
+    //      Add sync input (reset wave cycle)
     private static final CellDimensions METER_CELL_DIMENSIONS = new CellDimensions(1, 2);
     public static final int SIGNAL_OUTPUT_PORT_ID = 0;
 
@@ -71,22 +76,9 @@ public class SimpleLFOModule extends Module implements IListener {
     @Override
     public void close() {}
 
-    public void setFrequency(
-        final double frequency
-    ) {
-        _oscillator.setFrequency(frequency);
-    }
-
     @Override
-    public void repaint() {
-        if (_oscillator != null) {
-            _meterIndicator.setValue(_oscillator.getValue());
-        }
-    }
-
-    @Override
-    public void reset() {
-        _oscillator.reset();
+    public Configuration getConfiguration() {
+        return null;//TODO
     }
 
     @Override
@@ -109,5 +101,32 @@ public class SimpleLFOModule extends Module implements IListener {
                 _oscillator.setRangeType(msg.getRangeTypeValue());
             }
         }
+    }
+
+    @Override
+    public void repaint() {
+        if (_oscillator != null) {
+            _meterIndicator.setValue(_oscillator.getValue());
+        }
+    }
+
+    @Override
+    public void reset() {
+        _oscillator.reset();
+    }
+
+    @Override
+    public void setConfiguration(
+        final Configuration configuration
+    ) {
+        if (configuration instanceof SimpleLFOConfiguration config) {
+            //TODO
+        }
+    }
+
+    public void setFrequency(
+        final double frequency
+    ) {
+        _oscillator.setFrequency(frequency);
     }
 }

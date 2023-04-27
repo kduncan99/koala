@@ -10,7 +10,7 @@ package com.bearsnake.koala.messages.components;
  */
 public class PotentiometerKnobComponentMessage extends ComponentMessage {
 
-    private final double _position;
+    private final double _position;     //  knob position from 0.0 to 1.0
 
     public PotentiometerKnobComponentMessage(
         final double position

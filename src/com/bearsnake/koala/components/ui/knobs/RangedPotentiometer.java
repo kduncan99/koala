@@ -7,6 +7,7 @@ package com.bearsnake.koala.components.ui.knobs;
 
 import com.bearsnake.koala.DoubleRange;
 import com.bearsnake.koala.PixelDimensions;
+import com.bearsnake.koala.messages.components.RangedPotentiometerKnobComponentMessage;
 import javafx.scene.paint.Color;
 
 /**
@@ -21,34 +22,37 @@ public class RangedPotentiometer extends Potentiometer {
      * @param dimensions Pixel dimensions within which this knob must fit
      * @param color Base color of the knob - the face will this color while the edge and any other markings will be a
      *              darker version of the color.
-     * @param range Range to use for setting and reporting position
-     * @param initialPosition Initial position of the knob from 0.0 to 1.0
+     * @param range Range to use for setting and reporting scaledValue
+     * @param initialSetting Initial setting of the knob, relative to the range
      */
     public RangedPotentiometer(
         final PixelDimensions dimensions,
         final Color color,
         final DoubleRange range,
-        final double initialPosition
+        final double initialSetting
     ) {
-        super(dimensions, color, range.normalizeValue(initialPosition));
+        super(dimensions, color, range.normalizeValue(initialSetting));
         _range = range;
     }
 
     /**
-     * Reports the current position of the RangedPotentiometer, relative to the provided range.
+     * Reports the current scaledValue of the RangedPotentiometer, relative to the provided range.
      * This is invoked by messaging, so that the messages sent by the superclass will have the
      * range-adjusted values.
      */
-    public double getPosition() {
-        return _range.scaleValue(super.getPosition());
+    public double getScaledValue() {
+        return _range.scaleValue(getPosition());
     }
 
     /**
-     * Sets the position of the potentiometer
+     * Sets the scaledValue of the potentiometer based on the given scaled value,
+     * and sends a notification.
+     * @param scaledValue value relative to the established range, by which the potentiometer is set
      */
-    public void setPosition(
-        final double position
+    public void setScaledValue(
+        final double scaledValue
     ) {
-        super.setPosition(_range.normalizeValue(position));
+        setPositionSilently(_range.normalizeValue(scaledValue));
+        notifyListeners(new RangedPotentiometerKnobComponentMessage(scaledValue));
     }
 }

@@ -4,9 +4,11 @@
  */
 
 //  TODO
+//      (INPR) Implement ability to apply a configuration, and to save one
 //      Draw connections
-//      Implement ability to clear connections (in progress)
-//          We will simply right-click and select Delete on the wire object's context menu
+//      (INPR) Implement ability to clear connections
+//          --> right-click and select Delete on the wire object's context menu
+//          --> maybe also right-click and select Delete from a list of connections on the port's context menu
 //      Implement ability to set connections
 //          For connections - we need a Wire object, which will be a child of the rack
 //              the wire objects will always be on top of all other graphic entities
@@ -16,6 +18,7 @@
 //                  The Rack will do the rest.
 //          Also, we can just tell the Rack to connect Module(m1).Port(p1) to Module(m2).Port(p2)
 //          The Rack object will need to be able to determine the coordinates of the two ports involved.
+//      Ability to load/save connections as part of a configuration
 //      StereoDBGraphPane see comments
 //      Update LFO module - see notes in that module
 //      Implement signal Modifier - everything (see notes)
@@ -23,6 +26,9 @@
 //      new Envelope module (ADSR, no need for initial delay)
 //      new Signal Mixer module
 //      HFO module (high-freq oscillator)
+//      How do we collapse a set of modules into a patch, load it, and save it?
+//      How do we implement polyphony?
+//      Implement Scales (various temperaments, 1/4 tone, etc)
 
 package com.bearsnake.koala;
 

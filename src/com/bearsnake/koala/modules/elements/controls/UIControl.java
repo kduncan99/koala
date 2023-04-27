@@ -54,6 +54,12 @@ import javafx.scene.text.Font;
  */
 public abstract class UIControl extends Element {
 
+    /**
+     * Reflects the current configuration state of this UIControl.
+     * A pure indicator has no state, and thus will always accept and report this empty object.
+     */
+    public class State {};
+
     public static final int HORIZONTAL_PIXELS_PER_CELL = 40;
     public static final int VERTICAL_PIXELS_PER_CELL = 55;
     public static final int VERTICAL_PIXELS_FOR_LEGEND = 15;
@@ -138,5 +144,17 @@ public abstract class UIControl extends Element {
     ) {
         return new PixelDimensions(determinePixelWidth(cellDimensions.getWidth()),
                                    determinePixelHeight(cellDimensions.getHeight()));
+    }
+
+    //  State stuff
+    public State getState() {
+        //  default implementation
+        return new State();
+    }
+
+    public void setState(
+        final State state
+    ) {
+        //  default implementation
     }
 }

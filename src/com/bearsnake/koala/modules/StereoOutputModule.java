@@ -12,6 +12,7 @@ import com.bearsnake.koala.components.signals.Oscillator;
 import com.bearsnake.koala.messages.IListener;
 import com.bearsnake.koala.messages.Message;
 import com.bearsnake.koala.messages.controls.TestToneSelectorControlMessage;
+import com.bearsnake.koala.modules.elements.controls.UIControl;
 import com.bearsnake.koala.modules.elements.ports.AnalogInputPort;
 import com.bearsnake.koala.modules.elements.controls.LabeledPotentiometerControl;
 import com.bearsnake.koala.modules.elements.controls.StatefulButtonControl;
@@ -27,6 +28,26 @@ import javax.sound.sampled.SourceDataLine;
 import static com.bearsnake.koala.Koala.SAMPLE_SIZE_IN_BITS;
 
 public class StereoOutputModule extends OutputModule implements IListener {
+
+    public static class StereoOutputConfiguration extends Module.Configuration {
+
+        public final UIControl.State _dimControlState;
+        public final UIControl.State _gainControlState;
+        public final UIControl.State _muteControlState;
+        public final UIControl.State _testToneSelectorState;
+
+        public StereoOutputConfiguration(
+            final UIControl.State dimControlState,
+            final UIControl.State gainControlState,
+            final UIControl.State muteControlState,
+            final UIControl.State testToneControlState
+        ) {
+            _dimControlState = dimControlState;
+            _gainControlState = gainControlState;
+            _muteControlState = muteControlState;
+            _testToneSelectorState = testToneControlState;
+        }
+    }
 
     private class DriverThread extends Thread {
 
@@ -94,7 +115,6 @@ public class StereoOutputModule extends OutputModule implements IListener {
         _muteControl = new StatefulButtonControl("off", Color.BLACK, Color.RED, Color.DARKGRAY);
         _testToneSelectorControl = new TestToneSelectorButtonControl();
 
-        _gainControl.registerListener(this);
         _testToneSelectorControl.registerListener(this);
 
         //  TODO balance meter (1x2)
@@ -132,7 +152,7 @@ public class StereoOutputModule extends OutputModule implements IListener {
 
         var leftCombined = 0.0;
         var rightCombined = 0.0;
-        if (!_muteControl.getCurrentState()) {
+        if (!_muteControl.getButtonValue()) {
             //  get input signal and optionally mix in the test tone
             leftCombined = _inputPortLeft.getSignalValue();
             rightCombined = _inputPortRight.getSignalValue();
@@ -141,10 +161,10 @@ public class StereoOutputModule extends OutputModule implements IListener {
                 rightCombined += _testTone.getValue() / 2.0;
             }
 
-            var scalar = Koala.dbToScalar(_gainControl.getValue());
+            var scalar = Koala.dbToScalar(_gainControl.getScaledValue());
             leftCombined *= scalar;
             rightCombined *= scalar;
-            if (_dimControl.getCurrentState()) {
+            if (_dimControl.getButtonValue()) {
                 leftCombined /= 2;
                 rightCombined /= 2;
             }
@@ -175,6 +195,16 @@ public class StereoOutputModule extends OutputModule implements IListener {
     }
 
     @Override
+    public Configuration getConfiguration() {
+        return new StereoOutputConfiguration(
+            _dimControl.getState(),
+            _gainControl.getState(),
+            _muteControl.getState(),
+            _testToneSelectorControl.getState()
+        );
+    }
+
+    @Override
     public void repaint() {
         _dbfsIndicator.setValues(_dbfsAveragerLeft.getDBFSValue(),
                                  _dbfsAveragerRight.getDBFSValue());
@@ -197,6 +227,18 @@ public class StereoOutputModule extends OutputModule implements IListener {
             _sourceDataLine = sdl;
         } catch (LineUnavailableException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void setConfiguration(
+        final Configuration configuration
+    ) {
+        if (configuration instanceof StereoOutputConfiguration cfg) {
+            _dimControl.setState(cfg._dimControlState);
+            _gainControl.setState(cfg._gainControlState);
+            _muteControl.setState(cfg._muteControlState);
+            _testToneSelectorControl.setState(cfg._testToneSelectorState);
         }
     }
 

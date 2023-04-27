@@ -19,16 +19,16 @@ import javafx.scene.layout.Pane;
 public class SelectorButton extends MomentaryButton {
 
     private final Pane[] _imagePanes;
-    private final RolloverCounter _selector;
+    private final RolloverCounter _selectorIndex;
 
     public SelectorButton(
         final PixelDimensions dimensions,
         final Pane[] imagePanes
     ) {
         super(dimensions, createParentPane(dimensions, imagePanes));
-        _selector = new RolloverCounter(new IntegerRange(0, imagePanes.length));
+        _selectorIndex = new RolloverCounter(new IntegerRange(0, imagePanes.length));
         _imagePanes = imagePanes;
-        _imagePanes[_selector.getValue()].setVisible(true);
+        _imagePanes[_selectorIndex.getValue()].setVisible(true);
     }
 
     private static Pane createParentPane(
@@ -57,15 +57,30 @@ public class SelectorButton extends MomentaryButton {
         return parent;
     }
 
+    /**
+     * Retrieves the current selector value (an index of the given panes)
+     */
+    public int getSelectorIndex() { return _selectorIndex.getValue(); }
+
     @Override
     protected void mouseClicked(
         final MouseEvent event
     ) {
-        _imagePanes[_selector.getValue()].setVisible(false);
-        _selector.increment();
-        _imagePanes[_selector.getValue()].setVisible(true);
-        notifyListeners(new SelectorButtonComponentMessage(_selector.getValue()));
+        _imagePanes[_selectorIndex.getValue()].setVisible(false);
+        _selectorIndex.increment();
+        _imagePanes[_selectorIndex.getValue()].setVisible(true);
+        notifyListeners(new SelectorButtonComponentMessage(_selectorIndex.getValue()));
     }
 
-    public int getSelectorValue() { return _selector.getValue(); }
+    /**
+     * Sets the selector value to a particular index, clipping if necessary
+     */
+    public void setSelectorIndex(
+        final int index
+    ) {
+        _imagePanes[_selectorIndex.getValue()].setVisible(false);
+        _selectorIndex.setValue(index);
+        _imagePanes[_selectorIndex.getValue()].setVisible(true);
+        notifyListeners(new SelectorButtonComponentMessage(_selectorIndex.getValue()));
+    }
 }

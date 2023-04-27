@@ -43,7 +43,9 @@ public class Potentiometer extends Knob {
     ) {
         super(dimensions, color);
         _initialPosition = Koala.POSITIVE_RANGE.clipValue(initialPosition);
-        establishPosition(_initialPosition);
+        _position = Koala.POSITIVE_RANGE.clipValue(initialPosition);
+        var rotation = ROTATION_RANGE.scaleValue(_position);
+        getCanvas().setRotate(rotation);
     }
 
     /**
@@ -85,37 +87,39 @@ public class Potentiometer extends Knob {
     protected void mouseDoubleClicked(
         final MouseEvent event
     ) {
-        establishPosition(_initialPosition);
-        notifyListeners(new PotentiometerKnobComponentMessage(getPosition()));
+        setPosition(_initialPosition);
     }
 
     @Override
     protected void positionDecrement() {
-        establishPosition(Koala.POSITIVE_RANGE.clipValue(_position - POSITION_DELTA));
-        notifyListeners(new PotentiometerKnobComponentMessage(getPosition()));
+        setPosition(Koala.POSITIVE_RANGE.clipValue(_position - POSITION_DELTA));
     }
 
     @Override
     protected void positionIncrement() {
-        establishPosition(Koala.POSITIVE_RANGE.clipValue(_position + POSITION_DELTA));
-        notifyListeners(new PotentiometerKnobComponentMessage(getPosition()));
+        setPosition(Koala.POSITIVE_RANGE.clipValue(_position + POSITION_DELTA));
     }
 
-    private void establishPosition(
+    /**
+     * Sets the position of the potentiometer without sending a notification
+     * @param position desired position from 0.0 to 1.0
+     */
+    protected void setPositionSilently(
         final double position
     ) {
-        //  this is separate from setPosition() because internally we want to avoid calling subclasses, sometimes.
         _position = Koala.POSITIVE_RANGE.clipValue(position);
         var rotation = ROTATION_RANGE.scaleValue(_position);
         getCanvas().setRotate(rotation);
     }
 
     /**
-     * Sets the position of the potentiometer
+     * Sets the position of the potentiometer, sending a notification
+     * @param position desired position from 0.0 to 1.0
      */
     public void setPosition(
         final double position
     ) {
-        establishPosition(position);
+        setPositionSilently(position);
+        notifyListeners(new PotentiometerKnobComponentMessage(_position));
     }
 }

@@ -6,9 +6,7 @@
 package com.bearsnake.koala.components.ui.knobs;
 
 import com.bearsnake.koala.DoubleRange;
-import com.bearsnake.koala.Koala;
 import com.bearsnake.koala.PixelDimensions;
-import com.bearsnake.koala.messages.components.PotentiometerKnobComponentMessage;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -41,7 +39,7 @@ public class LabeledPotentiometer extends RangedPotentiometer {
         _indicator.setFont(new Font(10));
         _indicator.setAlignment(Pos.CENTER);
         getChildren().add(_indicator);
-        setPosition(initialValue);
+        writeText();
     }
 
     @Override
@@ -49,19 +47,19 @@ public class LabeledPotentiometer extends RangedPotentiometer {
         final MouseEvent event
     ) {
         super.mouseDoubleClicked(event);
-        _indicator.setText(String.format(_textFormat, getPosition()));
+        writeText();
     }
 
     @Override
     protected void positionDecrement() {
         super.positionDecrement();
-        _indicator.setText(String.format(_textFormat, getPosition()));
+        writeText();
     }
 
     @Override
     protected void positionIncrement() {
         super.positionIncrement();
-        _indicator.setText(String.format(_textFormat, getPosition()));
+        writeText();
     }
 
     @Override
@@ -69,6 +67,10 @@ public class LabeledPotentiometer extends RangedPotentiometer {
         final double position
     ) {
         super.setPosition(position);
-        _indicator.setText(String.format(_textFormat, position));
+        writeText();
+    }
+
+    private void writeText() {
+        _indicator.setText(String.format(_textFormat, getScaledValue()));
     }
 }

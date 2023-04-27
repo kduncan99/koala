@@ -16,6 +16,17 @@ import javafx.scene.paint.Color;
  */
 public class StatefulButtonControl extends ButtonControl {
 
+    public class StatefulButtonState extends State {
+
+        public final boolean _value;
+
+        public StatefulButtonState(
+            final boolean value
+        ) {
+            _value = value;
+        }
+    }
+
     public StatefulButtonControl(
         final Pane pane,
         final Color enabledColor,
@@ -52,8 +63,17 @@ public class StatefulButtonControl extends ButtonControl {
         return new StatefulButton(BUTTON_DIMENSIONS, legend, legendColor, enabledColor, disabledColor);
     }
 
-    public boolean getCurrentState() {
-        return ((StatefulButton) getButton()).getState();
+    public boolean getButtonValue() {
+        return getStatefulButton().getValue();
+    }
+
+    @Override
+    public State getState() {
+        return new StatefulButtonState(getButtonValue());
+    }
+
+    public StatefulButton getStatefulButton() {
+        return (StatefulButton) getButton();
     }
 
     @Override
@@ -62,5 +82,20 @@ public class StatefulButtonControl extends ButtonControl {
         final Message message
     ) {
         notifyListeners(message);
+    }
+
+    public void setButtonValue(
+        final boolean value
+    ) {
+        getStatefulButton().setValue(value);
+    }
+
+    @Override
+    public void setState(
+        final State state
+    ) {
+        if (state instanceof StatefulButtonState st) {
+            setButtonValue(st._value);
+        }
     }
 }

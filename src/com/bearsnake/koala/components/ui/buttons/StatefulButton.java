@@ -22,7 +22,7 @@ import javafx.scene.paint.Color;
  */
 public class StatefulButton extends LegendButton {
 
-    private boolean _currentState;
+    private boolean _value;
     private final Background _disabledBackground;
     private final Background _enabledBackground;
 
@@ -37,7 +37,7 @@ public class StatefulButton extends LegendButton {
         var enabledFill = new BackgroundFill(enabledColor, CornerRadii.EMPTY, Insets.EMPTY);
         _disabledBackground = new Background(disabledFill);
         _enabledBackground = new Background(enabledFill);
-        setState(false);
+        setValue(false);
     }
 
     public StatefulButton(
@@ -52,20 +52,20 @@ public class StatefulButton extends LegendButton {
         var enabledFill = new BackgroundFill(enabledColor, CornerRadii.EMPTY, Insets.EMPTY);
         _disabledBackground = new Background(disabledFill);
         _enabledBackground = new Background(enabledFill);
-        setState(false);
+        setValue(false);
     }
 
-    public boolean getState() { return _currentState; }
+    public boolean getValue() { return _value; }
 
     @Override
     protected void mouseClicked(MouseEvent event) {
-        setState(!_currentState);
+        setValue(!_value);
     }
 
     @Override
     protected void mousePressed(MouseEvent event) {
         super.setButtonPressed(true);
-        notifyListeners(new StatefulButtonComponentMessage(_currentState));
+        notifyListeners(new StatefulButtonComponentMessage(_value));
     }
 
     @Override
@@ -73,10 +73,10 @@ public class StatefulButton extends LegendButton {
         super.setButtonPressed(false);
     }
 
-    private void setState(
+    public void setValue(
         final boolean value
     ) {
-        _currentState = value;
-        getLegendPane().setBackground(_currentState ? _enabledBackground : _disabledBackground);
+        _value = value;
+        getLegendPane().setBackground(_value ? _enabledBackground : _disabledBackground);
     }
 }
