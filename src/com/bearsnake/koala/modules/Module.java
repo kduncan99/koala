@@ -13,9 +13,7 @@ import com.bearsnake.koala.modules.elements.ports.InputPort;
 import com.bearsnake.koala.modules.sections.PortsSection;
 import com.bearsnake.koala.modules.sections.ControlsSection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -42,8 +40,6 @@ public abstract class Module extends VBox {
 
     private static final int VERTICAL_CELLS_CONTROLS = 6;
     private static final int VERTICAL_CELLS_CONNECTIONS = 2;
-
-    private static final Set<Module> _modules = new HashSet<>();
 
     private final ControlsSection _controlsSection;
     private final int _moduleWidthCells;
@@ -113,7 +109,7 @@ public abstract class Module extends VBox {
      * Subclasses should override this and do any updates necessary.
      * Subclasses should call back here as part of their own advance() handling.
      */
-    protected void advance() {
+    public void advance() {
         //  Resample all the inputs
         for (var conn : _portsSection.getChildren()) {
             if (conn instanceof InputPort ip) {
@@ -123,60 +119,9 @@ public abstract class Module extends VBox {
     }
 
     /**
-     * Must be called {n} times per second, where n is the system frequency.
-     * Each Module must make any necessary adjustments to implement its functionality.
-     * Because of the very fine resolution required for audio, it is expected that this
-     * will be invoked by the same code which feeds the audio output (i.e., the SourceDataLine).
-     * Alternatively, it could be driven by code which is capturing output to a file rather than to
-     * real-time playback, in which case it frequency of invocation is not important.
-     */
-    public static void advanceAll() {
-        synchronized (Module.class) {
-            for (var module : _modules) {
-                module.advance();
-            }
-        }
-    }
-
-    /**
-     * Clears our module container after detaching all ports
-     */
-    public static void clear() {
-        synchronized (Module.class) {
-            for (Module module : _modules) {
-                module.detachAllConnections();
-                module.close();
-            }
-
-            _modules.clear();
-        }
-    }
-
-    /**
      * Implementors should shut themselves down, as they are going to be discarded
      */
     public abstract void close();
-
-    /**
-     * Detaches all connections for this module's ports
-     */
-    public synchronized void detachAllConnections() {
-        _ports.values().forEach(Port::disconnectAll);
-    }
-
-    /**
-     * All modules must be registered with the static class.
-     * However, we don't want them registered until they are ready to begin handling calls to advance(),
-     * so we leave it up to each individual subclass to invoke this method when this requirement is met,
-     * presumably from the constructor.
-     */
-    protected static void register(
-        final Module module
-    ) {
-        synchronized (Module.class) {
-            _modules.add(module);
-        }
-    }
 
     /**
      * Repaints the graphical content of the module.

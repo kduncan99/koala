@@ -41,8 +41,6 @@ public class VariableControlledPanModule extends Module {
         getPortsSection().setConnection(1, 1, _signalInput);
         getPortsSection().setConnection(0, 0, _leftOutput);
         getPortsSection().setConnection(1, 0, _rightOutput);
-
-        register(this);
     }
 
     @Override

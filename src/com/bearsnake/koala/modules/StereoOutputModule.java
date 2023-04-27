@@ -7,6 +7,7 @@ package com.bearsnake.koala.modules;
 
 import com.bearsnake.koala.DoubleRange;
 import com.bearsnake.koala.Koala;
+import com.bearsnake.koala.Rack;
 import com.bearsnake.koala.components.signals.DBFSAverager;
 import com.bearsnake.koala.components.signals.Oscillator;
 import com.bearsnake.koala.messages.IListener;
@@ -49,20 +50,6 @@ public class StereoOutputModule extends OutputModule implements IListener {
         }
     }
 
-    private class DriverThread extends Thread {
-
-        public void run() {
-            while (!_terminate) {
-                Module.advanceAll();
-                try {
-                    Thread.sleep(0);
-                } catch (InterruptedException ex) {
-                    //  do nothing
-                }
-            }
-        }
-    }
-
     public static final int LEFT_INPUT_PORT_ID = 0;
     public static final int RIGHT_INPUT_PORT_ID = 1;
 
@@ -91,7 +78,6 @@ public class StereoOutputModule extends OutputModule implements IListener {
     private SourceDataLine _sourceDataLine;
 
     //  other stuff
-    private boolean _terminate = false;
     private final Oscillator _testTone = new Oscillator();
     private boolean _testToneEnabled = false;
 
@@ -139,10 +125,6 @@ public class StereoOutputModule extends OutputModule implements IListener {
 
         //  finish setup
         reset();
-        register(this);
-
-        DriverThread _driverThread = new DriverThread();
-        _driverThread.start();
     }
 
     @Override
@@ -186,8 +168,6 @@ public class StereoOutputModule extends OutputModule implements IListener {
 
     @Override
     public void close() {
-        _terminate = true;
-
         _sourceDataLine.stop();
         _sourceDataLine.flush();
         _sourceDataLine.close();

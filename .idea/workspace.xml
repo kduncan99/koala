@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/messages/components/RangedPotentiometerKnobComponentMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Range.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Range.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/buttons/SelectorButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/buttons/SelectorButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/buttons/StatefulButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/buttons/StatefulButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/knobs/LabeledPotentiometer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/knobs/LabeledPotentiometer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/knobs/Potentiometer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/knobs/Potentiometer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/knobs/RangedPotentiometer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/components/ui/knobs/RangedPotentiometer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/messages/components/PotentiometerKnobComponentMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/messages/components/PotentiometerKnobComponentMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/BlankModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/BlankModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Shelf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/Module.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SignalModifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SignalModifierModule.java" afterDir="false" />
@@ -23,11 +16,7 @@
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/StereoOutputModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledAmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledAmplifierModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/LabeledPotentiometerControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/LabeledPotentiometerControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/PotentiometerControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/RangedPotentiometerControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/StatefulButtonControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/StatefulButtonControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/TestToneSelectorButtonControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/TestToneSelectorButtonControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/UIControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls/UIControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Port.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Port.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +143,7 @@
       <workItem from="1674582080515" duration="28000" />
       <workItem from="1674582256888" duration="140856000" />
       <workItem from="1681832101403" duration="19020000" />
-      <workItem from="1681866163310" duration="140704000" />
+      <workItem from="1681866163310" duration="144026000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

@@ -8,6 +8,7 @@ package com.bearsnake.koala.modules.elements.ports;
 import com.bearsnake.koala.CellDimensions;
 import com.bearsnake.koala.Koala;
 import com.bearsnake.koala.PixelDimensions;
+import com.bearsnake.koala.Rack;
 import com.bearsnake.koala.modules.elements.Element;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javafx.geometry.Pos;
@@ -89,6 +90,7 @@ public abstract class Port extends Element {
         var cm = new ContextMenu();
 
         var mi1 = new MenuItem("Disconnect All");
+        mi1.setOnAction(e -> System.out.println("FOO"));
         cm.getItems().add(mi1);
         //TODO need to set up an action for mi1
 
@@ -103,6 +105,14 @@ public abstract class Port extends Element {
     protected final boolean connect(
         final Port partner
     ) {
+        //  TODO remove
+        var r = Rack.findContainingRack(this);
+        var p1 = r.localToScene(0, 0);
+        System.out.printf("Rack 0,0->%f,%f\n", p1.getX(), p1.getY());
+        var p2 = localToScene(0, 0);
+        System.out.printf("Port 0,0->%f,%f\n", p2.getX(), p2.getY());
+        //  TODO end remove
+
         if (canConnectTo(partner) && !_connections.contains(partner)) {
             _connections.add(partner);
             return true;
@@ -113,6 +123,7 @@ public abstract class Port extends Element {
 
     /**
      * Connects an input and an output port.
+     * Should ONLY be invoked by Rack, for proper Wire handling.
      * @return true if successful, else false
      */
     public static synchronized boolean connect(
@@ -153,6 +164,7 @@ public abstract class Port extends Element {
 
     /**
      * Disconnects an input and output port connection
+     * Should ONLY be invoked by Rack, for proper Wire handling.
      */
     public synchronized void disconnect(
         final OutputPort output,
@@ -160,16 +172,6 @@ public abstract class Port extends Element {
     ) {
         output.disconnect(input);
         input.disconnect(output);
-    }
-
-    /**
-     * Disconnect all connected ports from this port
-     */
-    public synchronized void disconnectAll() {
-        for (var port : _connections) {
-            port.disconnect(this);
-        }
-        _connections.clear();
     }
 
     /**

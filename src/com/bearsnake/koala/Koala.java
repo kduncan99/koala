@@ -209,8 +209,7 @@ public class Koala extends Application {
     }
 
     @Override
-    public void init(
-    ) throws Exception {
+    public void init() throws Exception {
         super.init();
         _paintTimer = new Timer();
         _paintTimer.scheduleAtFixedRate(new PaintTask(), 0, PAINT_PERIOD_MS);
@@ -219,7 +218,6 @@ public class Koala extends Application {
     @Override
     public void stop(
     ) throws Exception {
-        Module.clear();
         _paintTimer.cancel();
         super.stop();
     }

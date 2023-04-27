@@ -6,7 +6,6 @@
 package com.bearsnake.koala;
 
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import java.util.TreeMap;
 
@@ -23,6 +22,38 @@ import java.util.TreeMap;
 public class Rack extends VBox {
 
     private final TreeMap<Integer, Shelf> _shelves = new TreeMap<>();
+    private boolean _terminate = false;
+    private final DriverThread _driverThread = new DriverThread();
+
+    private class DriverThread extends Thread {
+
+        private boolean _terminate = false;
+        private boolean _terminated = false;
+
+        public void run() {
+            while (!_terminate) {
+                advanceModules();
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException ex) {
+                    //  do nothing
+                }
+            }
+
+            _terminated = true;
+        }
+
+        public void terminate() {
+            _terminate = true;
+            while (_terminated) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                    //  nothing
+                }
+            }
+        }
+    }
 
     /**
      * Creates a Rack object
@@ -45,6 +76,33 @@ public class Rack extends VBox {
             getChildren().add(shelf);
             _shelves.put(sx, shelf);
         }
+
+        _driverThread.start();
+    }
+
+    /**
+     * Must be called {n} times per second, where n is the system frequency.
+     * Each Module must make any necessary adjustments to implement its functionality.
+     * Because of the very fine resolution required for audio, it is expected that this
+     * will be invoked by the same code which feeds the audio output (i.e., the SourceDataLine).
+     * Alternatively, it could be driven by code which is capturing output to a file rather than to
+     * real-time playback, in which case it frequency of invocation is not important.
+     */
+    public void advanceModules() {
+        _shelves.values().forEach(Shelf::advanceModules);
+    }
+
+    /**
+     * Invoked when discarding a Rack
+     */
+    public void close() {
+        _driverThread.terminate();
+
+        //  TODO remove all connections
+
+        //  TODO remove all shelves
+        _shelves.values().forEach(Shelf::close);
+        _shelves.clear();
     }
 
     public static Rack findContainingRack(

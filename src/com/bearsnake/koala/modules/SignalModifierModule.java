@@ -33,8 +33,6 @@ public class SignalModifierModule extends Module {
         _signalOutput = new AnalogOutputPort("signal");
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
         getPortsSection().setConnection(0, 1, _signalOutput);
-
-        register(this);
     }
 
     @Override

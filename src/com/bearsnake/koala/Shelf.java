@@ -40,6 +40,22 @@ public class Shelf extends HBox {
     }
 
     /**
+     * Invoked by Rack at the sampling frequency
+     */
+    public synchronized void advanceModules() {
+        _modules.values().forEach(Module::advance);
+    }
+
+    /**
+     * Only called by Rack when it is itself closing, or when it is discarding a shelf.
+     * In either case, all connections into and out of this shelf must first be deleted by the Rack.
+     */
+    public synchronized void close() {
+        _modules.values().forEach(Module::close);
+        _modules.clear();
+    }
+
+    /**
      * Should only be invoked on the Application thread.
      * <p>
      * Places a Module into the Shelf at the indicated zero-based location, if possible.
@@ -52,7 +68,7 @@ public class Shelf extends HBox {
      * @param location zero-based location for the module
      * @param module the module to be placed
      */
-    public boolean placeModule(
+    public synchronized boolean placeModule(
         final int location,
         final Module module
     ) {
@@ -76,6 +92,12 @@ public class Shelf extends HBox {
         //  Rebuild the child list
         getChildren().addAll(_modules.values());
         return true;
+    }
+
+    public synchronized boolean removeModule(
+        final int location
+    ) {
+        return false;//TODO
     }
 
     //  Only to be run on the Application thread

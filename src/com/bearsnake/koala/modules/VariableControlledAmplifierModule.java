@@ -36,8 +36,6 @@ public class VariableControlledAmplifierModule extends Module {
         getPortsSection().setConnection(0, 1, _controlInput);
         getPortsSection().setConnection(1, 1, _signalInput);
         getPortsSection().setConnection(1, 0, _signalOutput);
-
-        register(this);
     }
 
     @Override
