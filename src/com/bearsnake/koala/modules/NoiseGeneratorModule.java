@@ -10,12 +10,15 @@ import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
 
 public class NoiseGeneratorModule extends Module {
 
+    public static final String DEFAULT_NAME = "Noise";
     public static final int SIGNAL_OUTPUT_PORT_ID = 0;
 
     private final AnalogOutputPort _signalOutput;
 
-    public NoiseGeneratorModule() {
-        super(1, "Noise");
+    public NoiseGeneratorModule(
+        final String name
+    ) {
+        super(1, name);
 
         //  ports
         _signalOutput = new AnalogOutputPort("Signal Output", "signal");
@@ -34,7 +37,7 @@ public class NoiseGeneratorModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new Configuration(getIdentifier());
+        return new Configuration(getIdentifier(), getName());
     }
 
     @Override
@@ -46,5 +49,6 @@ public class NoiseGeneratorModule extends Module {
     @Override
     public void setConfiguration(final Configuration configuration) {
         setIdentifier(configuration._identifier);
+        setName(configuration._name);
     }
 }

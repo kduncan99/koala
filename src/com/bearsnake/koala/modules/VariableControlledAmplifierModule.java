@@ -13,6 +13,7 @@ import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
  */
 public class VariableControlledAmplifierModule extends Module {
 
+    public static final String DEFAULT_NAME = "VCAmp";
     public static final int SIGNAL_INPUT_PORT_ID = 0;
     public static final int SIGNAL_OUTPUT_PORT_ID = 1;
     public static final int CONTROL_INPUT_PORT_ID = 2;
@@ -21,8 +22,10 @@ public class VariableControlledAmplifierModule extends Module {
     private final AnalogInputPort _signalInput;
     private final AnalogOutputPort _signalOutput;
 
-    public VariableControlledAmplifierModule() {
-        super(2, "VCAmp");
+    public VariableControlledAmplifierModule(
+        final String name
+    ) {
+        super(2, name);
 
         //  ports
         _controlInput = new AnalogInputPort("Control Input", "control");
@@ -49,7 +52,7 @@ public class VariableControlledAmplifierModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new Configuration(getIdentifier());
+        return new Configuration(getIdentifier(), getName());
     }
 
     @Override
@@ -63,5 +66,6 @@ public class VariableControlledAmplifierModule extends Module {
         final Configuration configuration
     ) {
         setIdentifier(configuration._identifier);
+        setName(configuration._name);
     }
 }

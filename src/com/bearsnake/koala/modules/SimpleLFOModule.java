@@ -20,12 +20,15 @@ import javafx.scene.paint.Color;
 
 public class SimpleLFOModule extends Module implements IListener {
 
+    public static final String DEFAULT_NAME = "LFO";
+
     public static class SimpleLFOConfiguration extends Configuration {
 
         public SimpleLFOConfiguration(
-            final int identifier
+            final int identifier,
+            final String name
         ) {
-            super(identifier);
+            super(identifier, name);
         }
     }
 
@@ -45,8 +48,10 @@ public class SimpleLFOModule extends Module implements IListener {
     private final AnalogOutputPort _signalOutput;
     private final AnalogMeterIndicator _meterIndicator;
 
-    public SimpleLFOModule() {
-        super(1, "LFO");
+    public SimpleLFOModule(
+        final String name
+    ) {
+        super(1, name);
 
         _oscillator.setFrequency(1.0);
 
@@ -81,7 +86,7 @@ public class SimpleLFOModule extends Module implements IListener {
 
     @Override
     public Configuration getConfiguration() {
-        return new SimpleLFOConfiguration(getIdentifier());
+        return new SimpleLFOConfiguration(getIdentifier(), getName());
     }
 
     @Override
@@ -124,6 +129,7 @@ public class SimpleLFOModule extends Module implements IListener {
     ) {
         if (configuration instanceof SimpleLFOConfiguration config) {
             setIdentifier(config._identifier);
+            setName(config._name);
         }
     }
 

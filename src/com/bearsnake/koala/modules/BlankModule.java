@@ -21,7 +21,7 @@ public final class BlankModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new Configuration(getIdentifier());
+        return new Configuration(getIdentifier(), getName());
     }
 
     @Override

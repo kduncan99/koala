@@ -13,6 +13,7 @@ import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
  */
 public class VariableControlledPanModule extends Module {
 
+    public static final String DEFAULT_NAME = "VCPan";
     public static final int CONTROL_INPUT_PORT_ID = 0;
     public static final int SIGNAL_INPUT_PORT_ID = 1;
     public static final int LEFT_OUTPUT_PORT_ID = 2;
@@ -23,8 +24,10 @@ public class VariableControlledPanModule extends Module {
     private final AnalogOutputPort _leftOutput;
     private final AnalogOutputPort _rightOutput;
 
-    public VariableControlledPanModule() {
-        super(2, "VCPan");
+    public VariableControlledPanModule(
+        final String name
+    ) {
+        super(2, name);
 
         //  ports
         _controlInput = new AnalogInputPort("Control Input", "control");
@@ -57,7 +60,7 @@ public class VariableControlledPanModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new Configuration(getIdentifier());
+        return new Configuration(getIdentifier(), getName());
     }
 
     @Override
@@ -71,5 +74,6 @@ public class VariableControlledPanModule extends Module {
         final Configuration configuration
     ) {
         setIdentifier(configuration._identifier);
+        setName(configuration._name);
     }
 }

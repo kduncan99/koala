@@ -34,11 +34,14 @@ public abstract class Module extends VBox {
     public static class Configuration {
 
         public final int _identifier;
+        public final String _name;
 
         public Configuration(
-            final int identifier
+            final int identifier,
+            final String name
         ) {
             _identifier = identifier;
+            _name = name;
         }
     }
 
@@ -53,23 +56,26 @@ public abstract class Module extends VBox {
 
     private int _identifier;
     private final int _moduleWidthCells;
+    private String _name;
+    private Label _nameLabel;
     protected final Map<Integer, Port> _ports = new HashMap<>();
     private final PortsSection _portsSection;
 
     /**
      * Base constructor for all modules
      * @param moduleWidthCells width of module expressed as a number of cells (or shelf spaces).
-     * @param caption name of the module, displayed at the top of the panel.
+     * @param name name of the module, displayed at the top of the panel. Should be unique, but we don't force that here.
      */
     protected Module(
         final int moduleWidthCells,
-        final String caption
+        final String name
     ) {
         _identifier = _nextIdentifier.getAndIncrement();
         _moduleWidthCells = moduleWidthCells;
+        _name = name;
 
-        var cap = new Label(caption);
-        cap.setAlignment(Pos.CENTER);
+        _nameLabel = new Label(name);
+        _nameLabel.setAlignment(Pos.CENTER);
         var controlDims = new CellDimensions(moduleWidthCells, VERTICAL_CELLS_CONTROLS);
         _controlsSection = new ControlsSection(controlDims);
         var connectionDims = new CellDimensions(moduleWidthCells, VERTICAL_CELLS_CONNECTIONS);
@@ -78,7 +84,7 @@ public abstract class Module extends VBox {
         setBackground(BACKGROUND);
         setBorder(Koala.OUTSET_BORDER);
 
-        getChildren().add(cap);
+        getChildren().add(_nameLabel);
         getChildren().add(_controlsSection);
         getChildren().add(_portsSection);
     }
@@ -117,6 +123,7 @@ public abstract class Module extends VBox {
     public abstract Configuration getConfiguration();
     protected final ControlsSection getControlsSection() { return _controlsSection; }
     public final int getModuleWidth() { return _moduleWidthCells; }
+    public final String getName() { return _name; }
     protected final PortsSection getPortsSection() { return _portsSection; }
 
     /**
@@ -159,5 +166,12 @@ public abstract class Module extends VBox {
         final int identifier
     ) {
         _identifier = identifier;
+    }
+
+    public void setName(
+        final String name
+    ) {
+        _name = name;
+        _nameLabel.setText(_name);
     }
 }

@@ -5,17 +5,17 @@
 
 package com.bearsnake.koala.modules;
 
-import com.bearsnake.koala.Koala;
-import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
-
 public class SignalModifierModule extends Module {
+
+    public static final String DEFAULT_NAME = "SigMod";
 
     public static class SignalModifierConfiguration extends Configuration {
 
         public SignalModifierConfiguration(
-            final int identifier
+            final int identifier,
+            final String name
         ) {
-            super(identifier);
+            super(identifier, name);
         }
     }
 
@@ -31,8 +31,10 @@ public class SignalModifierModule extends Module {
 
 //    private final AnalogOutputPort _signalOutput;
 
-    public SignalModifierModule() {
-        super(1, "SigMod");
+    public SignalModifierModule(
+        final String name
+    ) {
+        super(1, name);
 
         //  ports
 //        _signalOutput = new AnalogOutputPort("signal");
@@ -51,7 +53,7 @@ public class SignalModifierModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new SignalModifierConfiguration(getIdentifier());
+        return new SignalModifierConfiguration(getIdentifier(), getName());
     }
 
     @Override
@@ -66,6 +68,7 @@ public class SignalModifierModule extends Module {
     ) {
         if (configuration instanceof SignalModifierConfiguration cfg) {
             setIdentifier(cfg._identifier);
+            setName(cfg._name);
             //  TODO
         }
     }

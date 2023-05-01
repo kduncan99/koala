@@ -38,12 +38,13 @@ public class StereoOutputModule extends OutputModule implements IListener {
 
         public StereoOutputConfiguration(
             final int identifier,
+            final String name,
             final UIControl.State dimControlState,
             final UIControl.State gainControlState,
             final UIControl.State muteControlState,
             final UIControl.State testToneControlState
         ) {
-            super(identifier);
+            super(identifier, name);
             _dimControlState = dimControlState;
             _gainControlState = gainControlState;
             _muteControlState = muteControlState;
@@ -51,6 +52,7 @@ public class StereoOutputModule extends OutputModule implements IListener {
         }
     }
 
+    public static final String DEFAULT_NAME = "Output";
     public static final int LEFT_INPUT_PORT_ID = 0;
     public static final int RIGHT_INPUT_PORT_ID = 1;
 
@@ -82,8 +84,10 @@ public class StereoOutputModule extends OutputModule implements IListener {
     private final Oscillator _testTone = new Oscillator();
     private boolean _testToneEnabled = false;
 
-    public StereoOutputModule() {
-        super(2, "System Out");
+    public StereoOutputModule(
+        final String name
+    ) {
+        super(2, name);
 
         _testTone.setWaveForm(WaveType.SINE);
         _dbfsAveragerLeft = new DBFSAverager();
@@ -179,6 +183,7 @@ public class StereoOutputModule extends OutputModule implements IListener {
     public Configuration getConfiguration() {
         return new StereoOutputConfiguration(
             getIdentifier(),
+            getName(),
             _dimControl.getState(),
             _gainControl.getState(),
             _muteControl.getState(),
@@ -216,7 +221,8 @@ public class StereoOutputModule extends OutputModule implements IListener {
     public void setConfiguration(
         final Configuration configuration
     ) {
-        setIdentifier(getIdentifier());
+        setIdentifier(configuration._identifier);
+        setName(configuration._name);
         if (configuration instanceof StereoOutputConfiguration cfg) {
             _dimControl.setState(cfg._dimControlState);
             _gainControl.setState(cfg._gainControlState);

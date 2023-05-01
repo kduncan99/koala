@@ -171,12 +171,12 @@ public class Koala extends Application {
         //  TODO temporary
         var rackContent = (VBox)_rack.getChildren().get(0);
         var s = (Shelf)rackContent.getChildren().get(0);
-        var lfo = new SimpleLFOModule();
-        var noise1 = new NoiseGeneratorModule();
-        var noise2 = new NoiseGeneratorModule();
-        var vcAmp = new VariableControlledAmplifierModule();
-        var vcPan = new VariableControlledPanModule();
-        var audio = new StereoOutputModule();
+        var lfo = new SimpleLFOModule(SimpleLFOModule.DEFAULT_NAME);
+        var noise1 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
+        var noise2 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
+        var vcAmp = new VariableControlledAmplifierModule(VariableControlledAmplifierModule.DEFAULT_NAME);
+        var vcPan = new VariableControlledPanModule(VariableControlledPanModule.DEFAULT_NAME);
+        var audio = new StereoOutputModule(StereoOutputModule.DEFAULT_NAME);
         s.placeModule(0, lfo);
         s.placeModule(1, noise1);
         s.placeModule(2, noise2);
