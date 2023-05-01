@@ -10,12 +10,13 @@ import com.bearsnake.koala.Koala;
 import com.bearsnake.koala.PixelDimensions;
 import com.bearsnake.koala.modules.elements.Element;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javafx.event.ActionEvent;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -47,8 +48,10 @@ public abstract class Port extends Element {
     private final ContextMenu _contextMenu;
     protected final Jack _jack;
     protected final Label _label;
+    private final String _name;
 
     protected Port(
+        final String name,
         final Jack jack,
         final String caption
     ) {
@@ -60,10 +63,16 @@ public abstract class Port extends Element {
         _label = new Label(caption);
         _label.setTextFill(Koala.LEGEND_COLOR);
         _label.setAlignment(Pos.CENTER);
+        _name = name;
+
+        _contextMenu = new ContextMenu();
+        var connectMenu = new Menu("Connect");
+        var disconnectMenu = new Menu("Disconnect");
+        _contextMenu.getItems().addAll(connectMenu, disconnectMenu);
+        _contextMenu.setOnAction(this::invokeMenu);
 
         setOnMousePressed(this::mousePressed);
 
-        _contextMenu = createContextMenu();
     }
 
     protected Port() {
@@ -71,20 +80,10 @@ public abstract class Port extends Element {
         super(CELL_DIMENSIONS, PIXEL_DIMENSIONS);
         setPrefSize(_pixelDimensions.getWidth(), _pixelDimensions.getHeight());
 
+        _contextMenu = null;
         _jack = null;
         _label = null;
-        _contextMenu = null;
-    }
-
-    private static ContextMenu createContextMenu() {
-        var cm = new ContextMenu();
-
-        var mi1 = new MenuItem("Disconnect All");
-        mi1.setOnAction(e -> System.out.println("FOO"));
-        cm.getItems().add(mi1);
-        //TODO need to set up an action for mi1
-
-        return cm;
+        _name = null;
     }
 
     /**
@@ -168,14 +167,20 @@ public abstract class Port extends Element {
     }
 
     public final Jack getJack() { return _jack; }
+    public final String getName() { return _name; }
     public abstract Color getWireColor();
+
+    private void invokeMenu(
+        final ActionEvent event
+    ) {
+        //TODO
+    }
 
     private void mousePressed(
         final MouseEvent event
     ) {
         //TODO if primary button, notify Rack so it can start a connection sequence
         if (event.isSecondaryButtonDown()) {
-            System.out.println("Port context menu");
             _contextMenu.show(this, Side.RIGHT, 0, 0);
         }
     }

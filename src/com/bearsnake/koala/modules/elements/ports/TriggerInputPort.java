@@ -12,9 +12,10 @@ package com.bearsnake.koala.modules.elements.ports;
 public class TriggerInputPort extends OnOffInputPort implements OnOffPort {
 
     public TriggerInputPort(
+        final String name,
         final String caption
     ) {
-        super(caption);
+        super(name, caption);
     }
 
     @Override

@@ -18,9 +18,10 @@ public class AnalogInputPort extends InputPort implements AnalogPort {
     private double _signalValue = 0.0;
 
     public AnalogInputPort(
+        final String name,
         final String caption
     ) {
-        super(new InputJack(JACK_RADIUS, ANALOG_PORT_COLOR), caption);
+        super(name, new InputJack(JACK_RADIUS, ANALOG_PORT_COLOR), caption);
     }
 
     @Override

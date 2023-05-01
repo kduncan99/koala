@@ -29,21 +29,21 @@ public class SignalModifierModule extends Module {
     public static final int SIGNAL_INPUT_PORT_ID = 0;
     public static final int SIGNAL_OUTPUT_PORT_ID = 1;
 
-    private final AnalogOutputPort _signalOutput;
+//    private final AnalogOutputPort _signalOutput;
 
     public SignalModifierModule() {
-        super(1, "Noise");
+        super(1, "SigMod");
 
         //  ports
-        _signalOutput = new AnalogOutputPort("signal");
-        _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
-        getPortsSection().setConnection(0, 1, _signalOutput);
+//        _signalOutput = new AnalogOutputPort("signal");
+//        _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
+//        getPortsSection().setConnection(0, 1, _signalOutput);
     }
 
     @Override
     public synchronized void advance() {
         super.advance();
-        _signalOutput.setSignalValue((Koala.RANDOM.nextDouble() * 2.0) - 1.0);
+//        _signalOutput.setSignalValue((Koala.RANDOM.nextDouble() * 2.0) - 1.0);
     }
 
     @Override

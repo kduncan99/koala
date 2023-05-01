@@ -16,9 +16,10 @@ public class OnOffOutputPort extends OutputPort implements OnOffPort {
     private boolean _signalValue = false;
 
     public OnOffOutputPort(
+        final String name,
         final String caption
     ) {
-        super(new OutputJack(JACK_RADIUS, ON_OFF_PORT_COLOR), caption);
+        super(name, new OutputJack(JACK_RADIUS, ON_OFF_PORT_COLOR), caption);
     }
 
     @Override

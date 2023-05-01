@@ -17,10 +17,11 @@ package com.bearsnake.koala.modules.elements.ports;
 public abstract class OutputPort extends Port {
 
     protected OutputPort(
+        final String name,
         final OutputJack outputJack,
         final String caption
     ) {
-        super(outputJack, caption);
+        super(name, outputJack, caption);
         getChildren().add(_jack);
         getChildren().add(_label);
     }

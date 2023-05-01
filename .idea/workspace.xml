@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Connection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Wire.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/BlankModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/BlankModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/Module.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SignalModifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SignalModifierModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SimpleLFOModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SimpleLFOModule.java" afterDir="false" />
@@ -20,11 +14,12 @@
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogInputPort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogOutputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/BlankPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/BlankPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Jack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Jack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/InputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/InputPort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffInputPort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OutputPort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Port.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Port.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/TriggerInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/TriggerInputPort.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +146,7 @@
       <workItem from="1674582080515" duration="28000" />
       <workItem from="1674582256888" duration="140856000" />
       <workItem from="1681832101403" duration="19020000" />
-      <workItem from="1681866163310" duration="167478000" />
+      <workItem from="1681866163310" duration="168727000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

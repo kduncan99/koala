@@ -18,7 +18,7 @@ public class NoiseGeneratorModule extends Module {
         super(1, "Noise");
 
         //  ports
-        _signalOutput = new AnalogOutputPort("signal");
+        _signalOutput = new AnalogOutputPort("Signal Output", "signal");
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
         getPortsSection().setConnection(0, 1, _signalOutput);
     }

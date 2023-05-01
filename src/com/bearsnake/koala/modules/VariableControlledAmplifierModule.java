@@ -25,9 +25,9 @@ public class VariableControlledAmplifierModule extends Module {
         super(2, "VCAmp");
 
         //  ports
-        _controlInput = new AnalogInputPort("control");
-        _signalInput = new AnalogInputPort("signal");
-        _signalOutput = new AnalogOutputPort("signal");
+        _controlInput = new AnalogInputPort("Control Input", "control");
+        _signalInput = new AnalogInputPort("Signal Input", "signal");
+        _signalOutput = new AnalogOutputPort("Signal Output", "signal");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);

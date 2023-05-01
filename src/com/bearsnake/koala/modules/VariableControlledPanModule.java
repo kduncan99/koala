@@ -27,10 +27,10 @@ public class VariableControlledPanModule extends Module {
         super(2, "VCPan");
 
         //  ports
-        _controlInput = new AnalogInputPort("control");
-        _signalInput = new AnalogInputPort("signal");
-        _leftOutput = new AnalogOutputPort("left");
-        _rightOutput = new AnalogOutputPort("right");
+        _controlInput = new AnalogInputPort("Control Input", "control");
+        _signalInput = new AnalogInputPort("Signal Input", "signal");
+        _leftOutput = new AnalogOutputPort("Left Output", "left");
+        _rightOutput = new AnalogOutputPort("Right Output", "right");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);
