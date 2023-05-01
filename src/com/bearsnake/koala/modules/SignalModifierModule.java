@@ -11,7 +11,12 @@ import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
 public class SignalModifierModule extends Module {
 
     public static class SignalModifierConfiguration extends Configuration {
-        //  TODO
+
+        public SignalModifierConfiguration(
+            final int identifier
+        ) {
+            super(identifier);
+        }
     }
 
     //  TODO performs the following:
@@ -46,7 +51,7 @@ public class SignalModifierModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return null;//  TODO
+        return new SignalModifierConfiguration(getIdentifier());
     }
 
     @Override
@@ -60,6 +65,7 @@ public class SignalModifierModule extends Module {
         final Configuration configuration
     ) {
         if (configuration instanceof SignalModifierConfiguration cfg) {
+            setIdentifier(cfg._identifier);
             //  TODO
         }
     }

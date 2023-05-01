@@ -5,6 +5,7 @@
 
 package com.bearsnake.koala.modules.elements.ports;
 
+import javafx.geometry.Point2D;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,5 +22,9 @@ public abstract class Jack extends HBox {
         _circle.setFill(Color.BLACK);
         _circle.setStrokeWidth(4);
         _circle.setStroke(ringColor);
+    }
+
+    public Point2D getCenterSceneCoordinates() {
+        return localToScene(_circle.getLayoutX(), _circle.getLayoutY());
     }
 }

@@ -24,7 +24,7 @@ public class VariableControlledPanModule extends Module {
     private final AnalogOutputPort _rightOutput;
 
     public VariableControlledPanModule() {
-        super(2, "VCAmp");
+        super(2, "VCPan");
 
         //  ports
         _controlInput = new AnalogInputPort("control");
@@ -37,10 +37,10 @@ public class VariableControlledPanModule extends Module {
         _ports.put(LEFT_OUTPUT_PORT_ID, _leftOutput);
         _ports.put(RIGHT_OUTPUT_PORT_ID, _rightOutput);
 
-        getPortsSection().setConnection(0, 1, _controlInput);
-        getPortsSection().setConnection(1, 1, _signalInput);
-        getPortsSection().setConnection(0, 0, _leftOutput);
-        getPortsSection().setConnection(1, 0, _rightOutput);
+        getPortsSection().setConnection(0, 0, _controlInput);
+        getPortsSection().setConnection(1, 0, _signalInput);
+        getPortsSection().setConnection(0, 1, _leftOutput);
+        getPortsSection().setConnection(1, 1, _rightOutput);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class VariableControlledPanModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new Configuration();
+        return new Configuration(getIdentifier());
     }
 
     @Override
@@ -67,5 +67,9 @@ public class VariableControlledPanModule extends Module {
     public void reset() {}
 
     @Override
-    public void setConfiguration(final Configuration configuration) {}
+    public void setConfiguration(
+        final Configuration configuration
+    ) {
+        setIdentifier(configuration._identifier);
+    }
 }

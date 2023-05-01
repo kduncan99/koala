@@ -34,7 +34,7 @@ public class NoiseGeneratorModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new Configuration();
+        return new Configuration(getIdentifier());
     }
 
     @Override
@@ -44,5 +44,7 @@ public class NoiseGeneratorModule extends Module {
     public void reset() {}
 
     @Override
-    public void setConfiguration(final Configuration configuration) {}
+    public void setConfiguration(final Configuration configuration) {
+        setIdentifier(configuration._identifier);
+    }
 }

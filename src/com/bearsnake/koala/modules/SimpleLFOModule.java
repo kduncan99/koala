@@ -21,7 +21,12 @@ import javafx.scene.paint.Color;
 public class SimpleLFOModule extends Module implements IListener {
 
     public static class SimpleLFOConfiguration extends Configuration {
-        //TODO
+
+        public SimpleLFOConfiguration(
+            final int identifier
+        ) {
+            super(identifier);
+        }
     }
 
     //  TODO possibile thoughts:
@@ -76,7 +81,7 @@ public class SimpleLFOModule extends Module implements IListener {
 
     @Override
     public Configuration getConfiguration() {
-        return null;//TODO
+        return new SimpleLFOConfiguration(getIdentifier());
     }
 
     @Override
@@ -118,7 +123,7 @@ public class SimpleLFOModule extends Module implements IListener {
         final Configuration configuration
     ) {
         if (configuration instanceof SimpleLFOConfiguration config) {
-            //TODO
+            setIdentifier(config._identifier);
         }
     }
 

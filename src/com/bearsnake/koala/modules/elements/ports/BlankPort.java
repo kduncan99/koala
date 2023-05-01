@@ -6,6 +6,7 @@
 package com.bearsnake.koala.modules.elements.ports;
 
 import com.bearsnake.koala.Koala;
+import javafx.scene.paint.Color;
 
 /**
  * Implements a blank/unused cell for PortsSection objects
@@ -18,6 +19,11 @@ public class BlankPort extends Port {
 
     @Override
     public boolean canConnectTo(final Port partner) { return false; }
+
+    @Override
+    public Color getWireColor() {
+        return Color.BLACK;
+    }
 
     @Override
     public void repaint() {}

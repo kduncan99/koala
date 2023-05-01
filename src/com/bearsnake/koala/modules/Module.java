@@ -14,6 +14,7 @@ import com.bearsnake.koala.modules.sections.PortsSection;
 import com.bearsnake.koala.modules.sections.ControlsSection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -28,11 +29,18 @@ public abstract class Module extends VBox {
     /**
      * Contains the current configuration state of the module.
      * This includes all knob and switch settings - that is, the setting for any {foo}Control element.
-     * If any particular subclass contains no such element, then that subclass can simply accept and return an empty
-     * Configuration object.
      * The Configuration class does *not* include any interconnection state.
      */
-    public static class Configuration {}
+    public static class Configuration {
+
+        public final int _identifier;
+
+        public Configuration(
+            final int identifier
+        ) {
+            _identifier = identifier;
+        }
+    }
 
     public static final Color BACKGROUND_COLOR = Color.rgb(200, 200, 200);
     private static final BackgroundFill BACKGROUND_FILL = new BackgroundFill(BACKGROUND_COLOR, CornerRadii.EMPTY, Insets.EMPTY);
@@ -40,8 +48,10 @@ public abstract class Module extends VBox {
 
     private static final int VERTICAL_CELLS_CONTROLS = 6;
     private static final int VERTICAL_CELLS_CONNECTIONS = 2;
-
+    private static final AtomicInteger _nextIdentifier = new AtomicInteger(1);
     private final ControlsSection _controlsSection;
+
+    private int _identifier;
     private final int _moduleWidthCells;
     protected final Map<Integer, Port> _ports = new HashMap<>();
     private final PortsSection _portsSection;
@@ -55,6 +65,7 @@ public abstract class Module extends VBox {
         final int moduleWidthCells,
         final String caption
     ) {
+        _identifier = _nextIdentifier.getAndIncrement();
         _moduleWidthCells = moduleWidthCells;
 
         var cap = new Label(caption);
@@ -79,6 +90,10 @@ public abstract class Module extends VBox {
         final int portId
     ) {
         return _ports.get(portId);
+    }
+
+    public final int getIdentifier() {
+        return _identifier;
     }
 
     /**
@@ -139,4 +154,10 @@ public abstract class Module extends VBox {
      * @param configuration Configuration object, or module-specific subclass thereof.
      */
     public abstract void setConfiguration(final Configuration configuration);
+
+    protected void setIdentifier(
+        final int identifier
+    ) {
+        _identifier = identifier;
+    }
 }

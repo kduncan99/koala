@@ -8,15 +8,16 @@ package com.bearsnake.koala.modules.elements.ports;
 import com.bearsnake.koala.CellDimensions;
 import com.bearsnake.koala.Koala;
 import com.bearsnake.koala.PixelDimensions;
-import com.bearsnake.koala.Rack;
 import com.bearsnake.koala.modules.elements.Element;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 /**
  * A Connection is implemented graphically as a cell in the ConnectionsSection object.
@@ -61,18 +62,7 @@ public abstract class Port extends Element {
         _label.setAlignment(Pos.CENTER);
 
         setOnMousePressed(this::mousePressed);
-        setOnDragDetected((e)-> startFullDrag());
-        /*
-            Lifecycle as follows:
-            Port 1710051277 Mouse Drag Entered
-            Port 1710051277 Mouse Drag Exited
-            Port 1316922069 Mouse Drag Entered
-            Port 1316922069 Mouse Drag Released
-            Port 1316922069 Mouse Drag Exited
-         */
-        setOnMouseDragEntered((e)-> System.out.printf("Port %d Mouse Drag Entered\n", hashCode()));
-        setOnMouseDragExited((e)-> System.out.printf("Port %d Mouse Drag Exited\n", hashCode()));
-        setOnMouseDragReleased((e)-> System.out.printf("Port %d Mouse Drag Released\n", hashCode()));
+
         _contextMenu = createContextMenu();
     }
 
@@ -105,14 +95,6 @@ public abstract class Port extends Element {
     protected final boolean connect(
         final Port partner
     ) {
-        //  TODO remove
-        var r = Rack.findContainingRack(this);
-        var p1 = r.localToScene(0, 0);
-        System.out.printf("Rack 0,0->%f,%f\n", p1.getX(), p1.getY());
-        var p2 = localToScene(0, 0);
-        System.out.printf("Port 0,0->%f,%f\n", p2.getX(), p2.getY());
-        //  TODO end remove
-
         if (canConnectTo(partner) && !_connections.contains(partner)) {
             _connections.add(partner);
             return true;
@@ -166,12 +148,16 @@ public abstract class Port extends Element {
      * Disconnects an input and output port connection
      * Should ONLY be invoked by Rack, for proper Wire handling.
      */
-    public synchronized void disconnect(
+    public static synchronized void disconnect(
         final OutputPort output,
         final InputPort input
     ) {
         output.disconnect(input);
         input.disconnect(output);
+    }
+
+    public Point2D getJackCenterSceneCoordinates() {
+        return _jack.getCenterSceneCoordinates();
     }
 
     /**
@@ -182,10 +168,12 @@ public abstract class Port extends Element {
     }
 
     public final Jack getJack() { return _jack; }
+    public abstract Color getWireColor();
 
     private void mousePressed(
         final MouseEvent event
     ) {
+        //TODO if primary button, notify Rack so it can start a connection sequence
         if (event.isSecondaryButtonDown()) {
             System.out.println("Port context menu");
             _contextMenu.show(this, Side.RIGHT, 0, 0);

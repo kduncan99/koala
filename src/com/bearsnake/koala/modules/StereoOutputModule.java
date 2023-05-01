@@ -7,7 +7,6 @@ package com.bearsnake.koala.modules;
 
 import com.bearsnake.koala.DoubleRange;
 import com.bearsnake.koala.Koala;
-import com.bearsnake.koala.Rack;
 import com.bearsnake.koala.components.signals.DBFSAverager;
 import com.bearsnake.koala.components.signals.Oscillator;
 import com.bearsnake.koala.messages.IListener;
@@ -38,11 +37,13 @@ public class StereoOutputModule extends OutputModule implements IListener {
         public final UIControl.State _testToneSelectorState;
 
         public StereoOutputConfiguration(
+            final int identifier,
             final UIControl.State dimControlState,
             final UIControl.State gainControlState,
             final UIControl.State muteControlState,
             final UIControl.State testToneControlState
         ) {
+            super(identifier);
             _dimControlState = dimControlState;
             _gainControlState = gainControlState;
             _muteControlState = muteControlState;
@@ -177,6 +178,7 @@ public class StereoOutputModule extends OutputModule implements IListener {
     @Override
     public Configuration getConfiguration() {
         return new StereoOutputConfiguration(
+            getIdentifier(),
             _dimControl.getState(),
             _gainControl.getState(),
             _muteControl.getState(),
@@ -214,6 +216,7 @@ public class StereoOutputModule extends OutputModule implements IListener {
     public void setConfiguration(
         final Configuration configuration
     ) {
+        setIdentifier(getIdentifier());
         if (configuration instanceof StereoOutputConfiguration cfg) {
             _dimControl.setState(cfg._dimControlState);
             _gainControl.setState(cfg._gainControlState);

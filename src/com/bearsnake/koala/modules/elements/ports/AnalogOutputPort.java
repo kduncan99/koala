@@ -5,6 +5,8 @@
 
 package com.bearsnake.koala.modules.elements.ports;
 
+import javafx.scene.paint.Color;
+
 /**
  * An analog output connection which is intended to report a value from -1.0 to 1.0.
  * These ports are used both for audio and for control.
@@ -29,6 +31,11 @@ public class AnalogOutputPort extends OutputPort implements AnalogPort {
     }
 
     public double getSignalValue() { return _signalValue; }
+
+    @Override
+    public Color getWireColor() {
+        return ANALOG_PORT_COLOR;
+    }
 
     @Override
     public void repaint() {}

@@ -11,11 +11,13 @@
 //          --> maybe also right-click and select Delete from a list of connections on the port's context menu
 //      Implement ability to set connections
 //          For connections - we need a Wire object, which will be a child of the rack
-//              the wire objects will always be on top of all other graphic entities
+//              The wire objects will always be on top of all other graphic entities
 //              The Rack object will be in charge of creating and deleting connections
-//              * A Port will notice a drag enter, and notify the Rack.
-//              * Some other entity will notice a drag completion, and notify the Rack.
-//                  The Rack will do the rest.
+//              A mouse click on any Port starts a connect operation
+//                  A wire object is created with one endpoint on the source port, the other on the cursor
+//                  A click on an acceptable Port completes the connect operation
+//                  A click on an unacceptable Port beeps at the user (or something like that)
+//                  A click anywhere else cancels the connect operation
 //          Also, we can just tell the Rack to connect Module(m1).Port(p1) to Module(m2).Port(p2)
 //          The Rack object will need to be able to determine the coordinates of the two ports involved.
 //      Ability to load/save connections as part of a configuration
@@ -32,7 +34,6 @@
 
 package com.bearsnake.koala;
 
-import com.bearsnake.koala.modules.Module;
 import com.bearsnake.koala.modules.NoiseGeneratorModule;
 import com.bearsnake.koala.modules.SimpleLFOModule;
 import com.bearsnake.koala.modules.StereoOutputModule;
@@ -55,6 +56,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.QuadCurve;
 import javafx.stage.Stage;
@@ -167,7 +169,8 @@ public class Koala extends Application {
         stage.show();
 
         //  TODO temporary
-        var s = (Shelf)_rack.getChildren().get(0);
+        var rackContent = (VBox)_rack.getChildren().get(0);
+        var s = (Shelf)rackContent.getChildren().get(0);
         var lfo = new SimpleLFOModule();
         var noise1 = new NoiseGeneratorModule();
         var noise2 = new NoiseGeneratorModule();
@@ -198,13 +201,12 @@ public class Koala extends Application {
         var audioLeftIn = audio.getInputPort(StereoOutputModule.LEFT_INPUT_PORT_ID);
         var audioRightIn = audio.getInputPort(StereoOutputModule.RIGHT_INPUT_PORT_ID);
 
-        Port.connect(lfoOut, vcPanCtlIn);
-        Port.connect(noise1Out, vcPanSigIn);
-        Port.connect(vcPanLeftOut, audioLeftIn);
-        Port.connect(vcPanRightOut, audioRightIn);
-
-        var qc1 = new QuadCurve();
-        qc1.setStartX(noise1Out.getLayoutX());
+        Platform.runLater(()->{
+            _rack.connectPorts(lfoOut, vcPanCtlIn);
+            _rack.connectPorts(noise1Out, vcPanSigIn);
+            _rack.connectPorts(vcPanLeftOut, audioLeftIn);
+            _rack.connectPorts(vcPanRightOut, audioRightIn);
+        });
          //  TODO end temporary
     }
 
@@ -219,6 +221,7 @@ public class Koala extends Application {
     public void stop(
     ) throws Exception {
         _paintTimer.cancel();
+        _rack.close();
         super.stop();
     }
 

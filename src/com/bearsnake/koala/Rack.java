@@ -5,25 +5,19 @@
 
 package com.bearsnake.koala;
 
+import com.bearsnake.koala.modules.elements.ports.InputPort;
+import com.bearsnake.koala.modules.elements.ports.OutputPort;
+import java.util.HashSet;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import java.util.TreeMap;
 
 /**
  * A rack is a container of 1 or more vertically stacked Shelf objects.
- * There is one and only one Rack object for a given application instance.
- * The rack must have exactly one OutputModule, in order for any processing to occur.
- * It is suggested that the UI require either
- *  * specification of an output module type at startup, to be applied to the rack immediately upon starupt, or
- *  * disallowing the addition of any modules *other* than an OutputModule until one is added,
- *  AND
- *  * only one OutputModule can be added to a Rack.
  */
-public class Rack extends VBox {
-
-    private final TreeMap<Integer, Shelf> _shelves = new TreeMap<>();
-    private boolean _terminate = false;
-    private final DriverThread _driverThread = new DriverThread();
+public class Rack extends Pane {
 
     private class DriverThread extends Thread {
 
@@ -55,6 +49,14 @@ public class Rack extends VBox {
         }
     }
 
+    private static final int INTER_SHELF_PIXELS = 4;
+
+    private final HashSet<Connection> _connections = new HashSet<>();
+    private final VBox _shelfContent;
+    private final TreeMap<Integer, Shelf> _shelves = new TreeMap<>();
+    private boolean _terminate = false;
+    private final DriverThread _driverThread = new DriverThread();
+
     /**
      * Creates a Rack object
      * @param shelfCount Number of shelves for this rack
@@ -66,17 +68,19 @@ public class Rack extends VBox {
     ) {
         //  TODO validate count and width
 
-        setBackground(Koala.BACKGROUND);
-        setPadding(Koala.STANDARD_INSETS);
-        setSpacing(1.0);
+        _shelfContent = new VBox();
+        _shelfContent.setBackground(Koala.BACKGROUND);
+        _shelfContent.setPadding(Koala.STANDARD_INSETS);
+        _shelfContent.setSpacing(INTER_SHELF_PIXELS);
 
-        //  create a VBox consisting of a particular number of shelves.
+        //  populate the VBox with a particular number of shelves.
         for (int sx = 0; sx < shelfCount; sx++) {
             var shelf = new Shelf(shelfWidth);
-            getChildren().add(shelf);
+            _shelfContent.getChildren().add(shelf);
             _shelves.put(sx, shelf);
         }
 
+        getChildren().add(_shelfContent);
         _driverThread.start();
     }
 
@@ -105,6 +109,27 @@ public class Rack extends VBox {
         _shelves.clear();
     }
 
+    public synchronized boolean connectPorts(
+        final OutputPort source,
+        final InputPort destination
+    ) {
+        var c = new Connection(this, source, destination);
+        if (!c.connect()) {
+            return false;
+        }
+        _connections.add(c);
+        return true;
+    }
+
+    public synchronized boolean disconnect(
+        final Connection connection
+    ) {
+        if (!connection.disconnect())
+            return false;
+        _connections.remove(connection);
+        return true;
+    }
+
     public static Rack findContainingRack(
         final Node child
     ) {
@@ -117,6 +142,8 @@ public class Rack extends VBox {
         }
         return null;
     }
+
+    public Group getRootGroup() { return (Group) getParent(); }
 
     //  Only to be run on the Application thread
     public void repaint() {

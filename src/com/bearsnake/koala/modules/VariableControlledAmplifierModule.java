@@ -33,9 +33,9 @@ public class VariableControlledAmplifierModule extends Module {
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
 
-        getPortsSection().setConnection(0, 1, _controlInput);
-        getPortsSection().setConnection(1, 1, _signalInput);
-        getPortsSection().setConnection(1, 0, _signalOutput);
+        getPortsSection().setConnection(0, 0, _controlInput);
+        getPortsSection().setConnection(1, 0, _signalInput);
+        getPortsSection().setConnection(1, 1, _signalOutput);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class VariableControlledAmplifierModule extends Module {
 
     @Override
     public Configuration getConfiguration() {
-        return new Configuration();
+        return new Configuration(getIdentifier());
     }
 
     @Override
@@ -59,5 +59,9 @@ public class VariableControlledAmplifierModule extends Module {
     public void reset() {}
 
     @Override
-    public void setConfiguration(final Configuration configuration) {}
+    public void setConfiguration(
+        final Configuration configuration
+    ) {
+        setIdentifier(configuration._identifier);
+    }
 }
