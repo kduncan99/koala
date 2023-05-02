@@ -5,8 +5,8 @@
 
 //  TODO
 //      (INPR) Implement ability to apply a configuration, and to save one
-//      Draw connections
 //      (INPR) Implement ability to clear connections
+//          *** Need to prepend module names to the port names so disconnect/connect looks better
 //          --> right-click and select Delete on the wire object's context menu
 //          --> maybe also right-click and select Delete from a list of connections on the port's context menu
 //      Implement ability to set connections
@@ -39,7 +39,6 @@ import com.bearsnake.koala.modules.SimpleLFOModule;
 import com.bearsnake.koala.modules.StereoOutputModule;
 import com.bearsnake.koala.modules.VariableControlledAmplifierModule;
 import com.bearsnake.koala.modules.VariableControlledPanModule;
-import com.bearsnake.koala.modules.elements.ports.Port;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -58,7 +57,6 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.QuadCurve;
 import javafx.stage.Stage;
 
 public class Koala extends Application {
@@ -170,19 +168,18 @@ public class Koala extends Application {
 
         //  TODO temporary
         var rackContent = (VBox)_rack.getChildren().get(0);
-        var s = (Shelf)rackContent.getChildren().get(0);
         var lfo = new SimpleLFOModule(SimpleLFOModule.DEFAULT_NAME);
         var noise1 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
         var noise2 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
         var vcAmp = new VariableControlledAmplifierModule(VariableControlledAmplifierModule.DEFAULT_NAME);
         var vcPan = new VariableControlledPanModule(VariableControlledPanModule.DEFAULT_NAME);
         var audio = new StereoOutputModule(StereoOutputModule.DEFAULT_NAME);
-        s.placeModule(0, lfo);
-        s.placeModule(1, noise1);
-        s.placeModule(2, noise2);
-        s.placeModule(3, vcAmp);
-        s.placeModule(5, vcPan);
-        s.placeModule(18, audio);
+        _rack.placeModule(0, 0, lfo);
+        _rack.placeModule(0, 1, noise1);
+        _rack.placeModule(0, 2, noise2);
+        _rack.placeModule(0, 3, vcAmp);
+        _rack.placeModule(0, 5, vcPan);
+        _rack.placeModule(0, 18, audio);
 
         var lfoOut = lfo.getOutputPort(SimpleLFOModule.SIGNAL_OUTPUT_PORT_ID);
 

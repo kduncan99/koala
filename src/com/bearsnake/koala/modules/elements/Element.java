@@ -60,6 +60,7 @@ public abstract class Element extends VBox {
     }
 
     public CellDimensions getCellDimensions() { return _cellDimensions; }
+    protected ContextMenu getContextMenu() { return _contextMenu; }
     public PixelDimensions getPixelDimensions() { return _pixelDimensions; }
     protected void setContextMenu(final ContextMenu menu) { _contextMenu = menu; }
 

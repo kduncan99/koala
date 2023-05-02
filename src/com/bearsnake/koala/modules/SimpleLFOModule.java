@@ -49,9 +49,9 @@ public class SimpleLFOModule extends Module implements IListener {
     private final AnalogMeterIndicator _meterIndicator;
 
     public SimpleLFOModule(
-        final String name
+        final String moduleName
     ) {
-        super(1, name);
+        super(1, moduleName);
 
         _oscillator.setFrequency(1.0);
 
@@ -69,7 +69,7 @@ public class SimpleLFOModule extends Module implements IListener {
         controlsSection.setControl(0, 3, _rangeSelector);
 
         //  ports
-        _signalOutput = new AnalogOutputPort("Control Output", "control");
+        _signalOutput = new AnalogOutputPort(moduleName, "Control Output", "control");
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
         getPortsSection().setConnection(0, 1, _signalOutput);
     }

@@ -14,14 +14,15 @@ package com.bearsnake.koala.modules.elements.ports;
  * | caption |
  * -----------
  */
-public abstract class OutputPort extends Port {
+public abstract class OutputPort extends ActivePort {
 
     protected OutputPort(
+        final String moduleName,
         final String name,
         final OutputJack outputJack,
         final String caption
     ) {
-        super(name, outputJack, caption);
+        super(moduleName, name, outputJack, caption);
         getChildren().add(_jack);
         getChildren().add(_label);
     }

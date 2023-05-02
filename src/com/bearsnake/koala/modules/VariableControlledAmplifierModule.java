@@ -23,14 +23,14 @@ public class VariableControlledAmplifierModule extends Module {
     private final AnalogOutputPort _signalOutput;
 
     public VariableControlledAmplifierModule(
-        final String name
+        final String moduleName
     ) {
-        super(2, name);
+        super(2, moduleName);
 
         //  ports
-        _controlInput = new AnalogInputPort("Control Input", "control");
-        _signalInput = new AnalogInputPort("Signal Input", "signal");
-        _signalOutput = new AnalogOutputPort("Signal Output", "signal");
+        _controlInput = new AnalogInputPort(moduleName, "Control Input", "control");
+        _signalInput = new AnalogInputPort(moduleName, "Signal Input", "signal");
+        _signalOutput = new AnalogOutputPort(moduleName, "Signal Output", "signal");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);

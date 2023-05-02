@@ -13,8 +13,8 @@ public abstract class OutputModule extends Module {
 
     public OutputModule(
         final int ModuleWidth,
-        final String caption
+        final String moduleName
     ) {
-        super(ModuleWidth, caption);
+        super(ModuleWidth, moduleName);
     }
 }

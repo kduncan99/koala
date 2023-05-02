@@ -7,6 +7,11 @@ package com.bearsnake.koala;
 
 import com.bearsnake.koala.modules.BlankModule;
 import com.bearsnake.koala.modules.Module;
+import com.bearsnake.koala.modules.elements.ports.ActivePort;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 import javafx.scene.layout.HBox;
 import java.util.Map;
 import java.util.TreeMap;
@@ -56,7 +61,27 @@ public class Shelf extends HBox {
     }
 
     /**
-     * Should only be invoked on the Application thread.
+     * Retrieves the current names of all the modules in this shelf
+     */
+    public HashSet<String> getAllModuleNames() {
+        return _modules.values()
+                       .stream()
+                       .map(Module::getName)
+                       .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    /**
+     * Retrieves a collection of all the ports from all the modules in this shelf
+     */
+    public Collection<ActivePort> getAllPorts() {
+        return _modules.values()
+                       .stream()
+                       .flatMap(m -> m.getAllPorts().stream())
+                       .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Should only be invoked on the Application thread, and only by the Rack object.
      * <p>
      * Places a Module into the Shelf at the indicated zero-based location, if possible.
      * There must be enough space from the given location to the end of the shelf.

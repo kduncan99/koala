@@ -32,9 +32,9 @@ public class SignalModifierModule extends Module {
 //    private final AnalogOutputPort _signalOutput;
 
     public SignalModifierModule(
-        final String name
+        final String moduleName
     ) {
-        super(1, name);
+        super(1, moduleName);
 
         //  ports
 //        _signalOutput = new AnalogOutputPort("signal");

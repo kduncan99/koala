@@ -7,7 +7,7 @@ package com.bearsnake.koala;
 
 import com.bearsnake.koala.modules.elements.ports.InputPort;
 import com.bearsnake.koala.modules.elements.ports.OutputPort;
-import com.bearsnake.koala.modules.elements.ports.Port;
+import com.bearsnake.koala.modules.elements.ports.ActivePort;
 import javafx.scene.Group;
 
 public class Connection {
@@ -33,7 +33,7 @@ public class Connection {
             return false;
         }
 
-        if (!Port.connect(_source, _destination)) {
+        if (!ActivePort.connect(_source, _destination)) {
             return false;
         }
 

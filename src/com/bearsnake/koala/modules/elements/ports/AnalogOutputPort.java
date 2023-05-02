@@ -18,15 +18,16 @@ public class AnalogOutputPort extends OutputPort implements AnalogPort {
     private double _signalValue = 0.0;
 
     public AnalogOutputPort(
+        final String moduleName,
         final String name,
         final String caption
     ) {
-        super(name, new OutputJack(JACK_RADIUS, ANALOG_PORT_COLOR), caption);
+        super(moduleName, name, new OutputJack(JACK_RADIUS, ANALOG_PORT_COLOR), caption);
     }
 
     @Override
     public boolean canConnectTo(
-        final Port partner
+        final ActivePort partner
     ) {
         return partner instanceof AnalogInputPort;
     }

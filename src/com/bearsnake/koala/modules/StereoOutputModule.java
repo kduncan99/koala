@@ -85,9 +85,9 @@ public class StereoOutputModule extends OutputModule implements IListener {
     private boolean _testToneEnabled = false;
 
     public StereoOutputModule(
-        final String name
+        final String moduleName
     ) {
-        super(2, name);
+        super(2, moduleName);
 
         _testTone.setWaveForm(WaveType.SINE);
         _dbfsAveragerLeft = new DBFSAverager();
@@ -119,8 +119,8 @@ public class StereoOutputModule extends OutputModule implements IListener {
         section.setControl(1, 5, _muteControl);
 
         //  ports
-        _inputPortLeft = new AnalogInputPort("Left Input", "left");
-        _inputPortRight = new AnalogInputPort("Right Input", "right");
+        _inputPortLeft = new AnalogInputPort(moduleName, "Left Input", "left");
+        _inputPortRight = new AnalogInputPort(moduleName, "Right Input", "right");
 
         _ports.put(LEFT_INPUT_PORT_ID, _inputPortLeft);
         _ports.put(RIGHT_INPUT_PORT_ID, _inputPortRight);

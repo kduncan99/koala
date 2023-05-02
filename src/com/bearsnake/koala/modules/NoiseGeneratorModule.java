@@ -16,12 +16,12 @@ public class NoiseGeneratorModule extends Module {
     private final AnalogOutputPort _signalOutput;
 
     public NoiseGeneratorModule(
-        final String name
+        final String moduleName
     ) {
-        super(1, name);
+        super(1, moduleName);
 
         //  ports
-        _signalOutput = new AnalogOutputPort("Signal Output", "signal");
+        _signalOutput = new AnalogOutputPort(moduleName, "Signal Output", "signal");
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
         getPortsSection().setConnection(0, 1, _signalOutput);
     }

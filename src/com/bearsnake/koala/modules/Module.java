@@ -7,12 +7,15 @@ package com.bearsnake.koala.modules;
 
 import com.bearsnake.koala.CellDimensions;
 import com.bearsnake.koala.Koala;
+import com.bearsnake.koala.Rack;
 import com.bearsnake.koala.modules.elements.ports.OutputPort;
-import com.bearsnake.koala.modules.elements.ports.Port;
+import com.bearsnake.koala.modules.elements.ports.ActivePort;
 import com.bearsnake.koala.modules.elements.ports.InputPort;
 import com.bearsnake.koala.modules.sections.PortsSection;
 import com.bearsnake.koala.modules.sections.ControlsSection;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.geometry.Insets;
@@ -58,23 +61,24 @@ public abstract class Module extends VBox {
     private final int _moduleWidthCells;
     private String _name;
     private Label _nameLabel;
-    protected final Map<Integer, Port> _ports = new HashMap<>();
+    protected final Map<Integer, ActivePort> _ports = new HashMap<>();
     private final PortsSection _portsSection;
 
     /**
      * Base constructor for all modules
      * @param moduleWidthCells width of module expressed as a number of cells (or shelf spaces).
-     * @param name name of the module, displayed at the top of the panel. Should be unique, but we don't force that here.
+     * @param moduleName moduleName of the module, displayed at the top of the panel.
+     *            The actual value produced may have a number appended.
      */
     protected Module(
         final int moduleWidthCells,
-        final String name
+        final String moduleName
     ) {
         _identifier = _nextIdentifier.getAndIncrement();
         _moduleWidthCells = moduleWidthCells;
-        _name = name;
+        _name = moduleName;
 
-        _nameLabel = new Label(name);
+        _nameLabel = new Label(moduleName);
         _nameLabel.setAlignment(Pos.CENTER);
         var controlDims = new CellDimensions(moduleWidthCells, VERTICAL_CELLS_CONTROLS);
         _controlsSection = new ControlsSection(controlDims);
@@ -90,9 +94,16 @@ public abstract class Module extends VBox {
     }
 
     /**
+     * Retrieves a copy of our collection of ports
+     */
+    public synchronized Collection<ActivePort> getAllPorts() {
+        return new LinkedList<>(_ports.values());
+    }
+
+    /**
      * Retrieves an input or output port by its module-specific identifier
      */
-    public final Port getPort(
+    public final ActivePort getPort(
         final int portId
     ) {
         return _ports.get(portId);

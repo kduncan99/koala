@@ -16,15 +16,16 @@ public class OnOffInputPort extends InputPort implements OnOffPort {
     private boolean _signalValue = false;
 
     public OnOffInputPort(
+        final String moduleName,
         final String name,
         final String caption
     ) {
-        super(name, new InputJack(JACK_RADIUS, ON_OFF_PORT_COLOR), caption);
+        super(moduleName, name, new InputJack(JACK_RADIUS, ON_OFF_PORT_COLOR), caption);
     }
 
     @Override
     public boolean canConnectTo(
-        final Port partner
+        final ActivePort partner
     ) {
         return partner instanceof OnOffOutputPort;
     }

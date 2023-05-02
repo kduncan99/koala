@@ -25,15 +25,15 @@ public class VariableControlledPanModule extends Module {
     private final AnalogOutputPort _rightOutput;
 
     public VariableControlledPanModule(
-        final String name
+        final String moduleName
     ) {
-        super(2, name);
+        super(2, moduleName);
 
         //  ports
-        _controlInput = new AnalogInputPort("Control Input", "control");
-        _signalInput = new AnalogInputPort("Signal Input", "signal");
-        _leftOutput = new AnalogOutputPort("Left Output", "left");
-        _rightOutput = new AnalogOutputPort("Right Output", "right");
+        _controlInput = new AnalogInputPort(moduleName, "Control Input", "control");
+        _signalInput = new AnalogInputPort(moduleName, "Signal Input", "signal");
+        _leftOutput = new AnalogOutputPort(moduleName, "Left Output", "left");
+        _rightOutput = new AnalogOutputPort(moduleName, "Right Output", "right");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);

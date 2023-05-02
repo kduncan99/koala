@@ -5,14 +5,20 @@
 
 package com.bearsnake.koala;
 
+import com.bearsnake.koala.modules.Module;
 import com.bearsnake.koala.modules.elements.ports.InputPort;
 import com.bearsnake.koala.modules.elements.ports.OutputPort;
+import com.bearsnake.koala.modules.elements.ports.ActivePort;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import java.util.TreeMap;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A rack is a container of 1 or more vertically stacked Shelf objects.
@@ -140,13 +146,72 @@ public class Rack extends Pane {
             }
             n = n.getParent();
         }
-        return null;
+        throw new RuntimeException("findContainingRack() invoked on an unowned node");
     }
 
+    /**
+     * Given a candidate name, we modify *if necessary* to make it unique among
+     * all the modules in this rack.
+     * @param candidate candidate name - should be just a few alpha characters, no digits
+     * @return possibly-modified name
+     */
+    public synchronized String generateUniqueModuleName(
+        final @NotNull String candidate
+    ) {
+        var moduleNames = getAllModuleNames();
+        if (!moduleNames.contains(candidate)) {
+            return candidate;
+        }
+        for (int n = 2; ; n++) {
+            var result = String.format("%s%d", candidate, n);
+            if (!moduleNames.contains(result)) {
+                return result;
+            }
+        }
+    }
+
+    /**
+     * Retrieves a hash set of the current names of all the modules in all the shelves in this rack.
+     */
+    public synchronized HashSet<String> getAllModuleNames() {
+        return _shelves.values()
+                       .stream()
+                       .flatMap(s -> s.getAllModuleNames().stream())
+                       .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    /**
+     * Retrieves a collection of all the ports from all the modules in the shelves of this rack
+     */
+    public synchronized Collection<ActivePort> getAllPorts() {
+        return _shelves.values()
+                       .stream()
+                       .flatMap(s -> s.getAllPorts().stream())
+                       .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Returns a reference to the Group which contains this rack.
+     */
     public Group getRootGroup() { return (Group) getParent(); }
 
     //  Only to be run on the Application thread
     public void repaint() {
         _shelves.values().forEach(Shelf::repaint);
+    }
+
+    public synchronized boolean placeModule(
+        final int shelfIndex,
+        final int location,
+        final Module module
+    ) {
+        if (shelfIndex >= _shelves.size()) {
+            throw new RuntimeException("placeModule() invoked with invalid shelfIndex " + shelfIndex);
+        }
+
+        var adjustedName = generateUniqueModuleName(module.getName());
+        module.setName(adjustedName);
+        _shelves.get(shelfIndex).placeModule(location, module);
+        return true;
     }
 }

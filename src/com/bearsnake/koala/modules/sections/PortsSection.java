@@ -7,7 +7,7 @@ package com.bearsnake.koala.modules.sections;
 
 import com.bearsnake.koala.CellDimensions;
 import com.bearsnake.koala.modules.elements.ports.BlankPort;
-import com.bearsnake.koala.modules.elements.ports.Port;
+import com.bearsnake.koala.modules.elements.ports.ActivePort;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -28,7 +28,7 @@ public class PortsSection extends Section {
             }
         }
 
-        var clipDims = Port.determinePixelDimensions(cellDimensions);
+        var clipDims = ActivePort.determinePixelDimensions(cellDimensions);
         var clipRect = new Rectangle(clipDims.getWidth(), clipDims.getHeight());
         setClip(clipRect);
     }
@@ -36,7 +36,7 @@ public class PortsSection extends Section {
     public void setConnection(
         final int leftGridCell,
         final int topGridCell,
-        final Port conn
+        final ActivePort conn
     ) {
         add(conn, leftGridCell, topGridCell, 1,1);
     }
@@ -44,7 +44,7 @@ public class PortsSection extends Section {
     //  Only for Application thread
     public void repaint() {
         for (var p : getChildren()) {
-            if (p instanceof Port conn) {
+            if (p instanceof ActivePort conn) {
                 conn.repaint();
             }
         }
