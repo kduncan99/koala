@@ -24,7 +24,7 @@ public class Wire extends QuadCurve {
         setControlY(Math.max(point1.getY(), point2.getY()) + 50.0);
         setStroke(color);
         setStrokeWidth(2.0);
-        setFill(null);
+        setFill(Color.WHITE);//TODO
         setMouseTransparent(true);
     }
 }

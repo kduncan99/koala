@@ -11,11 +11,11 @@ import javafx.scene.paint.Color;
  * An on/off output port which reports a value of true or false.
  * These ports are used for control - usually for gates and triggers.
  */
-public class OnOffOutputPort extends OutputPort implements OnOffPort {
+public class OnOffSourcePort extends SourcePort implements OnOffPort {
 
     private boolean _signalValue = false;
 
-    public OnOffOutputPort(
+    public OnOffSourcePort(
         final String moduleName,
         final String name,
         final String caption
@@ -27,7 +27,7 @@ public class OnOffOutputPort extends OutputPort implements OnOffPort {
     public boolean canConnectTo(
         final ActivePort partner
     ) {
-        return partner instanceof OnOffInputPort;
+        return partner instanceof OnOffDestinationPort;
     }
 
     public boolean getSignalValue() { return _signalValue; }

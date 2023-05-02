@@ -5,8 +5,8 @@
 
 package com.bearsnake.koala.modules;
 
-import com.bearsnake.koala.modules.elements.ports.AnalogInputPort;
-import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
+import com.bearsnake.koala.modules.elements.ports.AnalogDestinationPort;
+import com.bearsnake.koala.modules.elements.ports.AnalogSourcePort;
 
 /**
  * Our virtual equivalent of a simple VCA
@@ -18,9 +18,9 @@ public class VariableControlledAmplifierModule extends Module {
     public static final int SIGNAL_OUTPUT_PORT_ID = 1;
     public static final int CONTROL_INPUT_PORT_ID = 2;
 
-    private final AnalogInputPort _controlInput;
-    private final AnalogInputPort _signalInput;
-    private final AnalogOutputPort _signalOutput;
+    private final AnalogDestinationPort _controlInput;
+    private final AnalogDestinationPort _signalInput;
+    private final AnalogSourcePort _signalOutput;
 
     public VariableControlledAmplifierModule(
         final String moduleName
@@ -28,9 +28,9 @@ public class VariableControlledAmplifierModule extends Module {
         super(2, moduleName);
 
         //  ports
-        _controlInput = new AnalogInputPort(moduleName, "Control Input", "control");
-        _signalInput = new AnalogInputPort(moduleName, "Signal Input", "signal");
-        _signalOutput = new AnalogOutputPort(moduleName, "Signal Output", "signal");
+        _controlInput = new AnalogDestinationPort(moduleName, "Control Input", "control");
+        _signalInput = new AnalogDestinationPort(moduleName, "Signal Input", "signal");
+        _signalOutput = new AnalogSourcePort(moduleName, "Signal Output", "signal");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);

@@ -13,11 +13,11 @@ import javafx.scene.paint.Color;
  * The normative value range *can* be exceeded, and this connection has an output clip indicator.
  * to indicate when the range has been exceeded.
  */
-public class AnalogOutputPort extends OutputPort implements AnalogPort {
+public class AnalogSourcePort extends SourcePort implements AnalogPort {
 
     private double _signalValue = 0.0;
 
-    public AnalogOutputPort(
+    public AnalogSourcePort(
         final String moduleName,
         final String name,
         final String caption
@@ -29,7 +29,7 @@ public class AnalogOutputPort extends OutputPort implements AnalogPort {
     public boolean canConnectTo(
         final ActivePort partner
     ) {
-        return partner instanceof AnalogInputPort;
+        return partner instanceof AnalogDestinationPort;
     }
 
     public double getSignalValue() { return _signalValue; }

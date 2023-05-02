@@ -6,8 +6,8 @@
 package com.bearsnake.koala;
 
 import com.bearsnake.koala.modules.Module;
-import com.bearsnake.koala.modules.elements.ports.InputPort;
-import com.bearsnake.koala.modules.elements.ports.OutputPort;
+import com.bearsnake.koala.modules.elements.ports.DestinationPort;
+import com.bearsnake.koala.modules.elements.ports.SourcePort;
 import com.bearsnake.koala.modules.elements.ports.ActivePort;
 import java.util.Collection;
 import java.util.HashSet;
@@ -116,9 +116,10 @@ public class Rack extends Pane {
     }
 
     public synchronized boolean connectPorts(
-        final OutputPort source,
-        final InputPort destination
+        final SourcePort source,
+        final DestinationPort destination
     ) {
+        System.out.printf("Rack:connectPorts %s, %s\n", source.getName(), destination.getName());//TODO remove
         var c = new Connection(this, source, destination);
         if (!c.connect()) {
             return false;
@@ -127,13 +128,30 @@ public class Rack extends Pane {
         return true;
     }
 
-    public synchronized boolean disconnect(
+    public synchronized boolean disconnectPorts(
         final Connection connection
     ) {
         if (!connection.disconnect())
             return false;
         _connections.remove(connection);
         return true;
+    }
+
+    public synchronized boolean disconnectPorts(
+        final SourcePort source,
+        final DestinationPort destination
+    ) {
+        System.out.printf("Rack:disconnect %s, %s\n", source.getName(), destination.getName());//TODO remove
+        var result = false;
+        for (var c : _connections) {
+            if (source.equals(c.getSource()) && destination.equals(c.getDestination())) {
+                System.out.println("Found connection...");//TODO remove
+                result = disconnectPorts(c);
+                break;
+            }
+        }
+        System.out.printf("  Returning %s\n", result);//TODO remove
+        return false;
     }
 
     public static Rack findContainingRack(

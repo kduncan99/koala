@@ -6,14 +6,14 @@
 package com.bearsnake.koala.modules;
 
 import com.bearsnake.koala.Koala;
-import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
+import com.bearsnake.koala.modules.elements.ports.AnalogSourcePort;
 
 public class NoiseGeneratorModule extends Module {
 
     public static final String DEFAULT_NAME = "Noise";
     public static final int SIGNAL_OUTPUT_PORT_ID = 0;
 
-    private final AnalogOutputPort _signalOutput;
+    private final AnalogSourcePort _signalOutput;
 
     public NoiseGeneratorModule(
         final String moduleName
@@ -21,7 +21,7 @@ public class NoiseGeneratorModule extends Module {
         super(1, moduleName);
 
         //  ports
-        _signalOutput = new AnalogOutputPort(moduleName, "Signal Output", "signal");
+        _signalOutput = new AnalogSourcePort(moduleName, "Signal Output", "signal");
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
         getPortsSection().setConnection(0, 1, _signalOutput);
     }

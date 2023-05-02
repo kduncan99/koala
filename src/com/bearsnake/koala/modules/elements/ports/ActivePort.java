@@ -6,6 +6,7 @@
 package com.bearsnake.koala.modules.elements.ports;
 
 import com.bearsnake.koala.Koala;
+import com.bearsnake.koala.Rack;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -81,20 +82,20 @@ public abstract class ActivePort extends Port {
     }
 
     /**
-     * Connects an input and an output port.
+     * Connects a destination and a source port.
      * Should ONLY be invoked by Rack, for proper Wire handling.
      * @return true if successful, else false
      */
     public static synchronized boolean connect(
-        final OutputPort output,
-        final InputPort input
+        final SourcePort source,
+        final DestinationPort destination
     ) {
-        if (!input.connect(output)) {
+        if (!destination.connect(source)) {
             return false;
         }
 
-        if (!output.connect(input)) {
-            input.disconnect(output);
+        if (!source.connect(destination)) {
+            destination.disconnect(source);
             return false;
         }
 
@@ -108,15 +109,15 @@ public abstract class ActivePort extends Port {
     }
 
     /**
-     * Disconnects an input and output port connection
+     * Disconnects a destination and a source port connection
      * Should ONLY be invoked by Rack, for proper Wire handling.
      */
     public static synchronized void disconnect(
-        final OutputPort output,
-        final InputPort input
+        final SourcePort source,
+        final DestinationPort destination
     ) {
-        output.disconnect(input);
-        input.disconnect(output);
+        source.disconnect(destination);
+        destination.disconnect(source);
     }
 
     public Point2D getJackCenterSceneCoordinates() {
@@ -143,17 +144,28 @@ public abstract class ActivePort extends Port {
     private void updateContextMenuItems(
         final Event event
     ) {
-        //TODO
         _connectMenu.getItems().clear();
-        var mi0 = new MenuItem("Fee");
-        var mi1 = new MenuItem("Fie");
-        _connectMenu.getItems().addAll(mi0, mi1);
+        //  TODO add all candidate ports to this list
 
         _disconnectMenu.getItems().clear();
         for (var p : _connections) {
             var mi = new MenuItem(p.getName());
-            mi.setOnAction((e)->{});
+            mi.setUserData(p);
+            mi.setOnAction(this::handleDisconnectMenuItem);
             _disconnectMenu.getItems().add(mi);
+        }
+    }
+
+    private void handleDisconnectMenuItem(
+        final ActionEvent event
+    ) {
+        var mi = (MenuItem) event.getSource();
+        var port = (Port) mi.getUserData();
+        var rack = Rack.findContainingRack(this);
+        if (this instanceof DestinationPort) {
+            rack.disconnectPorts((SourcePort) port, (DestinationPort) this);
+        } else {
+            rack.disconnectPorts((SourcePort) this, (DestinationPort) port);
         }
     }
 

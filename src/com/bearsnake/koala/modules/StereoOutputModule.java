@@ -13,7 +13,7 @@ import com.bearsnake.koala.messages.IListener;
 import com.bearsnake.koala.messages.Message;
 import com.bearsnake.koala.messages.controls.TestToneSelectorControlMessage;
 import com.bearsnake.koala.modules.elements.controls.UIControl;
-import com.bearsnake.koala.modules.elements.ports.AnalogInputPort;
+import com.bearsnake.koala.modules.elements.ports.AnalogDestinationPort;
 import com.bearsnake.koala.modules.elements.controls.LabeledPotentiometerControl;
 import com.bearsnake.koala.modules.elements.controls.StatefulButtonControl;
 import com.bearsnake.koala.modules.elements.controls.StereoDBFSIndicator;
@@ -64,8 +64,8 @@ public class StereoOutputModule extends OutputModule implements IListener {
     private static final double SAMPLE_MAGNITUDE = (1 << (SAMPLE_SIZE_IN_BITS - 1)) - 1;
 
     //  ports
-    private final AnalogInputPort _inputPortLeft;
-    private final AnalogInputPort _inputPortRight;
+    private final AnalogDestinationPort _inputPortLeft;
+    private final AnalogDestinationPort _inputPortRight;
 
     //  controls and indicators
     private final StereoDBFSIndicator _dbfsIndicator;
@@ -119,8 +119,8 @@ public class StereoOutputModule extends OutputModule implements IListener {
         section.setControl(1, 5, _muteControl);
 
         //  ports
-        _inputPortLeft = new AnalogInputPort(moduleName, "Left Input", "left");
-        _inputPortRight = new AnalogInputPort(moduleName, "Right Input", "right");
+        _inputPortLeft = new AnalogDestinationPort(moduleName, "Left Input", "left");
+        _inputPortRight = new AnalogDestinationPort(moduleName, "Right Input", "right");
 
         _ports.put(LEFT_INPUT_PORT_ID, _inputPortLeft);
         _ports.put(RIGHT_INPUT_PORT_ID, _inputPortRight);

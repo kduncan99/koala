@@ -12,7 +12,7 @@ import com.bearsnake.koala.messages.components.EncoderKnobComponentMessage;
 import com.bearsnake.koala.messages.IListener;
 import com.bearsnake.koala.messages.Message;
 import com.bearsnake.koala.messages.controls.RangeTypeSelectorControlMessage;
-import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
+import com.bearsnake.koala.modules.elements.ports.AnalogSourcePort;
 import com.bearsnake.koala.modules.elements.controls.AnalogMeterIndicator;
 import com.bearsnake.koala.modules.elements.controls.EncoderControl;
 import com.bearsnake.koala.modules.elements.controls.RangeTypeSelectorButtonControl;
@@ -45,7 +45,7 @@ public class SimpleLFOModule extends Module implements IListener {
     private EncoderControl _frequencyControl;
     private final Oscillator _oscillator = new Oscillator();
     private final RangeTypeSelectorButtonControl _rangeSelector;
-    private final AnalogOutputPort _signalOutput;
+    private final AnalogSourcePort _signalOutput;
     private final AnalogMeterIndicator _meterIndicator;
 
     public SimpleLFOModule(
@@ -69,7 +69,7 @@ public class SimpleLFOModule extends Module implements IListener {
         controlsSection.setControl(0, 3, _rangeSelector);
 
         //  ports
-        _signalOutput = new AnalogOutputPort(moduleName, "Control Output", "control");
+        _signalOutput = new AnalogSourcePort(moduleName, "Control Output", "control");
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
         getPortsSection().setConnection(0, 1, _signalOutput);
     }

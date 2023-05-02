@@ -7,10 +7,9 @@ package com.bearsnake.koala.modules;
 
 import com.bearsnake.koala.CellDimensions;
 import com.bearsnake.koala.Koala;
-import com.bearsnake.koala.Rack;
-import com.bearsnake.koala.modules.elements.ports.OutputPort;
+import com.bearsnake.koala.modules.elements.ports.SourcePort;
 import com.bearsnake.koala.modules.elements.ports.ActivePort;
-import com.bearsnake.koala.modules.elements.ports.InputPort;
+import com.bearsnake.koala.modules.elements.ports.DestinationPort;
 import com.bearsnake.koala.modules.sections.PortsSection;
 import com.bearsnake.koala.modules.sections.ControlsSection;
 import java.util.Collection;
@@ -116,19 +115,19 @@ public abstract class Module extends VBox {
     /**
      * Convenience method
      */
-    public final InputPort getInputPort(
+    public final DestinationPort getInputPort(
         final int portId
     ) {
-        return (InputPort)getPort(portId);
+        return (DestinationPort)getPort(portId);
     }
 
     /**
      * Convenience method
      */
-    public final OutputPort getOutputPort(
+    public final SourcePort getOutputPort(
         final int portId
     ) {
-        return (OutputPort)getPort(portId);
+        return (SourcePort)getPort(portId);
     }
 
     public abstract Configuration getConfiguration();
@@ -145,7 +144,7 @@ public abstract class Module extends VBox {
     public void advance() {
         //  Resample all the inputs
         for (var conn : _portsSection.getChildren()) {
-            if (conn instanceof InputPort ip) {
+            if (conn instanceof DestinationPort ip) {
                 ip.sampleSignal();
             }
         }

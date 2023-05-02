@@ -5,8 +5,8 @@
 
 package com.bearsnake.koala.modules;
 
-import com.bearsnake.koala.modules.elements.ports.AnalogInputPort;
-import com.bearsnake.koala.modules.elements.ports.AnalogOutputPort;
+import com.bearsnake.koala.modules.elements.ports.AnalogDestinationPort;
+import com.bearsnake.koala.modules.elements.ports.AnalogSourcePort;
 
 /**
  * Pans the input left or right according to the control input
@@ -19,10 +19,10 @@ public class VariableControlledPanModule extends Module {
     public static final int LEFT_OUTPUT_PORT_ID = 2;
     public static final int RIGHT_OUTPUT_PORT_ID = 3;
 
-    private final AnalogInputPort _controlInput;
-    private final AnalogInputPort _signalInput;
-    private final AnalogOutputPort _leftOutput;
-    private final AnalogOutputPort _rightOutput;
+    private final AnalogDestinationPort _controlInput;
+    private final AnalogDestinationPort _signalInput;
+    private final AnalogSourcePort _leftOutput;
+    private final AnalogSourcePort _rightOutput;
 
     public VariableControlledPanModule(
         final String moduleName
@@ -30,10 +30,10 @@ public class VariableControlledPanModule extends Module {
         super(2, moduleName);
 
         //  ports
-        _controlInput = new AnalogInputPort(moduleName, "Control Input", "control");
-        _signalInput = new AnalogInputPort(moduleName, "Signal Input", "signal");
-        _leftOutput = new AnalogOutputPort(moduleName, "Left Output", "left");
-        _rightOutput = new AnalogOutputPort(moduleName, "Right Output", "right");
+        _controlInput = new AnalogDestinationPort(moduleName, "Control Input", "control");
+        _signalInput = new AnalogDestinationPort(moduleName, "Signal Input", "signal");
+        _leftOutput = new AnalogSourcePort(moduleName, "Left Output", "left");
+        _rightOutput = new AnalogSourcePort(moduleName, "Right Output", "right");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);

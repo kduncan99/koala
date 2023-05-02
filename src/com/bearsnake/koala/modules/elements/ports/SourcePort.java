@@ -6,28 +6,26 @@
 package com.bearsnake.koala.modules.elements.ports;
 
 /**
- * Base class for all input ports.
- * All input ports have at least a connection point graphic and an in-going arrow graphic.
+ * Base class for all output ports.
+ * All output ports have at least a connection point graphic and an out-going arrow graphic.
  * Remember - we ultimately derive from VBox, so we can use that.
  * -----------
- * |  -> []  |
+ * |  [] ->  |
  * | caption |
  * -----------
  */
-public abstract class InputPort extends ActivePort {
+public abstract class SourcePort extends ActivePort {
 
-    protected InputPort(
+    protected SourcePort(
         final String moduleName,
         final String name,
-        final InputJack inputJack,
+        final OutputJack outputJack,
         final String caption
     ) {
-        super(moduleName, name, inputJack, caption);
+        super(moduleName, name, outputJack, caption);
         getChildren().add(_jack);
         getChildren().add(_label);
     }
 
-    protected InputJack getInputJack() { return (InputJack) _jack; }
-
-    public abstract void sampleSignal();
+    protected OutputJack getOutputJack() { return (OutputJack) _jack; }
 }

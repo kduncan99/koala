@@ -5,23 +5,23 @@
 
 package com.bearsnake.koala;
 
-import com.bearsnake.koala.modules.elements.ports.InputPort;
-import com.bearsnake.koala.modules.elements.ports.OutputPort;
+import com.bearsnake.koala.modules.elements.ports.DestinationPort;
+import com.bearsnake.koala.modules.elements.ports.SourcePort;
 import com.bearsnake.koala.modules.elements.ports.ActivePort;
 import javafx.scene.Group;
 
 public class Connection {
 
     private final Group _container;
-    private final InputPort _destination;
+    private final DestinationPort _destination;
     private boolean _isConnected;
-    private final OutputPort _source;
+    private final SourcePort _source;
     private Wire _wire = null;
 
     public Connection(
         final Rack rack,
-        final OutputPort source,
-        final InputPort destination
+        final SourcePort source,
+        final DestinationPort destination
     ) {
         _container = rack.getRootGroup();
         _source = source;
@@ -42,6 +42,7 @@ public class Connection {
         _wire = new Wire(r1, r2, _source.getWireColor());
         _container.getChildren().add(_wire);
         _wire.toFront();
+        _isConnected = true;
 
         return true;
     }
@@ -51,11 +52,14 @@ public class Connection {
             return false;
         }
 
+        ActivePort.disconnect(_source, _destination);
         _container.getChildren().remove(_wire);
         _wire = null;
         _isConnected = false;
         return true;
     }
 
+    public DestinationPort getDestination() { return _destination; }
+    public SourcePort getSource() { return _source; }
     public boolean isConnected() { return _isConnected; }
 }

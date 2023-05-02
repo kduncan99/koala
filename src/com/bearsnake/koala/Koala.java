@@ -5,11 +5,7 @@
 
 //  TODO
 //      (INPR) Implement ability to apply a configuration, and to save one
-//      (INPR) Implement ability to clear connections
-//          *** Need to prepend module names to the port names so disconnect/connect looks better
-//          --> right-click and select Delete on the wire object's context menu
-//          --> maybe also right-click and select Delete from a list of connections on the port's context menu
-//      Implement ability to set connections
+//      (INPR) Implement ability to set connections
 //          For connections - we need a Wire object, which will be a child of the rack
 //              The wire objects will always be on top of all other graphic entities
 //              The Rack object will be in charge of creating and deleting connections
@@ -18,8 +14,13 @@
 //                  A click on an acceptable Port completes the connect operation
 //                  A click on an unacceptable Port beeps at the user (or something like that)
 //                  A click anywhere else cancels the connect operation
-//          Also, we can just tell the Rack to connect Module(m1).Port(p1) to Module(m2).Port(p2)
-//          The Rack object will need to be able to determine the coordinates of the two ports involved.
+//      Ability to add shelves to a rack via GUI
+//      Ability to add modules to a rack/shelf via GUI
+//      Ability to move shelves within the rack
+//          implies redrawing the wires associated with all of the modules which move...
+//              maybe we should just reposition all the wires after a module is moved.
+//      Ability to move modules within a shelf, and across shelves
+//          same wire concerns as above
 //      Ability to load/save connections as part of a configuration
 //      StereoDBGraphPane see comments
 //      Update LFO module - see notes in that module
@@ -215,8 +216,7 @@ public class Koala extends Application {
     }
 
     @Override
-    public void stop(
-    ) throws Exception {
+    public void stop() throws Exception {
         _paintTimer.cancel();
         _rack.close();
         super.stop();

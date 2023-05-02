@@ -9,9 +9,9 @@ package com.bearsnake.koala.modules.elements.ports;
  * An on/off input port which reports a value of true or false.
  * When getSignal() is invoked the value is reset, thus implementing the trigger function.
  */
-public class TriggerInputPort extends OnOffInputPort implements OnOffPort {
+public class TriggerDestinationPort extends OnOffDestinationPort implements OnOffPort {
 
-    public TriggerInputPort(
+    public TriggerDestinationPort(
         final String moduleName,
         final String name,
         final String caption
