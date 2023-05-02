@@ -4,6 +4,7 @@
  */
 
 //  TODO
+//      Do I really need repaint() all over the place?
 //      Ability to load/save connections as part of a configuration
 //      (INPR) Implement ability to apply a configuration, and to save one
 //      (INPR) Implement ability to set connections

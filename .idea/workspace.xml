@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/PendingWire.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/Element.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/ActivePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/ActivePort.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +135,7 @@
       <workItem from="1674582080515" duration="28000" />
       <workItem from="1674582256888" duration="140856000" />
       <workItem from="1681832101403" duration="19020000" />
-      <workItem from="1681866163310" duration="181694000" />
+      <workItem from="1681866163310" duration="184338000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -59,10 +60,13 @@ public class Rack extends Pane {
     private static final int INTER_SHELF_PIXELS = 4;
 
     private final HashSet<Connection> _connections = new HashSet<>();
+    private ActivePort _pendingConnectionInitialPort = null;
+    private PendingWire _pendingWire = null;
     private final VBox _shelfContent;
     private final TreeMap<Integer, Shelf> _shelves = new TreeMap<>();
     private boolean _terminate = false;
     private final DriverThread _driverThread = new DriverThread();
+
 
     /**
      * Creates a Rack object
@@ -94,6 +98,9 @@ public class Rack extends Pane {
 
         getChildren().add(_shelfContent);
         _driverThread.start();
+
+        setOnMouseClicked(this::mouseClicked);
+        setOnMouseMoved(this::mouseMoved);
     }
 
     /**
@@ -291,6 +298,29 @@ public class Rack extends Pane {
         _shelves.values().forEach(Shelf::repaint);
     }
 
+    private void mouseClicked(
+        final MouseEvent event
+    ) {
+        //  Ignore regular mouse clicks, but right-click terminates a pending connection
+        if ((event.getButton() == MouseButton.SECONDARY) && (_pendingConnectionInitialPort != null)) {
+            var group = (Group) getParent();
+            group.getChildren().remove(_pendingWire);
+            _pendingWire = null;
+            _pendingConnectionInitialPort = null;
+        }
+    }
+
+    private void mouseMoved(
+        final MouseEvent event
+    ) {
+        //  If there is a connection pending, make the end of the pending wire follow the cursor
+        if (_pendingConnectionInitialPort != null) {
+            var group = (Group) getParent();
+            var point = group.sceneToLocal(event.getSceneX(), event.getSceneY());
+            _pendingWire.updateTerminalPoint(point);
+        }
+    }
+
     /**
      * An active port has been the target of a mouse click.
      * This could be the start or end of a connection attempt, or it could be nothing.
@@ -302,7 +332,24 @@ public class Rack extends Pane {
         final MouseEvent event,
         final ActivePort port
     ) {
-        //TODO
+        if (_pendingConnectionInitialPort == null) {
+            //  No connection is pending - start one
+            _pendingConnectionInitialPort = port;
+            var group = (Group) getParent();
+            var point = group.sceneToLocal(port.getJackCenterSceneCoordinates());
+            _pendingWire = new PendingWire(point);
+            group.getChildren().add(_pendingWire);
+        } else {
+            //  There *is* a pending connection - complete it?
+            if (_pendingConnectionInitialPort.canConnectTo(port)) {
+                if (connectPorts(_pendingConnectionInitialPort, port)) {
+                    var group = (Group) getParent();
+                    group.getChildren().remove(_pendingWire);
+                    _pendingWire = null;
+                    _pendingConnectionInitialPort = null;
+                }
+            }
+        }
     }
 
     /**
