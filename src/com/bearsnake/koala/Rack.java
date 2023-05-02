@@ -7,6 +7,7 @@ package com.bearsnake.koala;
 
 import com.bearsnake.koala.modules.Module;
 import com.bearsnake.koala.modules.elements.ports.DestinationPort;
+import com.bearsnake.koala.modules.elements.ports.Port;
 import com.bearsnake.koala.modules.elements.ports.SourcePort;
 import com.bearsnake.koala.modules.elements.ports.ActivePort;
 import java.util.Collection;
@@ -16,9 +17,9 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A rack is a container of 1 or more vertically stacked Shelf objects.
@@ -72,7 +73,12 @@ public class Rack extends Pane {
         final int shelfCount,
         final int shelfWidth
     ) {
-        //  TODO validate count and width
+        if ((shelfCount < 1) || (shelfCount > 3)) {
+            throw new RuntimeException("Invalid shelf count");
+        }
+        if ((shelfWidth < 5) || (shelfWidth > 20)) {
+            throw new RuntimeException("Invalid shelf width");
+        }
 
         _shelfContent = new VBox();
         _shelfContent.setBackground(Koala.BACKGROUND);
@@ -98,28 +104,43 @@ public class Rack extends Pane {
      * Alternatively, it could be driven by code which is capturing output to a file rather than to
      * real-time playback, in which case it frequency of invocation is not important.
      */
-    public void advanceModules() {
+    public synchronized void advanceModules() {
         _shelves.values().forEach(Shelf::advanceModules);
     }
 
     /**
      * Invoked when discarding a Rack
      */
-    public void close() {
+    public synchronized void close() {
         _driverThread.terminate();
 
-        //  TODO remove all connections
+        //  remove all connections
+        while (!_connections.isEmpty()) {
+            disconnectPorts(_connections.iterator().next());
+        }
 
-        //  TODO remove all shelves
+        //  remove all shelves
+        //  TODO probably a better way to do this
+        //      for each shelf, Shelf::close
+        //      while (!_shelves.isEmpty())
+        //          removeShelf(_shelves.iterator().next());
         _shelves.values().forEach(Shelf::close);
         _shelves.clear();
     }
 
+    /**
+     * Connects a source port and a destination port.
+     * This is the ONLY method which should be invoked by any other higher-level code for producing this behavior...
+     * This is due to the fact that the rack sits at the top of the hierarchy, and there is relevant state
+     * which is contained in multiple different locations, including this class.
+     * @param source source port to be connected
+     * @param destination destination port to be connected
+     * @return true if the connection was successfully made, else false
+     */
     public synchronized boolean connectPorts(
         final SourcePort source,
         final DestinationPort destination
     ) {
-        System.out.printf("Rack:connectPorts %s, %s\n", source.getName(), destination.getName());//TODO remove
         var c = new Connection(this, source, destination);
         if (!c.connect()) {
             return false;
@@ -128,6 +149,30 @@ public class Rack extends Pane {
         return true;
     }
 
+    /**
+     * Convenience method for callers who aren't sure which port is source, and which is destination
+     * (and don't want to have to figure it out).
+     * @return true if the connection was successfully made, else false
+     */
+    public boolean connectPorts(
+        final Port port1,
+        final Port port2
+    ) {
+        if ((port1 instanceof SourcePort source) && (port2 instanceof DestinationPort destination)) {
+            return connectPorts(source, destination);
+        } else if ((port1 instanceof DestinationPort destination) && (port2 instanceof SourcePort source)) {
+            return connectPorts(source, destination);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Disconnects a source port from a destination port.
+     * The discussion for connectPorts() above applies here.
+     * @param connection the connection to be removed
+     * @return true if successful, else false
+     */
     public synchronized boolean disconnectPorts(
         final Connection connection
     ) {
@@ -137,23 +182,51 @@ public class Rack extends Pane {
         return true;
     }
 
+    /**
+     * Disconnects a source port from a destination port.
+     * This method is used if the caller knows the ports, but not the corresponding connection.
+     * @param source source port to be disconnected
+     * @param destination destination port to be disconnected
+     * @return true if successful, else false
+     */
     public synchronized boolean disconnectPorts(
         final SourcePort source,
         final DestinationPort destination
     ) {
-        System.out.printf("Rack:disconnect %s, %s\n", source.getName(), destination.getName());//TODO remove
         var result = false;
         for (var c : _connections) {
             if (source.equals(c.getSource()) && destination.equals(c.getDestination())) {
-                System.out.println("Found connection...");//TODO remove
                 result = disconnectPorts(c);
                 break;
             }
         }
-        System.out.printf("  Returning %s\n", result);//TODO remove
         return false;
     }
 
+    /**
+     * Convenience method for callers who aren't sure which port is source, and which is destination
+     * (and don't want to have to figure it out).
+     * @return true if successful, else false
+     */
+    public boolean disconnectPorts(
+        final Port port1,
+        final Port port2
+    ) {
+        if ((port1 instanceof SourcePort source) && (port2 instanceof DestinationPort destination)) {
+            return disconnectPorts(source, destination);
+        } else if ((port1 instanceof DestinationPort destination) && (port2 instanceof SourcePort source)) {
+            return disconnectPorts(source, destination);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Allows the current Rack object to be located up the parent stack,
+     * given a starting point of any other Node below the Rack.
+     * @param child starting point
+     * @return reference to Rack object
+     */
     public static Rack findContainingRack(
         final Node child
     ) {
@@ -174,7 +247,7 @@ public class Rack extends Pane {
      * @return possibly-modified name
      */
     public synchronized String generateUniqueModuleName(
-        final @NotNull String candidate
+        final String candidate
     ) {
         var moduleNames = getAllModuleNames();
         if (!moduleNames.contains(candidate)) {
@@ -218,6 +291,27 @@ public class Rack extends Pane {
         _shelves.values().forEach(Shelf::repaint);
     }
 
+    /**
+     * An active port has been the target of a mouse click.
+     * This could be the start or end of a connection attempt, or it could be nothing.
+     * Figure it out.
+     * @param event instigating event
+     * @param port port which was clicked
+     */
+    public synchronized void portMouseClicked(
+        final MouseEvent event,
+        final ActivePort port
+    ) {
+        //TODO
+    }
+
+    /**
+     * Places a fully-constructed module into the indicated rack and shelf
+     * @param shelfIndex Index of the shelf
+     * @param location Location point within the shelf
+     * @param module Module to be added
+     * @return true if successful, else false
+     */
     public synchronized boolean placeModule(
         final int shelfIndex,
         final int location,

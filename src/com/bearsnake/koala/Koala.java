@@ -4,6 +4,7 @@
  */
 
 //  TODO
+//      Ability to load/save connections as part of a configuration
 //      (INPR) Implement ability to apply a configuration, and to save one
 //      (INPR) Implement ability to set connections
 //          For connections - we need a Wire object, which will be a child of the rack
@@ -21,17 +22,31 @@
 //              maybe we should just reposition all the wires after a module is moved.
 //      Ability to move modules within a shelf, and across shelves
 //          same wire concerns as above
-//      Ability to load/save connections as part of a configuration
+//      Implement Para-modules
+//          click on the modules to be included in the para module
+//          choose which ports and controls are propagated to the para module panel
+//          choose layout of the propagated ports and controls
+//          store the configuration in a chosen directory
+//      How do we implement polyphony?
 //      StereoDBGraphPane see comments
 //      Update LFO module - see notes in that module
 //      Implement signal Modifier - everything (see notes)
+//      Implement ability to morph settings for a particular module
+//          (can we use config struct for this?)
+//          (or can we implement MorphingModule base class and... make it work that way somehow?)
 //      new Signal Delay module
-//      new Envelope module (ADSR, no need for initial delay)
+//      new Sequencer module
+//      new ClipPlayback module
+//      Implement Scales (various temperaments, 1/4 tone, etc)
+//      new MIDI-to-discrete module (where the output represents note)
+//              implies new note-to-frequency module which uses a Temperament object for translations
+//                  to convert note to frequency (discrete) output
+//      new misc. logic modules for handling gates/triggers
+//      new Envelope module (ADSR, no need for initial delay... but we could do DADSR just for kicks)
+//      new MultiStage envelope module delay-attack-skew-level1-wait-skew-sustain-release
+//      new dynamic ADSR, where various values are dependent upon an impulse level (e.g., key velocity)
 //      new Signal Mixer module
 //      HFO module (high-freq oscillator)
-//      How do we collapse a set of modules into a patch, load it, and save it?
-//      How do we implement polyphony?
-//      Implement Scales (various temperaments, 1/4 tone, etc)
 
 package com.bearsnake.koala;
 

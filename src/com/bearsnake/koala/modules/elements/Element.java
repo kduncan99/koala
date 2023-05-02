@@ -8,6 +8,7 @@ package com.bearsnake.koala.modules.elements;
 import com.bearsnake.koala.CellDimensions;
 import com.bearsnake.koala.Koala;
 import com.bearsnake.koala.PixelDimensions;
+import javafx.event.ActionEvent;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
@@ -62,7 +63,12 @@ public abstract class Element extends VBox {
     public CellDimensions getCellDimensions() { return _cellDimensions; }
     protected ContextMenu getContextMenu() { return _contextMenu; }
     public PixelDimensions getPixelDimensions() { return _pixelDimensions; }
-    protected void setContextMenu(final ContextMenu menu) { _contextMenu = menu; }
+
+    private void invokeMenu(
+        final ActionEvent event
+    ) {
+        getContextMenu().show(this, 0.0, 0.0);
+    }
 
     protected void mouseClicked(
         final MouseEvent event
@@ -94,5 +100,10 @@ public abstract class Element extends VBox {
                 mouseDoubleClicked(event);
             }
         }
+    }
+
+    protected void setContextMenu(final ContextMenu menu) {
+        _contextMenu = menu;
+        _contextMenu.setOnAction(this::invokeMenu);
     }
 }

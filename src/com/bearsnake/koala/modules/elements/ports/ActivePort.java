@@ -16,6 +16,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
@@ -60,7 +61,6 @@ public abstract class ActivePort extends Port {
         _disconnectMenu = new Menu("Disconnect");
         var cm = new ContextMenu();
         cm.getItems().addAll(_connectMenu, _disconnectMenu);
-        cm.setOnAction(this::invokeMenu);
         cm.setOnShowing(this::updateContextMenuItems);
         setContextMenu(cm);
     }
@@ -83,7 +83,7 @@ public abstract class ActivePort extends Port {
 
     /**
      * Connects a destination and a source port.
-     * Should ONLY be invoked by Rack, for proper Wire handling.
+     * Should ONLY be invoked by Rack, as there are other things outside of our scope which accompany connections.
      * @return true if successful, else false
      */
     public static synchronized boolean connect(
@@ -110,7 +110,7 @@ public abstract class ActivePort extends Port {
 
     /**
      * Disconnects a destination and a source port connection
-     * Should ONLY be invoked by Rack, for proper Wire handling.
+     * Should ONLY be invoked by Rack, as there are other things outside of our scope which accompany connections.
      */
     public static synchronized void disconnect(
         final SourcePort source,
@@ -120,6 +120,10 @@ public abstract class ActivePort extends Port {
         destination.disconnect(source);
     }
 
+    /**
+     * Used by GUI connection logic, specifically for placing wire endpoints
+     * @return x,y coodinates of the center of the port's jack.
+     */
     public Point2D getJackCenterSceneCoordinates() {
         return _jack.getCenterSceneCoordinates();
     }
@@ -135,25 +139,13 @@ public abstract class ActivePort extends Port {
     public final String getName() { return _name; }
     public abstract Color getWireColor();
 
-    private void invokeMenu(
+    private void handleConnectMenuItem(
         final ActionEvent event
     ) {
-        getContextMenu().show(this, 0.0, 0.0);
-    }
-
-    private void updateContextMenuItems(
-        final Event event
-    ) {
-        _connectMenu.getItems().clear();
-        //  TODO add all candidate ports to this list
-
-        _disconnectMenu.getItems().clear();
-        for (var p : _connections) {
-            var mi = new MenuItem(p.getName());
-            mi.setUserData(p);
-            mi.setOnAction(this::handleDisconnectMenuItem);
-            _disconnectMenu.getItems().add(mi);
-        }
+        var mi = (MenuItem) event.getSource();
+        var port = (Port) mi.getUserData();
+        var rack = Rack.findContainingRack(this);
+        rack.connectPorts(this, port);
     }
 
     private void handleDisconnectMenuItem(
@@ -162,10 +154,39 @@ public abstract class ActivePort extends Port {
         var mi = (MenuItem) event.getSource();
         var port = (Port) mi.getUserData();
         var rack = Rack.findContainingRack(this);
-        if (this instanceof DestinationPort) {
-            rack.disconnectPorts((SourcePort) port, (DestinationPort) this);
-        } else {
-            rack.disconnectPorts((SourcePort) this, (DestinationPort) port);
+        rack.disconnectPorts(this, port);
+    }
+
+    @Override
+    protected void mouseClicked(
+        final MouseEvent event
+    ) {
+        //  This *might* be the beginning or ending of a GUI-driven port connect.
+        //  Tell the Rack about it and let the rack sort it out.
+        Rack.findContainingRack(this).portMouseClicked(event, this);
+    }
+
+    private void updateContextMenuItems(
+        final Event event
+    ) {
+        _connectMenu.getItems().clear();
+        var rack = Rack.findContainingRack(this);
+        var ports = rack.getAllPorts();
+        for (var p : ports) {
+            if (canConnectTo(p)) {
+                var mi = new MenuItem(p._name);
+                mi.setUserData(p);
+                mi.setOnAction(this::handleConnectMenuItem);
+                _connectMenu.getItems().add(mi);
+            }
+        }
+
+        _disconnectMenu.getItems().clear();
+        for (var p : _connections) {
+            var mi = new MenuItem(p._name);
+            mi.setUserData(p);
+            mi.setOnAction(this::handleDisconnectMenuItem);
+            _disconnectMenu.getItems().add(mi);
         }
     }
 

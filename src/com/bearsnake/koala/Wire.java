@@ -20,11 +20,11 @@ public class Wire extends QuadCurve {
         setStartY(point1.getY());
         setEndX(point2.getX());
         setEndY(point2.getY());
-        setControlX((point1.getX() + point2.getX()) / 6.0);
+        setControlX((point1.getX() + point2.getX()) / 2.0);
         setControlY(Math.max(point1.getY(), point2.getY()) + 50.0);
         setStroke(color);
-        setStrokeWidth(2.0);
-        setFill(Color.WHITE);//TODO
+        setStrokeWidth(4.0);
+        setFill(Color.TRANSPARENT);
         setMouseTransparent(true);
     }
 }
