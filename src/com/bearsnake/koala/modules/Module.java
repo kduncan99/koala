@@ -151,20 +151,23 @@ public abstract class Module extends VBox {
     }
 
     /**
-     * Implementors should shut themselves down, as they are going to be discarded
+     * Implementors should shut themselves down, as they are going to be discarded.
+     * Any module which does not need this should not implement it.
      */
-    public abstract void close();
+    public void close() {}
 
     /**
      * Repaints the graphical content of the module.
      * Should be invoked only on the graphics thread.
+     * Very few modules will need this, so we default to do-nothing.
      */
-    public abstract void repaint();
+    public void repaint() {}
 
     /**
-     * General purpose reset
+     * General purpose reset.
+     * Very few modules will need this, so we default to do-nothing.
      */
-    public abstract void reset();
+    public void reset() {}
 
     /**
      * Sets the configuration of the subclass

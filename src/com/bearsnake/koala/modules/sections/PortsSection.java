@@ -40,13 +40,4 @@ public class PortsSection extends Section {
     ) {
         add(conn, leftGridCell, topGridCell, 1,1);
     }
-
-    //  Only for Application thread
-    public void repaint() {
-        for (var p : getChildren()) {
-            if (p instanceof ActivePort conn) {
-                conn.repaint();
-            }
-        }
-    }
 }

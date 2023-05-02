@@ -17,18 +17,9 @@ public final class BlankModule extends Module {
     public void advance() {}
 
     @Override
-    public void close() {}
-
-    @Override
     public Configuration getConfiguration() {
         return new Configuration(getIdentifier(), getName());
     }
-
-    @Override
-    public void repaint() {}
-
-    @Override
-    public void reset() {}
 
     @Override
     public void setConfiguration(final Configuration configuration) {

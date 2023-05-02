@@ -15,7 +15,4 @@ public class BlankPort extends Port {
     public BlankPort() {
         setBorder(Koala.BLANK_BORDER);
     }
-
-    @Override
-    public void repaint() {}
 }

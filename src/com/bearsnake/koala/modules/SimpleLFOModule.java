@@ -82,9 +82,6 @@ public class SimpleLFOModule extends Module implements IListener {
     }
 
     @Override
-    public void close() {}
-
-    @Override
     public Configuration getConfiguration() {
         return new SimpleLFOConfiguration(getIdentifier(), getName());
     }

@@ -40,6 +40,4 @@ public abstract class Port extends Element {
         var height = cellDimensions.getHeight() * VERTICAL_PIXELS_PER_CELL;
         return new PixelDimensions(width, height);
     }
-
-    public abstract void repaint(); //  Can only be invoked on the Application thread
 }

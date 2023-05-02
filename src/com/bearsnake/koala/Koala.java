@@ -4,18 +4,8 @@
  */
 
 //  TODO
-//      Do I really need repaint() all over the place?
-//      Ability to load/save connections as part of a configuration
+//      (INPR) Ability to load/save connections as part of a configuration
 //      (INPR) Implement ability to apply a configuration, and to save one
-//      (INPR) Implement ability to set connections
-//          For connections - we need a Wire object, which will be a child of the rack
-//              The wire objects will always be on top of all other graphic entities
-//              The Rack object will be in charge of creating and deleting connections
-//              A mouse click on any Port starts a connect operation
-//                  A wire object is created with one endpoint on the source port, the other on the cursor
-//                  A click on an acceptable Port completes the connect operation
-//                  A click on an unacceptable Port beeps at the user (or something like that)
-//                  A click anywhere else cancels the connect operation
 //      Ability to add shelves to a rack via GUI
 //      Ability to add modules to a rack/shelf via GUI
 //      Ability to move shelves within the rack
@@ -155,6 +145,8 @@ public class Koala extends Application {
         }
     }
 
+    //  This class exists so that independently updating indicators get a chance to
+    //  periodically update their display. Not many modules, entities, whatever will need this.
     private class PaintRunnable implements Runnable {
 
         @Override
