@@ -5,18 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONArray.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONBoolean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONNull.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONNumber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONString.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONValue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/BlankModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/BlankModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/Module.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SignalModifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SignalModifierModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SimpleLFOModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SimpleLFOModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/StereoOutputModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledAmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledAmplifierModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/BlankPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/BlankPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Port.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/Port.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/sections/PortsSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/sections/PortsSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/ActivePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/ActivePort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogDestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogDestinationPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogSourcePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogSourcePort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/DestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/DestinationPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffDestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffDestinationPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffSourcePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffSourcePort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/SourcePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/SourcePort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/TriggerDestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/TriggerDestinationPort.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,22 +68,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/kduncan/sandbox/koala/src/com/bearsnake/koala/modules/elements/controls",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/kduncan/sandbox/koala/src/com/bearsnake/koala/modules/elements/controls&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/controls" />
@@ -143,7 +154,8 @@
       <workItem from="1674582080515" duration="28000" />
       <workItem from="1674582256888" duration="140856000" />
       <workItem from="1681832101403" duration="19020000" />
-      <workItem from="1681866163310" duration="185504000" />
+      <workItem from="1681866163310" duration="185879000" />
+      <workItem from="1683051217717" duration="16715000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>

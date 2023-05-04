@@ -7,6 +7,7 @@ package com.bearsnake.koala.modules.elements.ports;
 
 import com.bearsnake.koala.Koala;
 import com.bearsnake.koala.Rack;
+import com.bearsnake.koala.modules.Module;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -40,10 +41,11 @@ public abstract class ActivePort extends Port {
     private final Menu _disconnectMenu;
     protected final Jack _jack;
     protected final Label _label;
+    private final Module _module;
     private final String _name;
 
     protected ActivePort(
-        final String moduleName,
+        final Module module,
         final String name,
         final Jack jack,
         final String caption
@@ -55,7 +57,8 @@ public abstract class ActivePort extends Port {
         _label = new Label(caption);
         _label.setTextFill(Koala.LEGEND_COLOR);
         _label.setAlignment(Pos.CENTER);
-        _name = moduleName + ":" + name;
+        _module = module;
+        _name = name;
 
         _connectMenu = new Menu("Connect");
         _disconnectMenu = new Menu("Disconnect");
@@ -136,7 +139,9 @@ public abstract class ActivePort extends Port {
     }
 
     public final Jack getJack() { return _jack; }
+    public final Module getModule() { return _module; }
     public final String getName() { return _name; }
+    public final String getQualifiedName() { return _module.getName() + ":" + _name; }
     public abstract Color getWireColor();
 
     private void handleConnectMenuItem(
@@ -174,7 +179,7 @@ public abstract class ActivePort extends Port {
         var ports = rack.getAllPorts();
         for (var p : ports) {
             if (canConnectTo(p)) {
-                var mi = new MenuItem(p._name);
+                var mi = new MenuItem(p.getQualifiedName());
                 mi.setUserData(p);
                 mi.setOnAction(this::handleConnectMenuItem);
                 _connectMenu.getItems().add(mi);
@@ -183,12 +188,10 @@ public abstract class ActivePort extends Port {
 
         _disconnectMenu.getItems().clear();
         for (var p : _connections) {
-            var mi = new MenuItem(p._name);
+            var mi = new MenuItem(p.getQualifiedName());
             mi.setUserData(p);
             mi.setOnAction(this::handleDisconnectMenuItem);
             _disconnectMenu.getItems().add(mi);
         }
     }
-
-    public abstract void repaint(); //  Can only be invoked on the Application thread
 }

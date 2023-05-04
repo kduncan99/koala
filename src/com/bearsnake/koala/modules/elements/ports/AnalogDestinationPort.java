@@ -5,6 +5,7 @@
 
 package com.bearsnake.koala.modules.elements.ports;
 
+import com.bearsnake.koala.modules.Module;
 import javafx.scene.paint.Color;
 
 /**
@@ -18,11 +19,11 @@ public class AnalogDestinationPort extends DestinationPort implements AnalogPort
     private double _signalValue = 0.0;
 
     public AnalogDestinationPort(
-        final String moduleName,
+        final Module module,
         final String name,
         final String caption
     ) {
-        super(moduleName, name, new InputJack(JACK_RADIUS, ANALOG_PORT_COLOR), caption);
+        super(module, name, new InputJack(JACK_RADIUS, ANALOG_PORT_COLOR), caption);
     }
 
     @Override
@@ -38,9 +39,6 @@ public class AnalogDestinationPort extends DestinationPort implements AnalogPort
     }
 
     public double getSignalValue() { return _signalValue; }
-
-    @Override
-    public void repaint() {}
 
     @Override
     public final synchronized void sampleSignal() {

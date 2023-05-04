@@ -6,6 +6,7 @@
 //  TODO
 //      (INPR) Ability to load/save connections as part of a configuration
 //      (INPR) Implement ability to apply a configuration, and to save one
+//      Can we have modules with smaller control section and larger connection section?
 //      Ability to add shelves to a rack via GUI
 //      Ability to add modules to a rack/shelf via GUI
 //      Ability to move shelves within the rack
@@ -13,6 +14,8 @@
 //              maybe we should just reposition all the wires after a module is moved.
 //      Ability to move modules within a shelf, and across shelves
 //          same wire concerns as above
+//      Ability to remove (unconnected) modules from a shelf via GUI
+//      Ability to remove (empty) shelves from a rack via GUI
 //      Implement Para-modules
 //          click on the modules to be included in the para module
 //          choose which ports and controls are propagated to the para module panel
@@ -178,16 +181,21 @@ public class Koala extends Application {
         //  TODO temporary
         var rackContent = (VBox)_rack.getChildren().get(0);
         var lfo = new SimpleLFOModule(SimpleLFOModule.DEFAULT_NAME);
-        var noise1 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
-        var noise2 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
-        var vcAmp = new VariableControlledAmplifierModule(VariableControlledAmplifierModule.DEFAULT_NAME);
-        var vcPan = new VariableControlledPanModule(VariableControlledPanModule.DEFAULT_NAME);
-        var audio = new StereoOutputModule(StereoOutputModule.DEFAULT_NAME);
         _rack.placeModule(0, 0, lfo);
+
+        var noise1 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
         _rack.placeModule(0, 1, noise1);
+
+        var noise2 = new NoiseGeneratorModule(NoiseGeneratorModule.DEFAULT_NAME);
         _rack.placeModule(0, 2, noise2);
+
+        var vcAmp = new VariableControlledAmplifierModule(VariableControlledAmplifierModule.DEFAULT_NAME);
         _rack.placeModule(0, 3, vcAmp);
+
+        var vcPan = new VariableControlledPanModule(VariableControlledPanModule.DEFAULT_NAME);
         _rack.placeModule(0, 5, vcPan);
+
+        var audio = new StereoOutputModule(StereoOutputModule.DEFAULT_NAME);
         _rack.placeModule(0, 18, audio);
 
         var lfoOut = lfo.getOutputPort(SimpleLFOModule.SIGNAL_OUTPUT_PORT_ID);

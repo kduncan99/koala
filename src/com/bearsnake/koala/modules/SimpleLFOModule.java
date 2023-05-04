@@ -69,7 +69,7 @@ public class SimpleLFOModule extends Module implements IListener {
         controlsSection.setControl(0, 3, _rangeSelector);
 
         //  ports
-        _signalOutput = new AnalogSourcePort(moduleName, "Control Output", "control");
+        _signalOutput = new AnalogSourcePort(this, "Control Output", "control");
         _ports.put(SIGNAL_OUTPUT_PORT_ID, _signalOutput);
         getPortsSection().setConnection(0, 1, _signalOutput);
     }

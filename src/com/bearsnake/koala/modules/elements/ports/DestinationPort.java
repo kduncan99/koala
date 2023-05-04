@@ -5,6 +5,8 @@
 
 package com.bearsnake.koala.modules.elements.ports;
 
+import com.bearsnake.koala.modules.Module;
+
 /**
  * Base class for all input ports.
  * All input ports have at least a connection point graphic and an in-going arrow graphic.
@@ -17,12 +19,12 @@ package com.bearsnake.koala.modules.elements.ports;
 public abstract class DestinationPort extends ActivePort {
 
     protected DestinationPort(
-        final String moduleName,
+        final Module module,
         final String name,
         final InputJack inputJack,
         final String caption
     ) {
-        super(moduleName, name, inputJack, caption);
+        super(module, name, inputJack, caption);
         getChildren().add(_jack);
         getChildren().add(_label);
     }

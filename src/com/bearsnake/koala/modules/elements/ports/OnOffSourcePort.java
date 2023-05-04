@@ -5,6 +5,7 @@
 
 package com.bearsnake.koala.modules.elements.ports;
 
+import com.bearsnake.koala.modules.Module;
 import javafx.scene.paint.Color;
 
 /**
@@ -16,11 +17,11 @@ public class OnOffSourcePort extends SourcePort implements OnOffPort {
     private boolean _signalValue = false;
 
     public OnOffSourcePort(
-        final String moduleName,
+        final Module module,
         final String name,
         final String caption
     ) {
-        super(moduleName, name, new OutputJack(JACK_RADIUS, ON_OFF_PORT_COLOR), caption);
+        super(module, name, new OutputJack(JACK_RADIUS, ON_OFF_PORT_COLOR), caption);
     }
 
     @Override
@@ -36,9 +37,6 @@ public class OnOffSourcePort extends SourcePort implements OnOffPort {
     public Color getWireColor() {
         return ON_OFF_PORT_COLOR;
     }
-
-    @Override
-    public void repaint() {}
 
     public final void setSignalValue(
         final boolean signalValue

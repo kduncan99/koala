@@ -28,9 +28,9 @@ public class VariableControlledAmplifierModule extends Module {
         super(2, moduleName);
 
         //  ports
-        _controlInput = new AnalogDestinationPort(moduleName, "Control Input", "control");
-        _signalInput = new AnalogDestinationPort(moduleName, "Signal Input", "signal");
-        _signalOutput = new AnalogSourcePort(moduleName, "Signal Output", "signal");
+        _controlInput = new AnalogDestinationPort(this, "Control Input", "control");
+        _signalInput = new AnalogDestinationPort(this, "Signal Input", "signal");
+        _signalOutput = new AnalogSourcePort(this, "Signal Output", "signal");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);

@@ -5,6 +5,7 @@
 
 package com.bearsnake.koala.modules;
 
+import com.bearsnake.koala.modules.Module;
 import com.bearsnake.koala.modules.elements.ports.AnalogDestinationPort;
 import com.bearsnake.koala.modules.elements.ports.AnalogSourcePort;
 
@@ -30,10 +31,10 @@ public class VariableControlledPanModule extends Module {
         super(2, moduleName);
 
         //  ports
-        _controlInput = new AnalogDestinationPort(moduleName, "Control Input", "control");
-        _signalInput = new AnalogDestinationPort(moduleName, "Signal Input", "signal");
-        _leftOutput = new AnalogSourcePort(moduleName, "Left Output", "left");
-        _rightOutput = new AnalogSourcePort(moduleName, "Right Output", "right");
+        _controlInput = new AnalogDestinationPort(this, "Control Input", "control");
+        _signalInput = new AnalogDestinationPort(this, "Signal Input", "signal");
+        _leftOutput = new AnalogSourcePort(this, "Left Output", "left");
+        _rightOutput = new AnalogSourcePort(this, "Right Output", "right");
 
         _ports.put(CONTROL_INPUT_PORT_ID, _controlInput);
         _ports.put(SIGNAL_INPUT_PORT_ID, _signalInput);

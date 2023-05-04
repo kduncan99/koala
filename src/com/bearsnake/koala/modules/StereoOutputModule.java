@@ -119,8 +119,8 @@ public class StereoOutputModule extends OutputModule implements IListener {
         section.setControl(1, 5, _muteControl);
 
         //  ports
-        _inputPortLeft = new AnalogDestinationPort(moduleName, "Left Input", "left");
-        _inputPortRight = new AnalogDestinationPort(moduleName, "Right Input", "right");
+        _inputPortLeft = new AnalogDestinationPort(this, "Left Input", "left");
+        _inputPortRight = new AnalogDestinationPort(this, "Right Input", "right");
 
         _ports.put(LEFT_INPUT_PORT_ID, _inputPortLeft);
         _ports.put(RIGHT_INPUT_PORT_ID, _inputPortRight);
