@@ -5,7 +5,6 @@
 
 //  TODO
 //      Ability to add shelves to a rack via GUI
-//      Ability to add shelves to a rack via menu
 //      Ability to add modules to a shelf via GUI
 //      Ability to add modules to a shelf via menu
 //      (INPR) Ability to load/save connections as part of a configuration
@@ -145,6 +144,9 @@ public class Koala extends Application {
     public static final DoubleRange DBFS_RANGE = new DoubleRange(-30.0, 0.0);
     public static final DoubleRange POSITIVE_RANGE = new DoubleRange(0.0, 1.0);
 
+    private static final int MAX_SHELVES_PER_RACK = 4;
+    private static final int MAX_MODULES_PER_SHELF = 20;
+
     private static final long PAINT_PERIOD_MS = frequencyToMilliseconds(100);
 
     private MenuBar _menuBar;
@@ -181,7 +183,7 @@ public class Koala extends Application {
         vbox.getChildren().addAll(_menuBar, scroller);
 
         //  TODO later we'll do load/save, have a starting dialog, all that crap
-        _rack = new Rack(2, 20);
+        _rack = new Rack(1, 20);
         content.getChildren().add(_rack);
 
         var scene = new Scene(vbox);
@@ -305,7 +307,12 @@ public class Koala extends Application {
                                     koalaQuit);
 
         _menuRack = new Menu("Rack");
+
         _menuShelf = new Menu("Shelf");
+        var shelfNew = new MenuItem("New Shelf");
+        shelfNew.setOnAction((e)->createNewShelf());
+        _menuShelf.getItems().addAll(shelfNew);
+
         _menuModule = new Menu("Module");
 
         _menuBar = new MenuBar();
@@ -315,6 +322,24 @@ public class Koala extends Application {
 
     private boolean unsavedWorkExists() {
         return true;//TODO
+    }
+
+    //  ----------------------------------------------------------------------------------------------------------------
+
+    private void createNewShelf() {
+        if (_rack.getShelfCount() == MAX_SHELVES_PER_RACK) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(_stage);
+            alert.initModality(Modality.APPLICATION_MODAL);
+
+            alert.setContentText("Max shelves per rack is " + MAX_SHELVES_PER_RACK);
+
+            alert.getDialogPane().getButtonTypes().setAll(ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+
+        _rack.createShelf(MAX_MODULES_PER_SHELF);
     }
 
     //  ----------------------------------------------------------------------------------------------------------------

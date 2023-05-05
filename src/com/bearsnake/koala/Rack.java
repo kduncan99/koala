@@ -373,4 +373,43 @@ public class Rack extends Pane {
         _shelves.get(shelfIndex).placeModule(location, module);
         return true;
     }
+
+    public synchronized void createShelf(
+        final int shelfWidth
+    ) {
+        var shelf = new Shelf(shelfWidth);
+        _shelfContent.getChildren().add(shelf);
+        _shelves.put(_shelves.size(), shelf);
+    }
+
+    public synchronized boolean deleteShelfAt(
+        final int position
+    ) {
+        if (position >= _shelves.size()) {
+            return false;
+        }
+
+        var s = _shelves.get(position);
+        if (s.getChildren().size() > 0) {
+            return false;
+        }
+
+        _shelfContent.getChildren().clear();
+
+        int plimit = _shelves.size() - 1;
+        for (int px = position; px < plimit - 1; px++ ){
+            _shelves.put(px, _shelves.get(px + 1));
+        }
+        _shelves.remove(_shelves.size() - 1);
+
+        for (var sh : _shelves.values()) {
+            _shelfContent.getChildren().add(sh);
+        }
+
+        return true;
+    }
+
+    public synchronized int getShelfCount() {
+        return _shelves.size();
+    }
 }
