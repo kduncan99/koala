@@ -5,7 +5,7 @@
 
 package com.bearsnake.koala.waves;
 
-public class SineWave implements IWave {
+public class SineWave extends Wave {
 
     @Override
     public double getValue(

@@ -7,20 +7,19 @@ package com.bearsnake.koala.components.signals;
 
 import com.bearsnake.koala.AnalogRangeType;
 import com.bearsnake.koala.Koala;
-import com.bearsnake.koala.waves.IWave;
-import com.bearsnake.koala.waves.WaveManager;
+import com.bearsnake.koala.waves.Wave;
 import com.bearsnake.koala.waves.WaveType;
 
 public class Oscillator {
 
-    private IWave _wave;
+    private Wave _wave;
     private double _frequency;      //  0.0 through 44000.0 (or even higher, I suppose)
     private double _pulseWidth;     //  0.0 through 1.0
     private double _position;       //  0.0 through 1.0
     private AnalogRangeType _rangeType = AnalogRangeType.BIPOLAR;
 
     public Oscillator() {
-        _wave = WaveManager.createWave(WaveType.SINE);
+        _wave = Wave.createWave(WaveType.SINE);
         _frequency = 440.0;
         _pulseWidth = 0.5;
         _position = 0.0;
@@ -70,7 +69,7 @@ public class Oscillator {
     public void setWaveForm(
         final WaveType waveType
     ) {
-        _wave = WaveManager.createWave(waveType);
+        _wave = Wave.createWave(waveType);
         _position = 0.0;
     }
 }

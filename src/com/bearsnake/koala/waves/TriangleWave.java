@@ -7,7 +7,7 @@ package com.bearsnake.koala.waves;
 
 import com.bearsnake.koala.Koala;
 
-public class TriangleWave implements IWave {
+public class TriangleWave extends Wave {
 
     @Override
     public double getValue(

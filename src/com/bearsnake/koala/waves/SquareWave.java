@@ -7,7 +7,7 @@ package com.bearsnake.koala.waves;
 
 import com.bearsnake.koala.Koala;
 
-public class SquareWave implements IWave {
+public class SquareWave extends Wave {
 
     @Override
     public double getValue(

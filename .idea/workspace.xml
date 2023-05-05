@@ -5,29 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46cf2b94-d915-4bec-86a3-661d4a73f2b1" name="Default Changelist" comment="Minor white-space changes, and major completion of DADSR module">
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONArray.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONBoolean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONNull.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONNumber.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONString.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/JSONValue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/bearsnake/json/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Koala.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/NoiseGeneratorModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SimpleLFOModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/SimpleLFOModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/StereoOutputModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/StereoOutputModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledAmplifierModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledAmplifierModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/VariableControlledPanModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/ActivePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/ActivePort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogDestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogDestinationPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogSourcePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/AnalogSourcePort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/DestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/DestinationPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffDestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffDestinationPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffSourcePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/OnOffSourcePort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/SourcePort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/SourcePort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/TriggerDestinationPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/modules/elements/ports/TriggerDestinationPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/Rack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/components/signals/Oscillator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/components/signals/Oscillator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/IWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/Wave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/RampWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/RampWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/SawtoothWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/SawtoothWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/SineWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/SineWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/SquareWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/SquareWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/TriangleWave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/TriangleWave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bearsnake/koala/waves/WaveManager.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +143,7 @@
       <workItem from="1674582256888" duration="140856000" />
       <workItem from="1681832101403" duration="19020000" />
       <workItem from="1681866163310" duration="185879000" />
-      <workItem from="1683051217717" duration="16715000" />
+      <workItem from="1683051217717" duration="20339000" />
     </task>
     <task id="LOCAL-00001" summary="Minor white-space changes, and major completion of DADSR module">
       <created>1672360680542</created>
