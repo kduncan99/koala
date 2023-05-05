@@ -87,7 +87,7 @@ public class Rack extends Pane {
         _shelfContent = new VBox();
         _shelfContent.setBackground(Koala.BACKGROUND);
         _shelfContent.setPadding(Koala.STANDARD_INSETS);
-        _shelfContent.setSpacing(INTER_SHELF_PIXELS);
+        _shelfContent.setSpacing(20.0);//TODO INTER_SHELF_PIXELS);
 
         //  populate the VBox with a particular number of shelves.
         for (int sx = 0; sx < shelfCount; sx++) {

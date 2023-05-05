@@ -4,11 +4,13 @@
  */
 
 //  TODO
+//      Ability to add shelves to a rack via GUI
+//      Ability to add shelves to a rack via menu
+//      Ability to add modules to a shelf via GUI
+//      Ability to add modules to a shelf via menu
 //      (INPR) Ability to load/save connections as part of a configuration
 //      (INPR) Implement ability to apply a configuration, and to save one
 //      Can we have modules with smaller control section and larger connection section?
-//      Ability to add shelves to a rack via GUI
-//      Ability to add modules to a rack/shelf via GUI
 //      Ability to move shelves within the rack
 //          implies redrawing the wires associated with all of the modules which move...
 //              maybe we should just reposition all the wires after a module is moved.
@@ -49,6 +51,7 @@ import com.bearsnake.koala.modules.SimpleLFOModule;
 import com.bearsnake.koala.modules.StereoOutputModule;
 import com.bearsnake.koala.modules.VariableControlledAmplifierModule;
 import com.bearsnake.koala.modules.VariableControlledPanModule;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,7 +60,13 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -67,9 +76,13 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Koala extends Application {
+
+    public static final String COPYRIGHT = "Copyright 2020-2023 by Kurt Duncan";
+    public static final String VERSION = "1.0";
 
     public static final Color BACKGROUND_COLOR = Color.rgb(223, 223, 223);
     public static final BackgroundFill BACKGROUND_FILL = new BackgroundFill(BACKGROUND_COLOR, CornerRadii.EMPTY, Insets.EMPTY);
@@ -134,52 +147,48 @@ public class Koala extends Application {
 
     private static final long PAINT_PERIOD_MS = frequencyToMilliseconds(100);
 
-    private boolean _inhibitPaint = false;
+    private MenuBar _menuBar;
+    private Menu _menuKoala;
+    private Menu _menuRack;
+    private Menu _menuShelf;
+    private Menu _menuModule;
     private Rack _rack;
+    private Stage _stage;
     private Timer _paintTimer;
 
-    private class PaintTask extends TimerTask {
-
-        private final PaintRunnable _runnable = new PaintRunnable();
-
-        @Override
-        public void run() {
-            Platform.runLater(_runnable);
-        }
-    }
-
-    //  This class exists so that independently updating indicators get a chance to
-    //  periodically update their display. Not many modules, entities, whatever will need this.
-    private class PaintRunnable implements Runnable {
-
-        @Override
-        public void run() {
-            if (!_inhibitPaint && (_rack != null)) {
-                _rack.repaint();
-            }
-        }
-    }
-
     public static final Random RANDOM = new Random();
+    static {
+        RANDOM.setSeed(System.currentTimeMillis());
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        RANDOM.setSeed(System.currentTimeMillis());
+        _stage = stage;
+        stage.setTitle("Koala - v" + VERSION);
+        stage.setOnCloseRequest(e->{
+            if (quitHandler()) {
+                Platform.exit();
+            }
+            e.consume();
+        });
+
+        setupMenus();
+
+        var content = new Group();
+        var scroller = new ScrollPane(content);
+
+        var vbox = new VBox();
+        vbox.getChildren().addAll(_menuBar, scroller);
 
         //  TODO later we'll do load/save, have a starting dialog, all that crap
-        var root = new Group();
-        var scroller = new ScrollPane(root);
-        var scene = new Scene(scroller);
-
         _rack = new Rack(2, 20);
-        root.getChildren().add(_rack);
+        content.getChildren().add(_rack);
 
-        stage.setTitle("Koala - v1.0");//   TODO later pull version from somewhere useful
+        var scene = new Scene(vbox);
         stage.setScene(scene);
         stage.show();
 
-        //  TODO temporary
-        var rackContent = (VBox)_rack.getChildren().get(0);
+        //  TODO temporary ------------------------------------------------------------------------------------
         var lfo = new SimpleLFOModule(SimpleLFOModule.DEFAULT_NAME);
         _rack.placeModule(0, 0, lfo);
 
@@ -221,7 +230,7 @@ public class Koala extends Application {
             _rack.connectPorts(vcPanLeftOut, audioLeftIn);
             _rack.connectPorts(vcPanRightOut, audioRightIn);
         });
-         //  TODO end temporary
+        //  TODO end temporary
     }
 
     @Override
@@ -238,26 +247,77 @@ public class Koala extends Application {
         super.stop();
     }
 
-//    public static void drawWave(
-//        final IWave wave,
-//        final Canvas canvas
-//        ) {
-//        var gc = canvas.getGraphicsContext2D();
-//
-//        gc.beginPath();
-//        for (int x = 0; x < canvas.getWidth(); ++x) {
-//            double position = x / canvas.getWidth();
-//            var raw = wave.getValue(position, 0.5);
-//            var y = (int)((1.0 - ((raw + 1.0) / 2.0)) * canvas.getHeight());
-//
-//            if (x == 0)
-//                gc.moveTo(x, y);
-//            else
-//                gc.lineTo(x, y);
-//        }
-//        gc.stroke();
-//        gc.closePath();
-//    }
+    //  ----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Checks whether anything needs to be saved... if so, we prompt the user whether to save, not save, or cancel.
+     * @return true if we can go ahead and quit, else false
+     */
+    private boolean quitHandler() {
+        if (unsavedWorkExists()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(_stage);
+            alert.initModality(Modality.APPLICATION_MODAL);
+
+            alert.setHeaderText("Exit");
+            alert.setContentText("Unsaved work exists. Do you want to save your work before quitting?");
+
+            alert.getDialogPane().getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            Optional<ButtonType> optional = alert.showAndWait();
+
+            if (optional.isPresent()) {
+                ButtonType buttonType = optional.get();
+                if (buttonType.equals(ButtonType.YES)) {
+                    return saveUnsavedWork();
+                } else if (buttonType.equals(ButtonType.NO)) {
+                    return true;
+                } else if (buttonType.equals(ButtonType.CANCEL)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Saves anything which has been updated and not saved.
+     * @return true if successful, false otherwise
+     */
+    private boolean saveUnsavedWork() {
+        return true;//TODO
+    }
+
+    private void setupMenus() {
+        var menuKoala = new Menu("Koala");//TODO need to integrate with app menu instead of providing a new one..?
+        var koalaAbout = new MenuItem("About Koala");
+        var koalaSettings = new MenuItem("Settings...");
+        var koalaQuit = new MenuItem ("Quit Koala");
+        koalaQuit.setOnAction((e)->{
+            if (quitHandler()) {
+                Platform.exit();
+            }
+        });
+        menuKoala.getItems().addAll(koalaAbout,
+                                    new SeparatorMenuItem(),
+                                    koalaSettings,
+                                    new SeparatorMenuItem(),
+                                    koalaQuit);
+
+        _menuRack = new Menu("Rack");
+        _menuShelf = new Menu("Shelf");
+        _menuModule = new Menu("Module");
+
+        _menuBar = new MenuBar();
+        _menuBar.getMenus().addAll(menuKoala, _menuRack, _menuShelf, _menuModule);
+        _menuBar.setUseSystemMenuBar(true);
+    }
+
+    private boolean unsavedWorkExists() {
+        return true;//TODO
+    }
+
+    //  ----------------------------------------------------------------------------------------------------------------
 
     /**
      * Converts a dbFS value from -inf to 0, to a scalar value from 0.0 to 1.0.
@@ -380,6 +440,34 @@ public class Koala extends Application {
             return 0 - Double.MAX_VALUE;
         } else {
             return Math.log(Math.abs(scalar)) / LOG_E_OF_TWO * 3.0;
+        }
+    }
+
+    /**
+     * TimerTask which runs on every animation tick.
+     * Used for updating the graphics on anything that might need it.
+     * TODO can we do away with this by ensuring the 'things that need it' get poked by whatever it is
+     *  that they are monitoring?
+     */
+    private class PaintTask extends TimerTask {
+
+        private final PaintRunnable _runnable = new PaintRunnable();
+
+        @Override
+        public void run() {
+            Platform.runLater(_runnable);
+        }
+    }
+
+    //  This class exists so that independently updating indicators get a chance to
+    //  periodically update their display. Not many modules, entities, whatever will need this.
+    private class PaintRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            if (_rack != null) {
+                _rack.repaint();
+            }
         }
     }
 }
